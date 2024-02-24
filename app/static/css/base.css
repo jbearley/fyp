@@ -1,0 +1,35 @@
+* {
+	box-sizing: border-box;
+	--drake-blue: #004477;
+	--gray-200: #FCFCFC;
+	--gray-300: #F0F0F0;
+	--gray-500: #616161;
+	--gray-600: #595959;
+	--gray-700: #424242;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100dvh;
+	margin: 0;
+}
+
+nav {
+	display: flex;
+	background-color: var(--drake-blue);
+	align-items: center;
+	gap: 10px;
+}
+
+nav img {
+	padding: 12px 5px 10px 15px;
+}
+
+nav .page-title {
+	padding: 15px 20px;
+	border-left: 1px solid white;
+	font-family: serif;
+	font-size: 25px;
+	color: white;
+}

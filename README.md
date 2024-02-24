@@ -15,7 +15,7 @@ TODO: Give a short introduction of your project. Let this section explain the ob
 # Build and Test
 
 1. Running the web app
-- From project directory, run: export FLASK_APP=application.py; flask run
+- From project directory, run: flask run
 - Go to url printed in the terminal, most likely http://127.0.0.1:5000
 
 # Contribute

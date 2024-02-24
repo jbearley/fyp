@@ -1,9 +1,21 @@
-<!DOCTYPE html>
-<html>
-	<head>
+{% extends 'base.html' %}
 
-	</head>
-	<body>
-		HELLO!
-	</body>
-</html>
+{% block content %}
+
+<link rel='stylesheet' type='text/css' href='../static/css/main.css' />
+<main>
+	<section class='your-information'>
+		<header>
+			<h1>Your Information</h1>
+			<p>Use the fields below to set your graduation year, majors, and minors.</p>
+		</header>
+		<content>
+			-- dropdown stuff here --
+		</content>
+		<div class='resizer'></div>
+	</section>
+	<section>
+	</section>
+</main>
+
+{% endblock %}
