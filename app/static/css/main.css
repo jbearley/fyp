@@ -3,15 +3,29 @@ main {
 	height: 100%;
 }
 
-.your-information {
+section {
 	display: flex;
 	position: relative;
 	flex-direction: column;
+	padding: 32px;
+	gap: 32px;
+}
+
+section:not(.your-information):not(:last-of-type)::after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 24px;
+	bottom: 24px;
+	width: 1px;
+	background-color: var(--gray-300);
+}
+
+.your-information {
 	width: 350px;
 	margin-right: 8px;
 	background-color: var(--gray-200);
-	padding: 32px;
-	gap: 32px;
+	transition: all .12s;
 }
 
 .your-information .resizer {
@@ -26,6 +40,10 @@ main {
 	bottom: 0;
 	background-color: var(--gray-300);
 	cursor: pointer;
+}
+
+.your-information .resizer:hover {
+	filter: brightness(0.98);
 }
 
 .your-information .resizer::after {

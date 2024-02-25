@@ -3,7 +3,20 @@
 
 <head>
 	<meta charset='UTF-8' />
-	<link rel='stylesheet' type='text/css' href='../static/css/base.css' />
+	<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename='css/base.css') }}" />
+
+	{% if styles_to_enqueue %}
+	{% for style_file in styles_to_enqueue %}
+	<link rel='stylesheet' type='text/css' href="{{ url_for('static', filename=('css/'+style_file)) }}" />
+	{% endfor %}
+	{% endif %}
+
+	{% if scripts_to_enqueue %}
+	{% for script_file in scripts_to_enqueue %}
+	<script type="text/javascript" src="{{ url_for('static', filename=('js/'+script_file)) }}"></script>
+	{% endfor %}
+	{% endif %}
+
 	{% if title %}
 	<title>{{ title }}</title>
 	{% endif %}
@@ -11,8 +24,10 @@
 
 <body>
 	<nav>
-		<img src='../static/images/drake_logo.svg'>
+		<img src="{{ url_for('static', filename='images/drake_logo.svg') }}">
+		{% if title %}
 		<div class='page-title'>{{ title }}</div>
+		{% endif %}
 	</nav>
 	{% block content %}{% endblock %}
 </body>
