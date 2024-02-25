@@ -81,3 +81,12 @@ p {
 	color: var(--gray-600);
 	margin: 0;
 }
+
+.dropdown-content {
+	color: var(--gray-600);
+	display: none;
+}
+
+.dropdown .expanded + .dropdown-content {
+	display: flex;
+}
