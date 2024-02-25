@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 	resizer();
+	inputFields();
 });
 
 /**
@@ -29,4 +30,19 @@ function resizer() {
 		};
 		$resizer.addEventListener('mousedown', startListening);
 	}
+}
+
+/**
+ * Add event listeners to dropdowns.
+ */
+function inputFields() {
+	document.querySelectorAll('.dropdown button').forEach($dropdownButton => {
+		$dropdownButton.addEventListener('click', function (event) {
+			if (event.currentTarget.classList.contains("expanded")) {
+				event.currentTarget.classList.remove("expanded");
+			} else {
+				event.currentTarget.classList.add("expanded");
+			}
+		});
+	});
 }
