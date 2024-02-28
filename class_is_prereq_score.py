@@ -59,7 +59,7 @@ for classToValue in requirements:
 
 print(dict_postreq_list)
 for A in dict_postreq_list:
-    maxLength = 0
+    maxLength = 1
     #find max length string of classes
     for B in dict_postreq_list[A]:
         if len(B) > maxLength:
