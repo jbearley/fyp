@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 	resizer();
+	seeMore();
 	inputFields();
 });
 
@@ -30,6 +31,18 @@ function resizer() {
 			document.querySelector(`${sectionSelector} .resizer`).style.filter = 'brightness(0.96)';
 		};
 		$resizer.addEventListener('mousedown', startListening);
+	});
+}
+
+function seeMore() {
+	document.querySelectorAll('.class-container').forEach($classContainer => {
+		$classContainer.addEventListener('click', (event) => {
+			if (event.currentTarget.classList.contains('expanded')) {
+				event.currentTarget.classList.remove('expanded');
+			} else {
+				event.currentTarget.classList.add('expanded');
+			}
+		});
 	});
 }
 

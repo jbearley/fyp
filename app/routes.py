@@ -2,7 +2,7 @@ from app import app
 from flask import render_template
 import sys
 sys.path.append("app")
-from dummy_data import classes_by_semester
+from dummy_data import random_classes_by_semester
 
 
 @app.route("/")
@@ -13,7 +13,7 @@ def index():
     return render_template(
         "main.html",
         title="Drake Four-Year Plan Generator",
-        classes_by_semester=classes_by_semester,
+        classes_by_semester=random_classes_by_semester(),
         styles_to_enqueue=styles_to_enqueue,
         scripts_to_enqueue=scripts_to_enqueue,
     )

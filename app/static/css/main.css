@@ -146,16 +146,22 @@ h3 {
 	row-gap: 4px;
 	column-gap: 8px;
 	position: relative;
+	transition: all .2s;
 }
 
-.class-container:not(.expanded)::after {
+.class-container:hover {
+	cursor: pointer;
+	scale: 1.01;
+}
+
+.class-container:not(.expanded)::before {
 	content: '';
 	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	width: 40px;
-	background: linear-gradient(to right, rgba(255,255,255,0), white);
+	background: linear-gradient(to right, rgba(255, 255, 255, 0), white 80%);
 }
 
 .class-container.expanded {
@@ -170,6 +176,7 @@ h3 {
 
 .class-container.expanded .attributes {
 	flex-wrap: wrap;
+	margin-left: 8px;
 }
 
 .chip {
@@ -181,6 +188,32 @@ h3 {
 	border-radius: 6px;
 	color: var(--gray-500);
 	box-shadow: inset -1px -1px 2px rgba(150, 150, 150, 0.3);
+}
+
+.see-more {
+	position: absolute;
+	top: 0;
+	right: -4px;
+	width: 18px;
+	height: 18px;
+	background-color: transparent;
+	mask-image: url(../images/chevron-down-double-svgrepo-com.svg);
+	mask-position: right center;
+	mask-repeat: no-repeat;
+	mask-size: contain;
+	-webkit-mask-image: url(../images/chevron-down-double-svgrepo-com.svg);
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+	transition: all .2s;
+}
+
+.class-container.expanded .see-more {
+	transform: rotate(180deg);
+}
+
+.class-container:hover .see-more {
+	background-color: var(--gray-400);
 }
 
 .dropdown-content {

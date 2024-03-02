@@ -37,10 +37,15 @@ def random_class():
     }
 
 
-sample_classes_per_semester = []
-for i in range(random.randint(4, 6)):
-    sample_classes_per_semester.append(random_class())
+def random_sample_classes_per_semester():
+    sample_classes_per_semester = []
+    for i in range(random.randint(4, 6)):
+        sample_classes_per_semester.append(random_class())
+    return sample_classes_per_semester
 
-classes_by_semester = {}
-for semester in semesters:
-    classes_by_semester[semester] = sample_classes_per_semester
+
+def random_classes_by_semester():
+    classes_by_semester = {}
+    for semester in semesters:
+        classes_by_semester[semester] = random_sample_classes_per_semester()
+    return classes_by_semester
