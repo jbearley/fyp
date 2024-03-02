@@ -7,18 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
  * Give the vertical resize line functionality.
  */
 function resizer() {
-	const $resizer = document.querySelector('.your-information .resizer');
-	if ($resizer) {
+	document.querySelectorAll('.resizer').forEach($resizer => {
+		const sectionSelector = `#${$resizer.closest('section').id}`;
 		const stopListening = () => {
 			document.removeEventListener('mouseup', stopListening);
 			document.removeEventListener('mousemove', resize);
 			document.querySelectorAll('section').forEach($section => {
 				$section.style.userSelect = 'initial';
 			});
-			document.querySelector('.your-information .resizer').style.filter = '';
+			document.querySelector(`${sectionSelector} .resizer`).style.filter = '';
 		};
 		const resize = (event) => {
-			document.querySelector('.your-information').style.width = `${Math.max(224, Math.min(500, event.clientX))}px`;
+			const sectionLeft = document.querySelector(sectionSelector).getBoundingClientRect().left;
+			document.querySelector(sectionSelector).style.width = `${Math.max(240, Math.min(500, event.clientX - sectionLeft))}px`;
 		};
 		const startListening = () => {
 			document.addEventListener('mouseup', stopListening);
@@ -26,10 +27,10 @@ function resizer() {
 			document.querySelectorAll('section').forEach($section => {
 				$section.style.userSelect = 'none';
 			});
-			document.querySelector('.your-information .resizer').style.filter = 'brightness(0.96)';
+			document.querySelector(`${sectionSelector} .resizer`).style.filter = 'brightness(0.96)';
 		};
 		$resizer.addEventListener('mousedown', startListening);
-	}
+	});
 }
 
 /**
