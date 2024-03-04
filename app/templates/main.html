@@ -3,7 +3,7 @@
 {% block content %}
 
 <main>
-	<section class='your-information'>
+	<section id='your-information' class='your-information'>
 		<header>
 			<h1>Your Information</h1>
 			<p>Use the fields below to set your graduation year, majors, and minors.</p>
@@ -15,7 +15,6 @@
 					<a href="#">Business</a>
 				</div>
 			</div>
-
 			<div class="dropdown">
 				<button>Semester</button>
 				<div class="dropdown-content">
@@ -26,7 +25,7 @@
 		</content>
 		<div class='resizer'></div>
 	</section>
-	<section>
+	<section id='requirements-overview'>
 		<header>
 			<h1>Another Section</h1>
 			<p>Here's a helpful message below the heading.</p>
@@ -34,14 +33,34 @@
 		<content>
 			-- requirements overview, classes by semester, etc. --
 		</content>
+		<div class='resizer'></div>
 	</section>
-	<section>
+	<section id='by-semester'>
 		<header>
 			<h1>Yet Another Section</h1>
 			<p>Information about this section and some tips for its usage.</p>
 		</header>
 		<content>
-			-- requirements overview, classes by semester, etc. --
+			{% if classes_by_semester %}
+			{% for semester in classes_by_semester %}
+			<div class='semester-container'>
+				<h3>{{semester}}</h3>
+				<div class='classes-list-container'>
+					{% for class in classes_by_semester[semester] %}
+					<div class='class-container'>
+						<div class='main-info'><span>{{class.course_number}}</span><span>{{class.title}}</span></div>
+						<div class='attributes'>
+							{% for attribute in class.attributes %}
+							<div class='chip'>{{attribute}}</div>
+							{% endfor %}
+						</div>
+						<div class='see-more'></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			{% endfor %}
+			{% endif %}
 		</content>
 	</section>
 </main>
