@@ -60,3 +60,17 @@ function inputFields() {
 		});
 	});
 }
+
+function toggleImages(button) {
+
+	var image1 = button.querySelector('.image1');
+	var image2 = button.querySelector('.image2');
+
+	if (image1.style.display === 'none' || image1.style.display === '') {
+		image1.style.display = 'block'; // Display the first image
+		image2.style.display = 'none';  // Hide the second image
+	} else {
+		image1.style.display = 'none';  // Hide the first image
+		image2.style.display = 'block'; // Display the second image
+	}
+}
