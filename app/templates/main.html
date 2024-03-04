@@ -9,19 +9,29 @@
 			<p>Use the fields below to set your graduation year, majors, and minors.</p>
 		</header>
 		<content>
-			<div class="dropdown">
-				<button>Major</button>
-				<div class="dropdown-content">
-					<a href="#">Business</a>
-				</div>
+			{% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in user_choices) %}
+			{% for i in range((user_choices['majors'] | length)) %}
+			{% set major_choice = user_choices['majors'][i] %}
+			<div class="dropdown-container">
+				<label for='major'>Major {{i + 1}}</label>
+				<select id='major'>
+					<!-- <option selected disabled hidden value=''>Please choose an option</option> -->
+					{% for major in drake_curriculum['majors'] %}
+					<option value='{{major}}' {{ (major == major_choice) and 'selected' or '' }} >{{major}}</option>
+					{% endfor %}
+				</select>
 			</div>
-			<div class="dropdown">
-				<button>Semester</button>
-				<div class="dropdown-content">
-					<a href="#">2024 fall</a>
-					<a href="#">2025 spring</a>
-				</div>
+			{% endfor %}
+			<div class="dropdown-container">
+				<label for='major'>Major {{(user_choices['majors'] | length) + 1}}</label>
+				<select id='major'>
+					<option selected disabled hidden value=''>Please choose an option</option>
+					{% for major in drake_curriculum['majors'] %}
+					<option value='{{major}}'>{{major}}</option>
+					{% endfor %}
+				</select>
 			</div>
+			{% endif %}
 		</content>
 		<div class='resizer'></div>
 	</section>
