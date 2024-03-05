@@ -3,30 +3,39 @@
 {% block content %}
 
 <main>
-	<section class='your-information'>
+	<section id='your-information' class='your-information'>
 		<header>
 			<h1>Your Information</h1>
 			<p>Use the fields below to set your graduation year, majors, and minors.</p>
 		</header>
 		<content>
-			<div class="dropdown">
-				<button>Major</button>
-				<div class="dropdown-content">
-					<a href="#">Business</a>
-				</div>
+			{% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in user_choices) %}
+			{% for i in range((user_choices['majors'] | length)) %}
+			{% set major_choice = user_choices['majors'][i] %}
+			<div class="dropdown-container">
+				<label for='major'>Major {{i + 1}}</label>
+				<select id='major'>
+					<!-- <option selected disabled hidden value=''>Please choose an option</option> -->
+					{% for major in drake_curriculum['majors'] %}
+					<option value='{{major}}' {{ (major == major_choice) and 'selected' or '' }} >{{major}}</option>
+					{% endfor %}
+				</select>
 			</div>
-
-			<div class="dropdown">
-				<button>Semester</button>
-				<div class="dropdown-content">
-					<a href="#">2024 fall</a>
-					<a href="#">2025 spring</a>
-				</div>
+			{% endfor %}
+			<div class="dropdown-container">
+				<label for='major'>Major {{(user_choices['majors'] | length) + 1}}</label>
+				<select id='major'>
+					<option selected disabled hidden value=''>Please choose an option</option>
+					{% for major in drake_curriculum['majors'] %}
+					<option value='{{major}}'>{{major}}</option>
+					{% endfor %}
+				</select>
 			</div>
+			{% endif %}
 		</content>
 		<div class='resizer'></div>
 	</section>
-	<section>
+	<section id='requirements-overview'>
 		<header>
 			<h1>Another Section</h1>
 			<p>Here's a helpful message below the heading.</p>
@@ -34,14 +43,34 @@
 		<content>
 			-- requirements overview, classes by semester, etc. --
 		</content>
+		<div class='resizer'></div>
 	</section>
-	<section>
+	<section id='by-semester'>
 		<header>
 			<h1>Yet Another Section</h1>
 			<p>Information about this section and some tips for its usage.</p>
 		</header>
 		<content>
-			-- requirements overview, classes by semester, etc. --
+			{% if classes_by_semester %}
+			{% for semester in classes_by_semester %}
+			<div class='semester-container'>
+				<h3>{{semester}}</h3>
+				<div class='classes-list-container'>
+					{% for class in classes_by_semester[semester] %}
+					<div class='class-container'>
+						<div class='main-info'><span>{{class.course_number}}</span><span>{{class.title}}</span></div>
+						<div class='attributes'>
+							{% for attribute in class.attributes %}
+							<div class='chip'>{{attribute}}</div>
+							{% endfor %}
+						</div>
+						<div class='see-more'></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			{% endfor %}
+			{% endif %}
 		</content>
 	</section>
 </main>
