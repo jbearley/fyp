@@ -1,8 +1,10 @@
 /* Notes about dataset
 - All two digit course numbers do not have the 0 in front (ie. CS 065 is just written as CS 65)
+- One digit has one zero in front (ie. ECON 001 is written as ECON 01)
 - Binary for semester classes are offered
 - NULL is when there is no prereq/coreq/gradereq
 - In prereqs if there is a / that is either one course or the other is required 
+- Course that has MATH 20 or MATH 17 as a prereq can be MATH 20/MATH 17 or 4 years highschool math (not sure how to put that yet)
 
 Possibly do later
 - Deal with classes offered occasionally
