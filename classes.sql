@@ -1,52 +1,101 @@
+/* Notes about dataset
+- All two digit course numbers do not have the 0 in front (ie. CS 065 is just written as CS 65)
+- Binary for semester classes are offered
+- NULL is when there is no prereq/coreq/gradereq
+- In prereqs if there is a / that is either one course or the other is required 
+
+Possibly do later
+- Deal with classes offered occasionally
+- Classes offered odd or even semesters
+- If other schools are added, deal with business student only */
+
+
 CREATE TABLE CLASSES (
     ClassID VARCHAR(10),
     Prereqs VARCHAR(100),
     Coreq VARCHAR(100),
     GradeReq VARCHAR(10),
-    Fall TINYINT,
-    JTerm TINYINT,
-    Spring TINYINT,
-    Summer TINYINT,
+    Fall INT,
+    JTerm INT,
+    Spring INT,
+    Summer INT,
     Credits DECIMAL(3,1)
 );
 
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACCT 41", "", "", "", 1, 0, 1, 1, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACCT 42", "ACCT 41", "", "", 1, 0, 1, 1, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 131", "MATH 70", "ACTS 131L", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 131L", "MATH 70" "ACTS 131", "", 1, 0, 1, 0, .5)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 195", "FIN 101, MKTG 101, MGMT 110, MGMT 120", "", "SR", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BLAW 60", "", "", "SO", 1, 0, 1, 1, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 001", "", "", "", 1, 0, 1, 0, 0)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 002", "BUS 001", "", "", 1, 0, 1, 0, 0)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 003", "BUS 002", "", "", 1, 0, 1, 0, 0)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 004", "BUS 003", "", "", 1, 0, 1, 0, 0)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 70", "BUS 70", "", "SO", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 73", "", "", "", 1, 0, 1, 0, 2)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("BUS 74", "", "", "", 1, 0, 1, 0, 2)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ECON 2", "", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("IS 44", "", "", "", 1, 0, 1, 1, 2)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("IS 75", "", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("FIN 101", "ACCT 42, IS 44, ECON 2, STAT 71, STAT 30, ACTS 131", "", "", 1, 0, 1, 1, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("MGMT 110", "", "",  "SO", 1, 0, 1, 1, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("MGMT 120", "STAT 72, ACTS 135", "", "", 1, 1, 1, 0)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("MKTG 101", "ECON 2", "", "SO", 1, 0, 1, 1, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("MATH 50", "", "", "", 1, 0, 1, 1, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("MATH 70", "MATH 50", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 50", "", "", "", 1, 0, 0, 0, 0)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 120", "MATH 70", "ACTS 120L", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 120L", "MATH 70", "ACTS 120L", "", 1, 0, 1, 0, .5)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 135", "ACTS 131", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 140", "ACT 135", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 150", "ACTS 120, ACTS 131", "", "", 1, 0, 0, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 161", "ACTS 131", "", "", 0, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 190", "", "", "SR", 0, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ECON 10", "", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("INS 51", "", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("STAT 40", "", "", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("STAT 170", "", "STAT 40", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 155", "", "ACTS 150", "", 0, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("ACTS 165", "", "ACTS 135", "", 1, 0, 0, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("FIN 102", "", "ECON 10, FIN 10, ACTS 135, STAT 71, STAT 130", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("FIN 121", "", "FIN 119, ACTS 120, ACTS 131, STAT 71, STAT 130", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("MATH 100", "", "MATH 70", "", 1, 0, 1, 0, 3)
-INSERT INTO CLASSES (ClassID, Prereqs, Coreq, GradeReq, Fall, JTerm, Spring, Summer, Credits) VALUES ("STAT 172", "", "STAT 130, ACTS 131, STAT 40, STAT 170, MATH 70", "", 1, 0, 0, 0, 3
+INSERT INTO CLASSES VALUES ('ACCT 41', NULL, NULL, NULL, 1, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('ACCT 42', 'ACCT 41', NULL, NULL, 1, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('ACCT 105', 'ACCT41, ACCT 42, IS 44', NULL, NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('ACCT 110', 'ACCT 42, IS 44', NULL, NULL, 0, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACCT 120', 'ACCT 110', NULL, NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('ACCT 165', 'ACCT 42', NULL, 'JR', 1, 0, 0, 1, 3);
+INSERT INTO CLASSES VALUES ('ACCT 166', 'ACCT 165', NULL, NULL, 0, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('ACCT 167', 'ACCT 166', NULL, NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('ACCT 175', 'ACCT 105, ACCT 165', NULL, 'JR', 0, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACCT 185', 'ACCT 42', NULL, 'JR', 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('ACCT 186', 'ACCT 185', NULL, 'JR', 0, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 50', NULL, NULL, NULL, 1, 0, 0, 0, 0);
+INSERT INTO CLASSES VALUES ('ACTS 120', 'MATH 70', 'ACTS 120L', NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 120L', 'MATH 70', 'ACTS 120L', NULL, 1, 0, 1, 0, .5);
+INSERT INTO CLASSES VALUES ('ACTS 131', 'MATH 70', 'ACTS 131L', NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 131L', 'MATH 70' 'ACTS 131', NULL, 1, 0, 1, 0, .5);
+INSERT INTO CLASSES VALUES ('ACTS 135', 'ACTS 131', NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 140', 'ACT 135', NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 150', 'ACTS 120, ACTS 131', NULL, NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 155', NULL, 'ACTS 150', NULL, 0, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 161', 'ACTS 131', NULL, NULL, 0, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 165', NULL, 'ACTS 135', NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('ACTS 190', NULL, NULL, 'SR', 0, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('BLAW 60', NULL, NULL, 'SO', 1, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('BLAW 120'. 'BLAW 60', NULL, NULL, 0, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('BLAW 180', 'BLAW 60', NULL, NULL, 1, 0, 0, 0, 3);
+
+/* BLAW is offered occasionally, need to figure out how to handle and what to put for semesters*/
+INSERT INTO CLASSES VALUES ('BUS 195', 'FIN 101, MKTG 101, MGMT 110, MGMT 120', NULL, 'SR', 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('BUS 001', NULL, NULL, NULL, 1, 0, 1, 0, 0);
+INSERT INTO CLASSES VALUES ('BUS 002', 'BUS 001', NULL, NULL, 1, 0, 1, 0, 0);
+INSERT INTO CLASSES VALUES ('BUS 003', 'BUS 002', NULL, NULL, 1, 0, 1, 0, 0);
+INSERT INTO CLASSES VALUES ('BUS 004', 'BUS 003', NULL, NULL, 1, 0, 1, 0, 0);
+INSERT INTO CLASSES VALUES ('BUS 005', 'BUS 004', NULL, NULL, 1, 0, 1, 0, 0);
+INSERT INTO CLASSES VALUES ('BUS 67', NULL, NULL, NULL, 0, 0, 0, 1, 3);
+INSERT INTO CLASSES VALUES ('BUS 70', 'BUS 70', NULL, 'SO', 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('BUS 73', NULL, NULL, NULL, 1, 0, 1, 0, 2);
+INSERT INTO CLASSES VALUES ('BUS 74', NULL, NULL, NULL, 1, 0, 1, 0, 2);
+/* BUS 90 also occasional */
+INSERT INTO CLASSES VALUES ('BUS 105', NULL, NULL, NULL, 0, 1, 0, 0, 3);
+/* BUS 120 and BUS 122 are in odd an even year respectivly*/
+INSERT INTO CLASSES VALUES ('BUS 120', 'BUS 73, BUS 74', NULL, 'JR', 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('BUS 122', 'BUS 73. BUS 74', NULL, 'JR', 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('BUS 191', NULL, NULL, 'SO', 1, 1, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('BUS 195', 'MGMT 110, MGMT 120, MKTG 101, FIN 101', NULL, 'SR', 1, 0, 1, 0, 3);
+/* MATH 20 or 4 year highschool math */
+INSERT INTO CLASSES VALUES ('CS 65', 'MATH 20', NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('CS 66', 'CS 65', NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('CS 67', 'CS 66', NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('CS 83', NULL, NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('CS 130', 'CS 66', NULL, NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('CS 137', 'CS 67, MATH 50, MATH 54/MATH 101', NULL, NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES ('CS 167', 'CS 65, CS 66/STAT 40', NULL, NULL, 1, 0, 0, 0, 3);
+INSERT INTO CLASSES VALUES
+
+INSERT INTO CLASSES VALUES ('ECON 2', NULL, NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('ECON 10', NULL, NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('FIN 101', 'ACCT 42, IS 44, ECON 2, STAT 71, STAT 30, ACTS 131', NULL, NULL, 1, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('FIN 102', NULL, 'ECON 10, FIN 10, ACTS 135, STAT 71, STAT 130', NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('FIN 121', NULL, 'FIN 119, ACTS 120, ACTS 131, STAT 71, STAT 130', NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('INS 51', NULL, NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('IS 44', NULL, NULL, NULL, 1, 0, 1, 1, 2);
+INSERT INTO CLASSES VALUES ('IS 75', NULL, NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('MATH 50', NULL, NULL, NULL, 1, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('MATH 70', 'MATH 50', NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('MATH 100', NULL, 'MATH 70', NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('MGMT 110', NULL, NULL,  'SO', 1, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('MGMT 120', 'STAT 72, ACTS 135', NULL, NULL, 1, 1, 1, 0);
+INSERT INTO CLASSES VALUES ('MKTG 101', 'ECON 2', NULL, 'SO', 1, 0, 1, 1, 3);
+INSERT INTO CLASSES VALUES ('STAT 40', NULL, NULL, NULL, 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('STAT 170', NULL, 'STAT 40', 1, 0, 1, 0, 3);
+INSERT INTO CLASSES VALUES ('STAT 172', NULL, 'STAT 130, ACTS 131, STAT 40, STAT 170, MATH 70', NULL, 1, 0, 0, 0, 3);
+
+
+
+
+/* Table for each major and continue adding to classes */
