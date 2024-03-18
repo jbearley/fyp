@@ -81,3 +81,5 @@ def placement_algorithm(requirements):
     #print()
 
     return semesterLists
+
+placement_algorithm(requirements)

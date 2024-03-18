@@ -58,7 +58,7 @@ def class_is_prereq_score(requirements):
                                                                                             myList.append( [classToValue, lvl1postreq, lvl2postreq, lvl3postreq, lvl4postreq, lvl5postreq, lvl6postreq, lvl7postreq] )
         dict_postreq_list[classToValue] = myList
 
-    #print(dict_postreq_list)
+    print(dict_postreq_list)
     for A in dict_postreq_list:
         maxLength = 1
         #find max length string of classes
