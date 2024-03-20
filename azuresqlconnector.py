@@ -13,7 +13,7 @@ class SQLConnection(object):
     def getConnection(self):
 
         server = 'sqlservervrhovacbarbara01.database.windows.net'
-        database = 'sqldbvrhovacbarbara'
+        database = 'sqldbvrhovacbarbara01'
         username = 'sqlserveradmin'
         password = 'Password123'
         driver= '{ODBC Driver 18 for SQL Server}'
