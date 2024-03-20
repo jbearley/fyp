@@ -53,6 +53,7 @@ dict_5 = {}
 result_5 = cursor.fetchall()
 for tup in result_5:
     dict_5[tup[0]]=tup[1]
-print(dict_5)
+
+
 conn.commit()
 cursor.close()
