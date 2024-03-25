@@ -133,11 +133,31 @@ p {
 	width: 100%;
 }
 
+.semester-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: .5rem;
+}
+
 h3 {
+	display: flex;
 	margin: 0;
 	font-weight: 700;
 	font-size: 15px;
 	color: var(--gray-500);
+}
+
+.total-credits {
+	display: flex;
+	gap: 2px;
+	font-size: 12px;
+	color: var(--gray-500);
+	font-style: italic;
+}
+
+.total-credits span {
+	font-weight: 550;
 }
 
 .classes-list-container {
