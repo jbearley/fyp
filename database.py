@@ -132,6 +132,18 @@ print("This is the choose four econ table:")
 for tup in result_13:
     print(tup)
 
+print("\n")
+query_14 = f"""
+SELECT * FROM dbo.AOI
+"""
+cursor.execute(query_14)
+result_14 = cursor.fetchall()
+print("This is the AOI table:")
+for tup in result_14:
+    print(tup)
+
+
+
 
 conn.commit()
 cursor.close()
