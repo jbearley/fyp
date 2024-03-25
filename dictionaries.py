@@ -54,6 +54,14 @@ result_5 = cursor.fetchall()
 for tup in result_5:
     dict_5[tup[0]]=tup[1]
 
-
+query_6 = f"""
+SELECT ClassID, AOI FROM dbo.AOI
+"""
+cursor.execute(query_6)
+dict_6 = {}
+result_6 = cursor.fetchall()
+for tup in result_6:
+    dict_6[tup[0]]= tup[1]
+print(dict_6)
 conn.commit()
 cursor.close()
