@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 	resizer();
 	seeMore();
+	expandCollapseAll();
 	inputFields();
 });
 
 /**
- * Give the vertical resize line functionality.
+ * Give the vertical resize lines functionality.
  */
 function resizer() {
+	const getSectionWidth = (newWidth) => {
+		return Math.max(72, Math.min(500, newWidth));
+	};
 	document.querySelectorAll('.resizer').forEach($resizer => {
 		const sectionSelector = `#${$resizer.closest('section').id}`;
 		const stopListening = () => {
@@ -20,7 +24,8 @@ function resizer() {
 		};
 		const resize = (event) => {
 			const sectionLeft = document.querySelector(sectionSelector).getBoundingClientRect().left;
-			document.querySelector(sectionSelector).style.width = `${Math.max(240, Math.min(500, event.clientX - sectionLeft))}px`;
+			const newWidth = event.clientX - sectionLeft;
+			document.querySelector(sectionSelector).style.width = `${getSectionWidth(newWidth)}px`;
 		};
 		const startListening = () => {
 			document.addEventListener('mouseup', stopListening);
@@ -32,6 +37,19 @@ function resizer() {
 		};
 		$resizer.addEventListener('mousedown', startListening);
 	});
+	let previousWindowWidth = document.body.clientWidth;
+	window.addEventListener('resize', () => {
+		const sections = document.querySelectorAll('section');
+		if (!sections.length) {
+			return; // This should never happen but just in case, we avoid division by 0
+		}
+		const change = document.body.clientWidth - previousWindowWidth;
+		const changePerSection = change / sections.length;
+		document.querySelectorAll('section:not(:last-of-type)').forEach($section => {
+			$section.style.width = `${getSectionWidth($section.clientWidth + changePerSection)}px`;
+		});
+		previousWindowWidth = document.body.clientWidth;
+	});
 }
 
 function seeMore() {
@@ -42,6 +60,19 @@ function seeMore() {
 			} else {
 				event.currentTarget.classList.add('expanded');
 			}
+		});
+	});
+}
+
+function expandCollapseAll() {
+	document.querySelector('#expand-all').addEventListener('click', () => {
+		document.querySelectorAll('.class-container').forEach($classContainer => {
+			$classContainer.classList.add('expanded');
+		});
+	});
+	document.querySelector('#collapse-all').addEventListener('click', () => {
+		document.querySelectorAll('.class-container').forEach($classContainer => {
+			$classContainer.classList.remove('expanded');
 		});
 	});
 }

@@ -4,74 +4,88 @@
 
 <main>
 	<section id='your-information' class='your-information'>
-		<header>
-			<h1>Your Information</h1>
-			<p>Use the fields below to set your graduation year, majors, and minors.</p>
-		</header>
-		<content>
-			{% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in user_choices) %}
-			{% for i in range((user_choices['majors'] | length)) %}
-			{% set major_choice = user_choices['majors'][i] %}
-			<div class="dropdown-container">
-				<label for='major'>Major {{i + 1}}</label>
-				<select id='major'>
-					<!-- <option selected disabled hidden value=''>Please choose an option</option> -->
-					{% for major in drake_curriculum['majors'] %}
-					<option value='{{major}}' {{ (major == major_choice) and 'selected' or '' }} >{{major}}</option>
-					{% endfor %}
-				</select>
-			</div>
-			{% endfor %}
-			<div class="dropdown-container">
-				<label for='major'>Major {{(user_choices['majors'] | length) + 1}}</label>
-				<select id='major'>
-					<option selected disabled hidden value=''>Please choose an option</option>
-					{% for major in drake_curriculum['majors'] %}
-					<option value='{{major}}'>{{major}}</option>
-					{% endfor %}
-				</select>
-			</div>
-			{% endif %}
-		</content>
+		<div class='not-resizer'>
+			<header>
+				<h1>Your Information</h1>
+				<p>Use the fields below to set your graduation year, majors, and minors.</p>
+			</header>
+			<content>
+				{% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in
+				user_choices) %}
+				{% for i in range((user_choices['majors'] | length)) %}
+				{% set major_choice = user_choices['majors'][i] %}
+				<div class="dropdown-container">
+					<label for='major'>Major {{i + 1}}</label>
+					<select id='major'>
+						<option selected disabled hidden value=''>Please choose an option</option>
+						{% for major in drake_curriculum['majors'] %}
+						<option value='{{major}}' {{ (major==major_choice) and 'selected' or '' }}>{{major}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				{% endfor %}
+				<div class="dropdown-container">
+					<label for='major'>Major {{(user_choices['majors'] | length) + 1}}</label>
+					<select id='major'>
+						<option selected disabled hidden value=''>Please choose an option</option>
+						{% for major in drake_curriculum['majors'] %}
+						<option value='{{major}}'>{{major}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				{% endif %}
+			</content>
+		</div>
 		<div class='resizer'></div>
 	</section>
 	<section id='requirements-overview'>
-		<header>
-			<h1>Another Section</h1>
-			<p>Here's a helpful message below the heading.</p>
-		</header>
-		<content>
-			-- requirements overview, classes by semester, etc. --
-		</content>
+		<div class='not-resizer'>
+			<header>
+				<h1>Requirements Checklist</h1>
+				<p>The items below must be fulfilled for successful completion of your program.</p>
+			</header>
+			<content>
+				-- requirements overview, classes by semester, etc. --
+			</content>
+		</div>
 		<div class='resizer'></div>
 	</section>
 	<section id='by-semester'>
-		<header>
-			<h1>Yet Another Section</h1>
-			<p>Information about this section and some tips for its usage.</p>
-		</header>
-		<content>
-			{% if classes_by_semester %}
-			{% for semester in classes_by_semester %}
-			<div class='semester-container'>
-				<h3>{{semester}}</h3>
-				<div class='classes-list-container'>
-					{% for class in classes_by_semester[semester] %}
-					<div class='class-container'>
-						<div class='main-info'><span>{{class.course_number}}</span><span>{{class.title}}</span></div>
-						<div class='attributes'>
-							{% for attribute in class.attributes %}
-							<div class='chip'>{{attribute}}</div>
+		<div class='not-resizer'>
+			<header>
+				<h1>Four-Year Plan</h1>
+				<p>Below is a sample four-year plan that best meets your requirements.</p>
+			</header>
+			<content>
+				<div class='see-more-controllers'>
+					<button id='expand-all'>Expand All</button>
+					<button id='collapse-all'>Collapse All</button>
+				</div>
+				<div class='fyp-grid'>
+					{% if classes_by_semester %}
+					{% for semester in classes_by_semester %}
+					<div class='semester-container'>
+						<h3>{{semester}}</h3>
+						<div class='classes-list-container'>
+							{% for class_key, class in classes_by_semester[semester].items() %}
+							<div class='class-container'>
+								<div class='main-info'><span>{{class.course_number}}</span><span>{{class.title}}</span>
+								</div>
+								<div class='attributes'>
+									{% for attribute in class.attributes %}
+									<div class='chip'>{{attribute}}</div>
+									{% endfor %}
+								</div>
+								<div class='see-more'></div>
+							</div>
 							{% endfor %}
 						</div>
-						<div class='see-more'></div>
 					</div>
 					{% endfor %}
+					{% endif %}
 				</div>
-			</div>
-			{% endfor %}
-			{% endif %}
-		</content>
+			</content>
+		</div>
 	</section>
 </main>
 
