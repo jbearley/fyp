@@ -53,25 +53,31 @@
 	<section id='by-semester'>
 		<div class='not-resizer'>
 			<header>
-				<h1>Four-Year Plan</h1>
-				<p>Below is a sample four-year plan that best meets your requirements.</p>
-			</header>
-			<content>
+				<div class='left'>
+					<h1>Four-Year Plan</h1>
+					<p>Below is a sample four-year plan that best meets your requirements.</p>
+				</div>
 				<div class='see-more-controllers'>
 					<button id='expand-all'>Expand All</button>
 					<button id='collapse-all'>Collapse All</button>
 				</div>
+			</header>
+			<content>
 				<div class='fyp-grid'>
 					{% if classes_by_semester %}
 					{% for semester_key, semester in classes_by_semester.items() %}
 					<div class='semester-container'>
-						<div class='semester-header'><h3>{{semester_key}}</h3><div class='total-credits'>
-							credits: <span>{{semester.values()|sum(attribute='num_credits')}}</span>
-						</div></div>
+						<div class='semester-header'>
+							<h3>{{semester_key}}</h3>
+							<div class='total-credits'>
+								credits: <span>{{semester.values()|sum(attribute='num_credits')}}</span>
+							</div>
+						</div>
 						<div class='classes-list-container'>
 							{% for class_key, class in semester.items() %}
 							<div class='class-container'>
-								<div class='main-info'><span>{{class.course_number}}</span><span>{{class.title}}</span><span>{{class.num_credits}}</span>
+								<div class='main-info'>
+									<span>{{class.course_number}}</span><span>{{class.title}}</span><span>{{class.num_credits}}</span>
 								</div>
 								<div class='attributes'>
 									{% for attribute in class.attributes %}
