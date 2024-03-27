@@ -105,6 +105,12 @@ header:has(.left) {
 	justify-content: space-between;
 }
 
+.left {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
 h1 {
 	color: var(--drake-blue);
 	font-size: 24px;
@@ -177,7 +183,7 @@ h3 {
 .classes-list-container {
 	display: flex;
 	flex-direction: column;
-	gap: 12px;
+	gap: 5px;
 }
 
 .main-info {
@@ -195,6 +201,8 @@ h3 {
 .class-container {
 	display: flex;
 	align-items: center;
+	border-bottom: 1px solid #f1f1f1;
+	padding-bottom: 6px;
 	overflow: hidden;
 	row-gap: 4px;
 	column-gap: 8px;
