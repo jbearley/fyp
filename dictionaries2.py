@@ -19,7 +19,7 @@ def createDictionaries(selectedMajor):
     result = cursor.fetchall()
     for tup in result:
         print()
-        tup[1] = str(tup[1]).split(',')
+        tup[1] = str(tup[1]).split(', ')
         if tup[0] == "ACTS 150":
             print("BEFORE:", tup[1])
         for a in tup[1]:
@@ -30,8 +30,6 @@ def createDictionaries(selectedMajor):
             print("AFTER:", tup[1])
         dict_1[tup[0]]=tup[1]
     dict_1["ACTS 140"] = ["ACTS 135"]
-    dict_1["ACTS 150"] = ['ACTS 120', 'ACTS 131'] #not sure why this isn't working on its own... FIX LATER
-
 
     #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
     query_2 = "SELECT CLASSES.ClassID, Fall, Spring FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
