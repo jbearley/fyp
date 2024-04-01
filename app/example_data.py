@@ -11,9 +11,9 @@ FYP Table
 	...
 }
 
-Requirements Table (I think this is important so that we can justify/explain the FYP result on the front-end)
+Requirements Table (So that we can justify the FYP result on the front-end)
 {
-	"major_1": {
+    "major_1": {
         "singles": [
             "class_key_1",
             "class_key_2",
@@ -38,6 +38,7 @@ Requirements Table (I think this is important so that we can justify/explain the
         ],
     },
     "major_2": <major 2 requirements, similar to above>,
-    "AOIs": <requirements, similarly indicating any pick-ones etc.>
+    "AOIs": <requirements, similarly indicating any pick-ones etc.>,
+    "total_credits": <min # of credits for graduation>
 }
 """
