@@ -2,6 +2,7 @@ from azuresqlconnector import *
 conn = SQLConnection()
 conn = conn.getConnection()
 cursor = conn.cursor()
+    
 
 #dictionary with Class Id for the key, Prerequisites for the value
 query_1 = f"""
@@ -11,7 +12,10 @@ cursor.execute(query_1)
 dict_1 = {}
 result = cursor.fetchall()
 for tup in result:
+    tup[1] = str(tup[1]).split(',')
     dict_1[tup[0]]=tup[1]
+
+print("This is dictionary 1",dict_1)
 
 
 #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
@@ -53,6 +57,17 @@ dict_5 = {}
 result_5 = cursor.fetchall()
 for tup in result_5:
     dict_5[tup[0]]=tup[1]
+print("This is dictionary 5", dict_5)
+
+
+# This takes the list of corequisites from dictionary 5, check which of them are none, and then pops the ones that are none.
+for key in dict_5:
+    if dict_5[key]==None:
+        dict_1.pop(key)
+print("This is new dictionary 1:",dict_1)
+
+
+
 
 query_6 = f"""
 SELECT ClassID, AOI FROM dbo.AOI
@@ -62,6 +77,10 @@ dict_6 = {}
 result_6 = cursor.fetchall()
 for tup in result_6:
     dict_6[tup[0]]= tup[1]
-print(dict_6)
+
+
 conn.commit()
 cursor.close()
+
+#print(dict_1)
+#print(dict_1['ACCT 42'])
