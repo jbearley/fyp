@@ -2,36 +2,14 @@ from collections import OrderedDict
 from operator import itemgetter
 from class_prereqs_score import class_prereqs_score
 from class_is_prereq_score import class_is_prereq_score
-
-requirements = { "acct 41": [], 
-                "acct 42": ["acct 41"], 
-                "fin 101": ["acct 42", "is 44", "econ 2", "acts 131"], 
-                "bus 195": ["fin 101", "mktg 101", "mgmt 110", "mgmt 120"],
-                "acts 131": ["math 70"],
-                "acts 135": ["acts 131"],
-                "stat 170": ["stat 40", "acts 135"],
-                "acts 150": ["acts 120", "acts 131"],
-                "mgmt 120": ["acts 135"],
-                "acts 161": ["acts 131"], 
-                "is 44": [], 
-                "econ 2": [],
-                "mktg 101": ["econ 2"],
-                "mgmt 110": [],
-                "mgmt 120": ["acts 135"],
-                "math 50": [],
-                "math 70": ["math 50"],
-                "stat 40": [],
-                "acts 120": ["math 70"]
-}
+from dictionaries2 import *
 
 
 def placement_algorithm(requirements):
     prereq_dict = class_prereqs_score(requirements)
     postreq_dict = (class_is_prereq_score(requirements))[0]
 
-
     spots_dict = {}
-
     for a in class_prereqs_score(requirements):
         prereq_score = prereq_dict[a]
         postreq_score = postreq_dict[a]
@@ -48,7 +26,7 @@ def placement_algorithm(requirements):
     spots_dict = OrderedDict(spots_dict)
     #for now, I'm assuming everything is 3 credits... will have to change that later
     creditsLeft = [0,12,12,12,12,12,12,12,12]
-    semesterLists = [0,[],[],[],[],[],[],[],[]]
+    semesterLists = [0,['AOI'],['AOI'],['AOI'],['AOI'],['AOI'],['AOI'],['AOI'],['AOI']]
 
     for course in spots_dict:
         j = 1
@@ -82,4 +60,4 @@ def placement_algorithm(requirements):
 
     return semesterLists
 
-placement_algorithm(requirements)
+

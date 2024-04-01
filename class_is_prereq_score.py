@@ -1,15 +1,3 @@
-requirements = { "acct 41": [], 
-                "acct 42": ["acct 41"], 
-                "fin 101": ["acct 42", "is 44", "econ 2", "acts 131"], 
-                "bus 195": ["senior", "fin 101", "mktg 101", "mgmt 110", "mgmt 120"],
-                "acts 131": ["math 70"],
-                "acts 135": ["acts 131"],
-                "stat 170": ["stat 40", "acts 135"],
-                "acts 150": ["acts 120", "acts 131"],
-                "mgmt 120": ["acts 135"],
-                "acts 161": ["acts 131"]
-}
-
 def class_is_prereq_score(requirements):
     dict_postreq_values = {}
     dict_postreq_list = {}
@@ -58,7 +46,7 @@ def class_is_prereq_score(requirements):
                                                                                             myList.append( [classToValue, lvl1postreq, lvl2postreq, lvl3postreq, lvl4postreq, lvl5postreq, lvl6postreq, lvl7postreq] )
         dict_postreq_list[classToValue] = myList
 
-    print(dict_postreq_list)
+    #print(dict_postreq_list)
     for A in dict_postreq_list:
         maxLength = 1
         #find max length string of classes
@@ -70,4 +58,4 @@ def class_is_prereq_score(requirements):
     #print(dict_postreq_values)
     return dict_postreq_values, dict_postreq_list
 
-class_is_prereq_score(requirements)
+#class_is_prereq_score(requirements)
