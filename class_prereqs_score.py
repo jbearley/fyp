@@ -4,16 +4,13 @@ def class_prereqs_score(requirements):
     dict_prereq_values = {}
     dict_prereq_list = {}
     myList2 = []
-    print("!!!! reqs:", requirements)
     for classValue in requirements: 
         myList2 = []
         if requirements[classValue] != ['None']: #level 1
             for lvl1prereq in requirements[classValue]:
                 myList2.append([lvl1prereq, classValue])
-                print("!!!! classValue:", classValue)
-                print("!!!! lvl1prereqs:", requirements[classValue])
+                
                 if requirements[lvl1prereq] != ['None']: #level 2
-                    print("!!!! class value:", classValue)
                     for lvl2prereq in requirements[lvl1prereq]:
                         if [lvl1prereq, classValue] in myList2:
                             myList2.remove([lvl1prereq,classValue])

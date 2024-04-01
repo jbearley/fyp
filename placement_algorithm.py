@@ -10,7 +10,6 @@ def placement_algorithm(requirements):
     postreq_dict = (class_is_prereq_score(requirements))[0]
 
     spots_dict = {}
-
     for a in class_prereqs_score(requirements):
         prereq_score = prereq_dict[a]
         postreq_score = postreq_dict[a]
@@ -55,19 +54,10 @@ def placement_algorithm(requirements):
     
     #print("spots dict:")
     #print(spots_dict)
-    print("semester lists")
-    print(semesterLists)
+    #print("semester lists")
+    #print(semesterLists)
     #print()
 
     return semesterLists
 
-
-major = "ACTUARIAL SCIENCE" #don't hardcode later
-dictionaries = createDictionaries(major)
-dict_1 = dictionaries[0]
-dict_2 = dictionaries[1]
-dict_3 = dictionaries[2]
-dict_4 = dictionaries[3]
-dict_5 = dictionaries[4]
-placement_algorithm(dict_1)
 

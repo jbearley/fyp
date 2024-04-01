@@ -18,16 +18,10 @@ def createDictionaries(selectedMajor):
     dict_1 = {}
     result = cursor.fetchall()
     for tup in result:
-        print()
         tup[1] = str(tup[1]).split(', ')
-        if tup[0] == "ACTS 150":
-            print("BEFORE:", tup[1])
         for a in tup[1]:
             if a[0] == " ":
                 a = a[1:]
-            #a.strip()
-        if tup[0] == "ACTS 150":
-            print("AFTER:", tup[1])
         dict_1[tup[0]]=tup[1]
     dict_1["ACTS 140"] = ["ACTS 135"]
 
@@ -62,8 +56,23 @@ def createDictionaries(selectedMajor):
     result_5 = cursor.fetchall()
     for tup in result_5:
         dict_5[tup[0]]=tup[1]
+        
+    #dictionary with ClassID for the key, value consists of a concatenated string of Odd (0 or 1) and Even (0 or 1) value depending on whether the class is offered in odd / even years or not
+    query_7 = "SELECT CLASSES.ClassID, Odd, Even FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
+    cursor.execute(query_7)
+    dict_7 = {}
+    result_7 = cursor.fetchall()
+    for tup in result_7:
+        dict_7[tup[0]]=str(tup[1])+str(tup[2])
 
-
+    #dictionary with ClassID for the key, value is a list of courseId, course title, credits, and aoi attributes
+    query_8 = "SELECT CLASSES.ClassID, Credits FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
+    cursor.execute(query_8)
+    dict_8 = {}
+    result_8 = cursor.fetchall()
+    for tup in result_8:
+        dict_8[tup[0]]=[tup[0], 'course title', tup[1], 'aoi attributes'] #update when DB has those capabilities
+        
     conn.commit()
     cursor.close()
-    return (dict_1, dict_2, dict_3, dict_4, dict_5)
+    return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_7, dict_8)
