@@ -10,8 +10,6 @@ def createDictionaries(selectedMajor):
     if selectedMajor == "Actuarial Science":
         selectedMajor = "ACT_SCI_MAJOR"
 
-
-
     #dictionary with Class Id for the key, Prerequisites for the value
     query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
     cursor.execute(query_1)
@@ -24,6 +22,7 @@ def createDictionaries(selectedMajor):
                 a = a[1:]
         dict_1[tup[0]]=tup[1]
     dict_1["ACTS 140"] = ["ACTS 135"]
+    #print(dict_1)
 
     #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
     query_2 = "SELECT CLASSES.ClassID, Fall, Spring FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
@@ -32,6 +31,7 @@ def createDictionaries(selectedMajor):
     result_2 = cursor.fetchall()
     for tup in result_2:
         dict_2[tup[0]]=str(tup[1])+str(tup[2])
+    #print(dict_2)
 
     #dictionary with ClassID for the key, number of credits for the value
     query_3 = "SELECT CLASSES.ClassID, Credits FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
@@ -57,6 +57,15 @@ def createDictionaries(selectedMajor):
     for tup in result_5:
         dict_5[tup[0]]=tup[1]
         
+    query_6 = f"""
+    SELECT ClassID, AOI FROM dbo.AOI
+    """
+    cursor.execute(query_6)
+    dict_6 = {}
+    result_6 = cursor.fetchall()
+    for tup in result_6:
+        dict_6[tup[0]]= tup[1] 
+        
     #dictionary with ClassID for the key, value consists of a concatenated string of Odd (0 or 1) and Even (0 or 1) value depending on whether the class is offered in odd / even years or not
     query_7 = "SELECT CLASSES.ClassID, Odd, Even FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
     cursor.execute(query_7)
@@ -71,8 +80,14 @@ def createDictionaries(selectedMajor):
     dict_8 = {}
     result_8 = cursor.fetchall()
     for tup in result_8:
-        dict_8[tup[0]]=[tup[0], 'course title', tup[1], 'aoi attributes'] #update when DB has those capabilities
+        try:
+            aois = dict_6[tup[0]]
+        except:
+            aois = 'None'
+        dict_8[tup[0]]=[tup[0], 'course title', tup[1], aois] #update when DB has those capabilities
         
     conn.commit()
     cursor.close()
-    return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_7, dict_8)
+    return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_6, dict_7, dict_8)
+
+# createDictionaries("Actuarial Science")
