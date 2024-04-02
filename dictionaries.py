@@ -2,6 +2,7 @@ from azuresqlconnector import *
 conn = SQLConnection()
 conn = conn.getConnection()
 cursor = conn.cursor()
+    
 
 #dictionary with Class Id for the key, Prerequisites for the value
 query_1 = f"""
@@ -11,6 +12,7 @@ cursor.execute(query_1)
 dict_1 = {}
 result = cursor.fetchall()
 for tup in result:
+    tup[1] = str(tup[1]).split(',')
     dict_1[tup[0]]=tup[1]
 
 
@@ -65,3 +67,6 @@ for tup in result_6:
 print(dict_6)
 conn.commit()
 cursor.close()
+
+#print(dict_1)
+#print(dict_1['ACCT 42'])
