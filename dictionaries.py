@@ -60,11 +60,14 @@ for tup in result_5:
 print("This is dictionary 5", dict_5)
 
 
-# This takes the list of corequisites from dictionary 5, check which of them are none, and then pops the ones that are none.
+# This takes the list of corequisites from dictionary 5, checks which of them are none, and then pops the ones that are not from dictionary 1.
 for key in dict_5:
     if dict_5[key]==None:
-        dict_1.pop(key)
-print("This is new dictionary 1:",dict_1)
+        if key in dict_1:
+            dict_1.pop(key)
+
+            
+
 
 
 
