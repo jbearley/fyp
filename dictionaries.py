@@ -64,7 +64,7 @@ dict_6 = {}
 result_6 = cursor.fetchall()
 for tup in result_6:
     dict_6[tup[0]]= tup[1]
-print(dict_6)
+#print(dict_6)
 conn.commit()
 cursor.close()
 
