@@ -14,8 +14,8 @@ result = cursor.fetchall()
 for tup in result:
     tup[1] = str(tup[1]).split(',')
     dict_1[tup[0]]=tup[1]
+print("DICT1", dict_1)
 
-print("This is dictionary 1",dict_1)
 
 
 #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
@@ -57,13 +57,19 @@ dict_5 = {}
 result_5 = cursor.fetchall()
 for tup in result_5:
     dict_5[tup[0]]=tup[1]
-print("This is dictionary 5", dict_5)
+
+print("DICT5", dict_5)
 
 
 # This takes the list of corequisites from dictionary 5, checks which of them are none, and then pops the ones that are not from dictionary 1.
+# dict1 maps class: prerequisitiees, dict5 maps class to coreq (if class has corequisites), if it is in the list of prerequisites as well, remove it
+# left with a list of classes that
+#If the class has corequisites, then remove it from the list of classes that have prereqs
+popped_classes = {}
 for key in dict_5:
-    if dict_5[key]==None:
-        if key in dict_1:
+    if dict_5[key]!=None:
+        if key in dict_1 and "L" not in key:
+            popped_classes[key]=dict_1[key]
             dict_1.pop(key)
 
             
