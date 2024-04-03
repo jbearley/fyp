@@ -34,7 +34,6 @@ section:has(.resizer) {
 	display: flex;
 	width: 100%;
 	flex-direction: column;
-	background-color: white;
 	overflow: auto;
 	transition: all .12s;
 }
@@ -82,21 +81,6 @@ header {
 	position: relative;
 	z-index: 1;
 	padding: 1.5rem 1rem 1rem;
-}
-
-header::before {
-	background-color: white;
-	content: '';
-	position: absolute;
-	inset: 0;
-	bottom: -16px;
-	mask-image: linear-gradient(to top, transparent, black 16px);
-	-webkit-mask-image: linear-gradient(to top, transparent, black 16px);
-	z-index: -1;
-}
-
-.your-information header::before {
-	background-color: var(--gray-200);
 }
 
 header:has(.left) {
