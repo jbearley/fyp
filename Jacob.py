@@ -35,7 +35,8 @@ requirements = {
    "acts 120": ["math 70"]
 }
 
-def Jplacement_algorithm(requirements, dict_2, startingSemester):
+def Jplacement_algorithm(requirements, dict_2, dict_7, startingSemester):
+    startingSemesterYear = startingSemester.split(" ")
     # Calculate prerequisite dictionary 
     prereq_dict = class_prereqs_score(requirements)
 
@@ -54,7 +55,8 @@ def Jplacement_algorithm(requirements, dict_2, startingSemester):
 
         prereq_score = prereq_dict[course]
         postreq_score = postreq_dict[course]
-    
+        yearOfferings = dict_7[course]
+        
         fit = 1
         fits_arr = []
 
@@ -66,11 +68,56 @@ def Jplacement_algorithm(requirements, dict_2, startingSemester):
                         fits_arr.append(fit) #that works
                     elif int(dict_2[course][1])==1 and fit % 2 == 0: #offered spring, spring semester
                         fits_arr.append(fit) #that works
+                    
+                    #check if classes are offered in odd/even years and adjust accordingly
+                    
+                    if int(startingSemesterYear[1]) % 2 == 0: #semesters 1, 4, 5, and 8 are in even years
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [2,3,6,7]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #remove all odd year semesters from fits_arr
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [1,4,5,8]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #make it not fit in any even year semesters
+                                
+                    else: #semesters 2, 3, 6, and 7 are in even years
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [2,3,6,7]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #remove all even year semesters from fits_arr
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [1,4,5,8]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #make it not fit in any odd year semesters
+                        
                 else:
                     if int(dict_2[course][0])==1 and fit % 2 == 0: #offered fall, fall semester
                         fits_arr.append(fit) #that works
                     elif int(dict_2[course][1])==1 and fit % 2 != 0: #offered spring, spring semester
                         fits_arr.append(fit) #that works
+                        
+                    #check if classes are offered in odd/even years and adjust accordingly
+                        
+                    if int(startingSemesterYear[1]) % 2 == 0: #semesters 1, 2, 5, and 6 are in even years
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [3,4,7,8]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #remove all odd year semesters from fits_arr
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [1,2,5,6]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #make it not fit in any even year semesters
+                                
+                    else: #semesters 3, 4, 7, and 8 are in even years
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [3,4,7,8]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #remove all even year semesters from fits_arr
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [1,2,5,6]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #make it not fit in any odd year semesters
             fit += 1
         spots_dict[course] = fits_arr
         
