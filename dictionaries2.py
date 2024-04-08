@@ -22,7 +22,7 @@ def createDictionaries(selectedMajor):
                 a = a[1:]
         dict_1[tup[0]]=tup[1]
     dict_1["ACTS 140"] = ["ACTS 135"]
-    print(dict_1, "/n/n")
+    #print(dict_1, "/n/n")
 
     #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
     query_2 = "SELECT CLASSES.ClassID, Fall, Spring FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
@@ -95,7 +95,7 @@ def createDictionaries(selectedMajor):
             aois = dict_6[tup[0]]
         except:
             aois = 'None'
-        dict_8[tup[0]]=[tup[0], 'course title', tup[1], aois] #update when DB has those capabilities
+        dict_8[tup[0]]=[tup[0], 'course title', float(tup[1]), aois] #update when DB has those capabilities
         
     conn.commit()
     cursor.close()
