@@ -35,7 +35,7 @@ requirements = {
    "acts 120": ["math 70"]
 }
 
-def Jplacement_algorithm(requirements, dict_2, dict_7, startingSemester):
+def Jplacement_algorithm(requirements, dict_2, dict_4, dict_7, startingSemester):
     startingSemesterYear = startingSemester.split(" ")
     # Calculate prerequisite dictionary 
     prereq_dict = class_prereqs_score(requirements)
@@ -118,6 +118,23 @@ def Jplacement_algorithm(requirements, dict_2, dict_7, startingSemester):
                             for oddYrSemester in [1,2,5,6]:
                                 if oddYrSemester in fits_arr:
                                     fits_arr.remove(oddYrSemester) #make it not fit in any odd year semesters
+            
+            #check year requirements and remove values that don't fit
+            
+            if dict_4[course] != None: # if there is a year requirement
+                yearReq = dict_4[course]
+                if yearReq == "SO": # has to be taken sophmore yr or later
+                    for num in [1,2]:
+                        if num in fits_arr:
+                            fits_arr.remove(num) #can't fit in freshman year
+                elif yearReq == "JR": # has to be taken junior yr or later
+                    for num in [1,2,3,4]:
+                        if num in fits_arr:
+                            fits_arr.remove(num) #can't fit in freshman or sophmore year
+                elif yearReq == "SR": # has to be taken senior yr
+                    for num in [1,2,3,4,5,6]:
+                        if num in fits_arr:
+                            fits_arr.remove(num) #can't fit in freshman, sophomore, or junior year
             fit += 1
         spots_dict[course] = fits_arr
         
