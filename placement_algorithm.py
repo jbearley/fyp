@@ -5,7 +5,7 @@ from class_is_prereq_score import class_is_prereq_score
 from dictionaries2 import *
 
 
-def placement_algorithm(requirements, dict_2, startingSemester):
+def placement_algorithm(requirements, dict_2, dict_3, startingSemester):
     prereq_dict = class_prereqs_score(requirements)
     postreq_dict = (class_is_prereq_score(requirements))[0]
 
@@ -44,7 +44,7 @@ def placement_algorithm(requirements, dict_2, startingSemester):
             if j in spots_dict[course]:
                 i=1
                 while i <= 8:
-                    if creditsLeft[i] != 0:  
+                    if creditsLeft[i] > dict_3[course]:  
                         good = True
                         for a in semesterLists[i]:
                             #if those aren't pre-reqs of course, continue
@@ -53,7 +53,7 @@ def placement_algorithm(requirements, dict_2, startingSemester):
                                 good = False
                         if good:
                             semesterLists[i].append(course)
-                            creditsLeft[i] -= 3
+                            creditsLeft[i] -= dict_3[course]
                             break
                     i += 1
                 break
@@ -74,4 +74,4 @@ def placement_algorithm(requirements, dict_2, startingSemester):
 # dict_1 = dictionaries[0]
 # dict_2 = dictionaries[1]
 # print(dict_2, "\n")
-# print(placement_algorithm(dict_1, dict_2, "Fall 2022"))
+# print(placement_algorithm(dict_1, dict_2, dict_3, "Fall 2022"))

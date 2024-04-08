@@ -28,8 +28,10 @@ requirements = {
    "acts 120": ["math 70"]
 }
 
-def Jplacement_algorithm(requirements, dict_2, startingSemester,dict_6):
 
+
+def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingSemester):
+    startingSemesterYear = startingSemester.split(" ")
     # Calculate prerequisite dictionary 
     prereq_dict = class_prereqs_score(requirements)
 
@@ -42,7 +44,8 @@ def Jplacement_algorithm(requirements, dict_2, startingSemester,dict_6):
 
         prereq_score = prereq_dict[course]
         postreq_score = postreq_dict[course]
-    
+        yearOfferings = dict_7[course]
+        
         fit = 1
         fits_arr = []
 
@@ -54,11 +57,73 @@ def Jplacement_algorithm(requirements, dict_2, startingSemester,dict_6):
                         fits_arr.append(fit) #that works
                     elif int(dict_2[course][1])==1 and fit % 2 == 0: #offered spring, spring semester
                         fits_arr.append(fit) #that works
+                    
+                    #check if classes are offered in odd/even years and adjust accordingly
+                    
+                    if int(startingSemesterYear[1]) % 2 == 0: #semesters 1, 4, 5, and 8 are in even years
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [2,3,6,7]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #remove all odd year semesters from fits_arr
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [1,4,5,8]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #make it not fit in any even year semesters
+                                
+                    else: #semesters 2, 3, 6, and 7 are in even years
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [2,3,6,7]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #remove all even year semesters from fits_arr
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [1,4,5,8]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #make it not fit in any odd year semesters
+                        
                 else:
                     if int(dict_2[course][0])==1 and fit % 2 == 0: #offered fall, fall semester
                         fits_arr.append(fit) #that works
                     elif int(dict_2[course][1])==1 and fit % 2 != 0: #offered spring, spring semester
                         fits_arr.append(fit) #that works
+                        
+                    #check if classes are offered in odd/even years and adjust accordingly
+                        
+                    if int(startingSemesterYear[1]) % 2 == 0: #semesters 1, 2, 5, and 6 are in even years
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [3,4,7,8]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #remove all odd year semesters from fits_arr
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [1,2,5,6]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #make it not fit in any even year semesters
+                                
+                    else: #semesters 3, 4, 7, and 8 are in even years
+                        if yearOfferings[1] == 0: # if the course isn't offered in even years
+                            for evenYrSemester in [3,4,7,8]:
+                                if evenYrSemester in fits_arr:
+                                    fits_arr.remove(evenYrSemester) #remove all even year semesters from fits_arr
+                        if yearOfferings[0] == 0: # if the course isn't offered in odd years
+                            for oddYrSemester in [1,2,5,6]:
+                                if oddYrSemester in fits_arr:
+                                    fits_arr.remove(oddYrSemester) #make it not fit in any odd year semesters
+            
+            #check year requirements and remove values that don't fit
+            
+            if dict_4[course] != None: # if there is a year requirement
+                yearReq = dict_4[course]
+                if yearReq == "SO": # has to be taken sophmore yr or later
+                    for num in [1,2]:
+                        if num in fits_arr:
+                            fits_arr.remove(num) #can't fit in freshman year
+                elif yearReq == "JR": # has to be taken junior yr or later
+                    for num in [1,2,3,4]:
+                        if num in fits_arr:
+                            fits_arr.remove(num) #can't fit in freshman or sophmore year
+                elif yearReq == "SR": # has to be taken senior yr
+                    for num in [1,2,3,4,5,6]:
+                        if num in fits_arr:
+                            fits_arr.remove(num) #can't fit in freshman, sophomore, or junior year
             fit += 1
         spots_dict[course] = fits_arr
 
@@ -78,6 +143,7 @@ def Jplacement_algorithm(requirements, dict_2, startingSemester,dict_6):
             #course_dict.items are the value (of key:value pairs) of spots_dict = semster numbers avaliable
             fits_arr = info["fits"]
             for semester in fits_arr:
+ 
                 if credits_left[semester] >= 3:
                     good = True  # Assume the course can be added initially
                     for a in semester_lists[semester]:
@@ -90,6 +156,10 @@ def Jplacement_algorithm(requirements, dict_2, startingSemester,dict_6):
                         semester_lists[semester].append(course)
                         credits_left[semester] -= 3
                         break 
+                if credits_left[semester] >= dict_3[course]:
+                    semester_lists[semester].append(course)
+                    credits_left[semester] -= dict_3[course]
+                    break
 
     # Fill semester lists for required courses
     credits_left = {i: 12 for i in range(1, 9)}  # Initialize credits left for each semester

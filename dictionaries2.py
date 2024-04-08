@@ -22,7 +22,7 @@ def createDictionaries(selectedMajor):
                 a = a[1:]
         dict_1[tup[0]]=tup[1]
     dict_1["ACTS 140"] = ["ACTS 135"]
-    #print(dict_1)
+    #print(dict_1, "/n/n")
 
     #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
     query_2 = "SELECT CLASSES.ClassID, Fall, Spring FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
@@ -57,6 +57,17 @@ def createDictionaries(selectedMajor):
     for tup in result_5:
         dict_5[tup[0]]=tup[1]
         
+    # This takes the list of corequisites from dictionary 5, checks which of them are none, and then pops the ones that are not from dictionary 1.
+    # dict1 maps class: prerequisitiees, dict5 maps class to coreq (if class has corequisites), if it is in the list of prerequisites as well, remove it
+    # left with a list of classes that
+    #If the class has corequisites, then remove it from the list of classes that have prereqs
+    popped_classes = {}
+    for key in dict_5:
+        if dict_5[key]!=None:
+            if key in dict_1 and key[-1] == "L":
+                popped_classes[key]=dict_5[key]
+                dict_1.pop(key)
+        
     query_6 = f"""
     SELECT ClassID, AOI FROM dbo.AOI
     """
@@ -84,7 +95,7 @@ def createDictionaries(selectedMajor):
             aois = dict_6[tup[0]]
         except:
             aois = 'None'
-        dict_8[tup[0]]=[tup[0], 'course title', tup[1], aois] #update when DB has those capabilities
+        dict_8[tup[0]]=[tup[0], 'course title', float(tup[1]), aois] #update when DB has those capabilities
         
     conn.commit()
     cursor.close()
