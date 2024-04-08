@@ -95,7 +95,7 @@ def createDictionaries(selectedMajor):
             aois = dict_6[tup[0]]
         except:
             aois = 'None'
-        dict_8[tup[0]]=[tup[0], 'course title', tup[1], aois] #update when DB has those capabilities
+        dict_8[tup[0]]=[tup[0], 'course title', float(tup[1]), aois] #update when DB has those capabilities
         
     conn.commit()
     cursor.close()

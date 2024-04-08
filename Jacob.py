@@ -35,7 +35,7 @@ requirements = {
    "acts 120": ["math 70"]
 }
 
-def Jplacement_algorithm(requirements, dict_2, dict_4, dict_7, startingSemester):
+def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingSemester):
     startingSemesterYear = startingSemester.split(" ")
     # Calculate prerequisite dictionary 
     prereq_dict = class_prereqs_score(requirements)
@@ -172,9 +172,9 @@ def Jplacement_algorithm(requirements, dict_2, dict_4, dict_7, startingSemester)
             fits_arr = info['fits']
             #? what is this
             for semester in fits_arr:
-                if credits_left[semester] >= 3:
+                if credits_left[semester] >= dict_3[course]:
                     semester_lists[semester].append(course)
-                    credits_left[semester] -= 3
+                    credits_left[semester] -= dict_3[course]
                     break
 
     # Fill semester lists for required courses
