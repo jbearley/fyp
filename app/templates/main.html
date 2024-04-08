@@ -50,9 +50,11 @@
                     <h3>Minimum Total Credit</h3>
                     <div class='credit-req req-header'><input type='checkbox'><label>{{requirements.total_credits}}</label></div>
                 </div>
-                {% for category_key, category in requirements.majors.items() %}
+                {% set temp = requirements.majors %}
+                {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %}
+                {% for category_key, category in temp.items() %}
                 <div class='reqs-container'>
-                    <h3>{{category_key}} Major</h3>
+                    <h3>{{category_key}}</h3>
                     <div class='reqs'>
                         {% for req_key, req in category.items() %}
                         {% if req_key != 'singles' %}
