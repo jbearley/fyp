@@ -53,7 +53,7 @@ function resizer() {
 }
 
 function seeMore() {
-	document.querySelectorAll('.class-container').forEach($classContainer => {
+	document.querySelectorAll('.see-more-container').forEach($classContainer => {
 		$classContainer.addEventListener('click', (event) => {
 			if (event.currentTarget.classList.contains('expanded')) {
 				event.currentTarget.classList.remove('expanded');
