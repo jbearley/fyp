@@ -120,8 +120,7 @@ p {
     margin: 0;
 }
 
-.credit-req-container,
-.major-reqs-container {
+.reqs-container {
     display: flex;
     flex-direction: column;
     gap: .5rem;
@@ -147,7 +146,7 @@ p {
     border-radius: 4px;
 }
 
-.major-reqs {
+.reqs {
     display: flex;
     flex-direction: column;
     gap: .5rem;

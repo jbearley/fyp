@@ -19,17 +19,17 @@ Requirements Table (So that we can justify the FYP result on the front-end)
             "class_key_2",
             ...
         ],
-        "pick_one_1": [
+        "pick_1_description1": [
             "class_key_3",
             "class_key_4",
             ...
         ],
-        "pick_one_2": [
+        "pick_1_description2": [
             "class_key_5",
             "class_key_6",
             ...
         ],
-        "pick_two_1": [
+        "pick_2_description3": [
             "class_key_7",
             "class_key_8",
             "class_key_9",
@@ -38,7 +38,7 @@ Requirements Table (So that we can justify the FYP result on the front-end)
         ],
     },
     "major_2": <major 2 requirements, similar to above>,
-    "AOIs": <requirements, similarly indicating any pick-ones etc.>,
+    "AOIs": <requirements, similarly indicating any pick-1s, etc.>,
     "total_credits": <min # of credits for graduation>
 }
 """

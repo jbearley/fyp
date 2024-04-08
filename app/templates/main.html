@@ -46,15 +46,15 @@
             </header>
             <content>
                 {% if requirements %}
-                <div class='credit-req-container'>
-                    <h3>Minimum Credit Requirement</h3>
+                <div class='reqs-container'>
+                    <h3>Minimum Total Credit</h3>
                     <div class='credit-req req-header'><input type='checkbox'><label>{{requirements.total_credits}}</label></div>
                 </div>
-                {% for major, major_reqs in requirements.majors.items() %}
-                <div class='major-reqs-container'>
-                    <h3>{{major}} Major Requirements</h3>
-                    <div class='major-reqs'>
-                        {% for req_key, req in major_reqs.items() %}
+                {% for category_key, category in requirements.majors.items() %}
+                <div class='reqs-container'>
+                    <h3>{{category_key}} Major</h3>
+                    <div class='reqs'>
+                        {% for req_key, req in category.items() %}
                         {% if req_key != 'singles' %}
                         <div class='choice-group see-more-container'>
                             {% set num_choices = req_key[5]|int %}

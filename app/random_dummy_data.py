@@ -80,23 +80,23 @@ class Dummy_Data:
             res["majors"][major] = requirements
         res["AOIs"] = {
             # for the dummy data, each of these is a subset of all classes in the FYP, but for the real thing each can be a subset of all classes at Drake
-            "pick_one_artistic_literacy": random.sample(self.all_classes, 5),
-            "pick_one_critical_thinking": random.sample(self.all_classes, 5),
-            "pick_one_the_engaged_citizen": random.sample(self.all_classes, 5),
-            "pick_one_historical_foundations": random.sample(self.all_classes, 5),
-            "pick_one_information_literacy": random.sample(self.all_classes, 5),
-            "pick_one_global_and_cultural_understanding": random.sample(
+            "pick_1_artistic_literacy": random.sample(self.all_classes, 5),
+            "pick_1_critical_thinking": random.sample(self.all_classes, 5),
+            "pick_1_the_engaged_citizen": random.sample(self.all_classes, 5),
+            "pick_1_historical_foundations": random.sample(self.all_classes, 5),
+            "pick_1_information_literacy": random.sample(self.all_classes, 5),
+            "pick_1_global_and_cultural_understanding": random.sample(
                 self.all_classes, 5
             ),
-            "pick_one_scientific_literacy_-_life/behavioral_science": random.sample(
+            "pick_1_scientific_literacy_-_life/behavioral_science": random.sample(
                 self.all_classes, 5
             ),
-            "pick_one_scientific_literacy_-_physical_science": random.sample(
+            "pick_1_scientific_literacy_-_physical_science": random.sample(
                 self.all_classes, 5
             ),
-            "pick_one_quantitative_literacy": random.sample(self.all_classes, 5),
-            "pick_one_values_and_ethics": random.sample(self.all_classes, 5),
-            "pick_one_written_communication": random.sample(self.all_classes, 5),
+            "pick_1_quantitative_literacy": random.sample(self.all_classes, 5),
+            "pick_1_values_and_ethics": random.sample(self.all_classes, 5),
+            "pick_1_written_communication": random.sample(self.all_classes, 5),
         }
         res["equity_and_inclusion"] = {"pick_one": random.sample(self.all_classes, 2)}
         res["total_credits"] = 120
