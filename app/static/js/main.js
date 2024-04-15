@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	resizer();
 	seeMore();
 	expandCollapseAll();
-	inputFields();
+	inputSubmit();
 });
 
 /**
@@ -77,31 +77,17 @@ function expandCollapseAll() {
 	});
 }
 
-/**
- * Add event listeners to dropdowns.
- */
-function inputFields() {
-	document.querySelectorAll('.dropdown button').forEach($dropdownButton => {
-		$dropdownButton.addEventListener('click', function (event) {
-			if (event.currentTarget.classList.contains("expanded")) {
-				event.currentTarget.classList.remove("expanded");
-			} else {
-				event.currentTarget.classList.add("expanded");
-			}
-		});
+function inputSubmit() {
+	const form = document.querySelector("#majorselect");
+	form.addEventListener("submit", function (e) {
+		e.preventDefault(); // Prevent default form submission behavior
+		const $form = e.currentTarget;
+		const formData = new FormData($form);
+		let url = "?majors=";
+		for (const value of formData.values()) {
+			url += value + ",";
+		}
+		url = url.slice(0, -1); // Remove the trailing ','
+		window.location.href = url;
 	});
-}
-
-function toggleImages(button) {
-
-	var image1 = button.querySelector('.image1');
-	var image2 = button.querySelector('.image2');
-
-	if (image1.style.display === 'none' || image1.style.display === '') {
-		image1.style.display = 'block'; // Display the first image
-		image2.style.display = 'none';  // Hide the second image
-	} else {
-		image1.style.display = 'none';  // Hide the first image
-		image2.style.display = 'block'; // Display the second image
-	}
 }
