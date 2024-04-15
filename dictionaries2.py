@@ -96,9 +96,18 @@ def createDictionaries(selectedMajor):
         except:
             aois = 'None'
         dict_8[tup[0]]=[tup[0], 'course title', float(tup[1]), aois] #update when DB has those capabilities
+    #dictionary with ClassID for the key, value is the class Name
+    query_9 = "SELECT CLASSES.ClassID, CLASSES.ClassName FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
+    cursor.execute(query_9)
+    dict_9={}
+    result_9= cursor.fetchall()
+    for tup in result_9:
+        dict_9[tup[0]]= tup[1]
+
         
     conn.commit()
     cursor.close()
-    return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_6, dict_7, dict_8)
+    return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_6, dict_7, dict_8, dict_9)
 
-# createDictionaries("Actuarial Science")
+
+#print(createDictionaries("Actuarial Science"))
