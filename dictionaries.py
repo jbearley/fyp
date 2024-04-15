@@ -2,7 +2,7 @@ from azuresqlconnector import *
 conn = SQLConnection()
 conn = conn.getConnection()
 cursor = conn.cursor()
-    
+
 
 #dictionary with Class Id for the key, Prerequisites for the value
 query_1 = f"""
