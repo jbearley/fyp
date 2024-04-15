@@ -30,7 +30,7 @@ requirements = {
 
 
 
-def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingSemester):
+def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, startingSemester):
     startingSemesterYear = startingSemester.split(" ")
     # Calculate prerequisite dictionary 
     prereq_dict = class_prereqs_score(requirements)
@@ -141,13 +141,12 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingS
         for course, info in course_dict.items():
             #course,info are variable used to iterate
             #course_dict.items are the value (of key:value pairs) of spots_dict = semster numbers avaliable
-            fits_arr = info["fits"]
-            for semester in fits_arr:
+            for semester in info:
  
                 if credits_left[semester] >= 3:
                     good = True  # Assume the course can be added initially
                     for a in semester_lists[semester]:
-                        if a in requirements[course] or semester not in course_dict[course]['fits']:
+                        if a in requirements[course] or semester not in course_dict[course]:
                             # If a course in this semester is a prerequisite for the current course,
                             # or if this semester is not available for the current course, set good to False
                             good = False
@@ -163,7 +162,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingS
 
     # Fill semester lists for required courses
     credits_left = {i: 12 for i in range(1, 9)}  # Initialize credits left for each semester
-    fill_semester_lists(spots_dict, semester_lists, credits_left)
+    fill_semester_lists(spots_dict, semester_lists, credits_left, requirements)
 
     # Fill semester lists for AOI courses
 
@@ -178,15 +177,15 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingS
                         aoireqs.remove(info)
                     break
 
-    def fill_for_aoi(aoireqs,dict_6,semesterlist):
-        for type in aoireqs:
-            for aoicourse, info in dict_6.items():
-                if info == type :
-                    for semester in fits_arr:
-                        if credits_left[semester] >= 3:
-                            semesterlist[semester].append(aoicourse)
-                            credits_left[semester] -= 3
-                            break
+    # def fill_for_aoi(aoireqs,dict_6,semesterlist):
+    #     for type in aoireqs:
+    #         for aoicourse, info in dict_6.items():
+    #             if info == type :
+    #                 for semester in fits_arr:
+    #                     if credits_left[semester] >= 3:
+    #                         semesterlist[semester].append(aoicourse)
+    #                         credits_left[semester] -= 3
+    #                         break
 
     def fill_placeholder_courses(semester_lists, credits_left):
         placeholder_course = "Placeholder"
@@ -200,7 +199,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingS
 
     fill_placeholder_courses(semester_lists, credits_left)
     check_for_aoi(aoi_req, dict_6, semester_lists)
-    fill_for_aoi(aoi_req, dict_6, semester_lists)
+    #fill_for_aoi(aoi_req, dict_6, semester_lists)
 
     # Print the filled semester lists
     print("Semester Lists:")
@@ -210,5 +209,3 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_7, startingS
         semesterLists.append(courses)
     
     return semesterLists
-
-#print(function1 (requirements))
