@@ -26,6 +26,7 @@ def index():
             else []
         ),
     }
+    print(user_choices)
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
     styles_to_enqueue = ["main.css"]
     scripts_to_enqueue = ["main.js"]

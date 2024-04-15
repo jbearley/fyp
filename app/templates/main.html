@@ -12,27 +12,32 @@
             <content>
                 {% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in
                 user_choices) %}
-                {% for i in range((user_choices['majors'] | length)) %}
-                {% set major_choice = user_choices['majors'][i] %}
-                <div class="dropdown-container">
-                    <label for='major'>Major {{i + 1}}</label>
-                    <select id='major'>
-                        <option selected disabled hidden value=''>Please choose an option</option>
-                        {% for major in drake_curriculum['majors'] %}
-                        <option value='{{major}}' {{ (major==major_choice) and 'selected' or '' }}>{{major}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                {% endfor %}
-                <div class="dropdown-container">
-                    <label for='major'>Major {{(user_choices['majors'] | length) + 1}}</label>
-                    <select id='major'>
-                        <option selected disabled hidden value=''>Please choose an option</option>
-                        {% for major in drake_curriculum['majors'] %}
-                        <option value='{{major}}'>{{major}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                <form id="majorselect" action="{{ request.path }}" method="POST">
+                    <!-- Start of the form with action set to "/submit" and method set to "POST" -->
+                    {% for i in range((user_choices['majors'] | length)) %}
+                    <!-- Loop through the majors in user_choices -->
+                    {% set major_choice = user_choices['majors'][i] %}
+                    <!-- Set the current major choice in the loop -->
+                    <div class="dropdown-container">
+                        <!-- Start of dropdown container -->
+                        <label for='major{{i}}'>Major {{i + 1}}</label>
+                        <!-- Label for the current major dropdown -->
+                        <select id='major{{i}}' name="major{{i}}">
+                            <!-- Dropdown menu for the current major -->
+                            {% for major in drake_curriculum['majors'] %}
+                            <!-- Loop through available majors in drake_curriculum -->
+                            <option value='{{major}}' {% if major_choice==major %} selected {% endif %}>{{major}}
+                            </option>
+                            <!-- Option for each major, with the selected option set if it matches major_choice -->
+                            {% endfor %}
+                        </select>
+                        <!-- End of dropdown menu -->
+                    </div>
+                    <!-- End of dropdown container -->
+                    {% endfor %}
+                    <input type="submit" value="Submit">
+                </form>
+                <!-- End of form -->
                 {% endif %}
             </content>
         </div>
@@ -48,7 +53,8 @@
                 {% if requirements %}
                 <div class='reqs-container'>
                     <h3>Minimum Total Credit</h3>
-                    <div class='credit-req req-header'><input type='checkbox'><label>{{requirements.total_credits}}</label></div>
+                    <div class='credit-req req-header'><input
+                            type='checkbox'><label>{{requirements.total_credits}}</label></div>
                 </div>
                 {% set temp = requirements.majors %}
                 {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %}
@@ -60,9 +66,11 @@
                         {% if req_key != 'singles' %}
                         <div class='choice-group see-more-container'>
                             {% set num_choices = req_key[5]|int %}
-                            <div class='req-header'><input type='checkbox'><label>{{req_key[7:]}} (-/{{num_choices}})</label></div>
+                            <div class='req-header'><input type='checkbox'><label>{{req_key[7:]}}
+                                    (-/{{num_choices}})</label></div>
                             {% for class in req %}
-                            <label for='{{req_key}}_{{class}}'><input type='radio' value='{{class}}' name='{{req_key}}_{{class}}' id='{{req_key}}_{{class}}'>{{class}}</label>
+                            <label for='{{req_key}}_{{class}}'><input type='radio' value='{{class}}'
+                                    name='{{req_key}}_{{class}}' id='{{req_key}}_{{class}}'>{{class}}</label>
                             {% endfor %}
                             <div class='see-more'></div>
                         </div>

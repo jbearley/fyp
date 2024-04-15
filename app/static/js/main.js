@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	seeMore();
 	expandCollapseAll();
 	inputFields();
+	inputSubmit();
 });
 
 /**
@@ -104,4 +105,19 @@ function toggleImages(button) {
 		image1.style.display = 'none';  // Hide the first image
 		image2.style.display = 'block'; // Display the second image
 	}
+}
+
+function inputSubmit() {
+	const form = document.querySelector("#majorselect");
+	form.addEventListener("submit", function (e) {
+		e.preventDefault(); // Prevent default form submission behavior
+		const $form = e.currentTarget;
+		const formData = new FormData($form);
+		let url = "?majors=";
+		for (const value of formData.values()) {
+			url += value + ",";
+		}
+		url = url.slice(0, -1); // Remove the trailing ','
+		window.location.href = url;
+	});
 }
