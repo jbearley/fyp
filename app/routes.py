@@ -1,6 +1,14 @@
 from app import app
 from flask import render_template, request
 import sys
+from placement_algorithm import *
+from Jacob import *
+from collections import OrderedDict
+from operator import itemgetter
+from class_prereqs_score import class_prereqs_score
+from class_is_prereq_score import class_is_prereq_score
+from dictionaries2 import *
+from finalizeSchedule import *
 
 sys.path.append("app")  # This must be called before importing below modules
 from app.random_dummy_data import Dummy_Data
@@ -28,12 +36,24 @@ def index():
     }
     print(user_choices)
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
+    major = "ACTUARIAL SCIENCE" #don't hardcode later
+    startingSemester = "Fall 2022" #ditto
+    dictionaries = createDictionaries(major)
+    dict_1 = dictionaries[0]
+    dict_2 = dictionaries[1]
+    dict_3 = dictionaries[2]
+    dict_4 = dictionaries[3]
+    dict_5 = dictionaries[4]
+    dict_6 = dictionaries[5]
+    dict_7 = dictionaries[6]
+    dict_8 = dictionaries[7]
+    semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester)
     styles_to_enqueue = ["main.css"]
     scripts_to_enqueue = ["main.js"]
     return render_template(
         "main.html",
         title="Drake Four-Year Plan Generator",
-        classes_by_semester=data.get_FYP(),
+        classes_by_semester=finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester),
         requirements=data.get_requirements(),
         drake_curriculum=drake_curriculum,
         user_choices=user_choices,

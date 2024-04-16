@@ -28,7 +28,7 @@ dict_5 = dictionaries[4]
 dict_6 = dictionaries[5]
 dict_7 = dictionaries[6]
 dict_8 = dictionaries[7]
-semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4,dict_6, dict_7, startingSemester)
+semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester)
 
 #semesterList = [0, ["MATH 50", "ACTS 50", "ACTS 131"], ["ACTS 161"], [], [], [], [], [], []]
 
@@ -112,4 +112,4 @@ def reformat(semesterList, startingSemester, dict_8):
         i+=1
     return finalSchedule
 
-print(finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList))
+#print(finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList))
