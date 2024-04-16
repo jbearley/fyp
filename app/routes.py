@@ -53,7 +53,7 @@ def index():
     return render_template(
         "main.html",
         title="Drake Four-Year Plan Generator",
-        classes_by_semester=finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester),
+        classes_by_semester=finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList),
         requirements=data.get_requirements(),
         drake_curriculum=drake_curriculum,
         user_choices=user_choices,

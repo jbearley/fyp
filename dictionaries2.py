@@ -1,10 +1,11 @@
 from azuresqlconnector import *
-conn = SQLConnection()
-conn = conn.getConnection()
-cursor = conn.cursor()
+
 
 
 def createDictionaries(selectedMajor):
+    conn = SQLConnection()
+    conn = conn.getConnection()
+    cursor = conn.cursor()
     #this will have to be done for all majors
     selectedMajor = "Actuarial Science" #get this from frontend
     if selectedMajor == "Actuarial Science":
