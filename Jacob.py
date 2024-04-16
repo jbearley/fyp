@@ -202,10 +202,10 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     #fill_for_aoi(aoi_req, dict_6, semester_lists)
 
     # Print the filled semester lists
-    print("Semester Lists:")
+    #print("Semester Lists:")
     semesterLists = [0]
     for semester, courses in semester_lists.items():
-        print(f"Semester {semester}: {courses}")
+        #print(f"Semester {semester}: {courses}")
         semesterLists.append(courses)
     
     return semesterLists

@@ -28,7 +28,7 @@ dict_5 = dictionaries[4]
 dict_6 = dictionaries[5]
 dict_7 = dictionaries[6]
 dict_8 = dictionaries[7]
-semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4,dict_6, dict_7, startingSemester)
+semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester)
 
 #semesterList = [0, ["MATH 50", "ACTS 50", "ACTS 131"], ["ACTS 161"], [], [], [], [], [], []]
 
@@ -92,10 +92,35 @@ def finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList):
                         break
                 currentSemester = addSemester(currentSeason + " " + str(currentYear))
         if working:
-            return reformat(semesterList, startingSemester, dict_8)
+            return reformat(semesterList, startingSemester, dict_3, dict_6)
     return "ERROR - INVALID SCHEDULE"
 
-def reformat(semesterList, startingSemester, dict_8):
+def reformat(semesterList, startingSemester, dict_3, dict_6):
+        finalSchedule = {}
+        semester = startingSemester
+        i = 1
+        while i <= 8:
+            finalSchedule[semester] = {}
+            for course in semesterList[i]:
+                courseDict = {}
+                #for each course, we need the name, course_num and attributes
+                if course != "Placeholder" and course != "AOI":
+                    courseTitle = "course name"
+                    courseCredits = float(dict_3[course])
+                    if course in dict_6:
+                        courseAttributes = dict_6[course]
+                    else:
+                        courseAttributes = [None]
+                    courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': courseAttributes}
+                else:
+                    courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 0.0, 'attributes': []}    
+                finalSchedule[semester].update({course:courseDict[course]})
+            semester = addSemester(semester)
+            i+=1
+        return finalSchedule
+
+
+def reformat2(semesterList, startingSemester, dict_8):
     finalSchedule = {}
     semester = startingSemester
     i = 1
@@ -112,4 +137,4 @@ def reformat(semesterList, startingSemester, dict_8):
         i+=1
     return finalSchedule
 
-print(finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList))
+#print(finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList))
