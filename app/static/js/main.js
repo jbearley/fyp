@@ -111,7 +111,16 @@ function dropdowns() {
 
 		/* delete */
 		$dropdown.closest('.dropdown-container').querySelector('.delete-major').addEventListener('click', (e) => {
-			// add code for delete
+			const $toBeDeleted = e.currentTarget.closest('.dropdown-container');
+			let $nextSibling = $toBeDeleted.nextElementSibling;
+			while ($nextSibling && $nextSibling.classList.contains('dropdown-container')) {
+				const $label = $nextSibling.querySelector('.label');
+				$label.innerHTML = $label.innerHTML.replace(/(Major )(\d+)(.*)/, (match, p1, p2, p3) => {
+					return p1 + (parseInt(p2) - 1) + p3;
+				});
+				$nextSibling = $nextSibling.nextElementSibling;
+			}
+			$toBeDeleted.remove();
 		});
 	};
 	document.querySelectorAll('.dropdown').forEach($dropdown => {
@@ -151,9 +160,6 @@ function inputSubmit() {
 	form.addEventListener("submit", function (e) {
 		e.preventDefault(); // Prevent default form submission behavior
 		const formData = new FormData(e.currentTarget);
-		formData.getAll('majors').forEach((value, i) => {
-			console.log(value);
-		});
 		let url = "?majors=" + Array.from(formData.values()).join(",");
 		window.location.href = url;
 	});

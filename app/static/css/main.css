@@ -348,6 +348,12 @@ h3 {
     background-color: var(--gray-200);
     border: 1px solid var(--drake-blue);
     border-radius: .25rem;
+    cursor: pointer;
+}
+
+.dropdown-container .delete-major:hover,
+#add-major:hover {
+    background-color: var(--light-blue);
 }
 
 .dropdown-container .delete-major::after,
@@ -489,6 +495,11 @@ h3 {
     padding: .5rem .75rem;
     color: white;
     background-color: var(--drake-blue);
+    cursor: pointer;
+}
+
+#majorselect input[type="submit"]:hover {
+    filter: brightness(1.2);
 }
 
 .see-more-controllers {
