@@ -1,4 +1,6 @@
 majors = [
+    "Actuarial Science", 
+    "Accounting",
     "Anthropology and Sociology",
     "Astronomy",
     "Biochemistry, Cell and Molecular Biology",

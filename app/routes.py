@@ -35,7 +35,12 @@ def index():
         ),
     }
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
-    major = "ACTUARIAL SCIENCE" #don't hardcode later
+    try:
+        major = user_choices["majors"][0]
+    except:
+        major = "ACTUARIAL SCIENCE" #don't hardcode later
+        print("not working")
+        
     startingSemester = "Fall 2022" #ditto
     dictionaries = createDictionaries(major)
     dict_1 = dictionaries[0]
