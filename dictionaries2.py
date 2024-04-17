@@ -7,7 +7,7 @@ def createDictionaries(selectedMajor):
     conn = conn.getConnection()
     cursor = conn.cursor()
     #this will have to be done for all majors
-    if selectedMajor == "Actuarial Science":
+    if selectedMajor == "ACTUARIAL SCIENCE":
         selectedMajor =  "ACT_SCI_MAJOR"
     elif selectedMajor== "Accounting":
         selectedMajor="ACCOUNTING_MAJOR"
