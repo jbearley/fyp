@@ -7,9 +7,16 @@ def createDictionaries(selectedMajor):
     conn = conn.getConnection()
     cursor = conn.cursor()
     #this will have to be done for all majors
-    selectedMajor = "Actuarial Science" #get this from frontend
     if selectedMajor == "Actuarial Science":
-        selectedMajor = "ACT_SCI_MAJOR"
+        selectedMajor =  "ACT_SCI_MAJOR"
+    elif selectedMajor== "Accounting":
+        selectedMajor="ACCOUNTING_MAJOR"
+    elif selectedMajor=="Business Law":
+        selectedMajor="BLAW_MAJOR"
+    elif selectedMajor=="Economics":
+        selectedMajor="ECON_MAJOR"
+    
+
 
     #dictionary with Class Id for the key, Prerequisites for the value
     query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
@@ -111,4 +118,4 @@ def createDictionaries(selectedMajor):
     return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_6, dict_7, dict_8, dict_9)
 
 
-#print(createDictionaries("Actuarial Science"))
+#print(createDictionaries("Economics"))
