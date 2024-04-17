@@ -12,32 +12,32 @@
             <content>
                 {% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in
                 user_choices) %}
-                <form id="majorselect" action="{{ request.path }}" method="POST">
-                    <!-- Start of the form with action set to "/submit" and method set to "POST" -->
-                    {% for i in range((user_choices['majors'] | length)) %}
-                    <!-- Loop through the majors in user_choices -->
-                    {% set major_choice = user_choices['majors'][i] %}
-                    <!-- Set the current major choice in the loop -->
-                    <div class="dropdown-container">
-                        <!-- Start of dropdown container -->
-                        <label for='major{{i}}'>Major {{i + 1}}</label>
-                        <!-- Label for the current major dropdown -->
-                        <select id='major{{i}}' name="major{{i}}">
-                            <!-- Dropdown menu for the current major -->
-                            {% for major in drake_curriculum['majors'] %}
-                            <!-- Loop through available majors in drake_curriculum -->
-                            <option value='{{major}}' {% if major_choice==major %} selected {% endif %}>{{major}}
-                            </option>
-                            <!-- Option for each major, with the selected option set if it matches major_choice -->
-                            {% endfor %}
-                        </select>
-                        <!-- End of dropdown menu -->
+                <form id="majorselect">
+                    <div class='dropdowns'>
+                        {% for i in range((user_choices['majors'] | length)) %}
+                        {% set major_choice = user_choices['majors'][i] %}
+                        <div class='dropdown-container'>
+                            <button class='delete-major'></button>
+                            <select name='majors'>
+                                {% for major in drake_curriculum['majors'] %}
+                                <option value='{{major}}' {% if major_choice==major %} selected {% endif %}>{{major}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class='dropdown'>
+                                <div class='label'>Major {{i + 1}}: <b>{{major_choice}}</b></div>
+                                <div class='options'>
+                                    {% for major in drake_curriculum['majors'] %}
+                                    <button class='option' value='{{major}}'>{{major}}</button>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <button id='add-major' data-majors='{{drake_curriculum["majors"]|join(",")}}'></button>
                     </div>
-                    <!-- End of dropdown container -->
-                    {% endfor %}
                     <input type="submit" value="Submit">
                 </form>
-                <!-- End of form -->
                 {% endif %}
             </content>
         </div>
@@ -57,7 +57,7 @@
                             type='checkbox'><label>{{requirements.total_credits}}</label></div>
                 </div>
                 {% set temp = requirements.majors %}
-                {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %}
+                {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %} <!-- temp = {...majors, AOIs: <aois>} -->
                 {% for category_key, category in temp.items() %}
                 <div class='reqs-container'>
                     <h3>{{category_key}}</h3>

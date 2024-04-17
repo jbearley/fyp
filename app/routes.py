@@ -34,7 +34,6 @@ def index():
             else []
         ),
     }
-    print(user_choices)
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
     major = "ACTUARIAL SCIENCE" #don't hardcode later
     startingSemester = "Fall 2022" #ditto

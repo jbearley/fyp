@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	resizer();
 	seeMore();
 	expandCollapseAll();
-	inputFields();
+	dropdowns();
 	inputSubmit();
 });
 
@@ -78,46 +78,83 @@ function expandCollapseAll() {
 	});
 }
 
-/**
- * Add event listeners to dropdowns.
- */
-function inputFields() {
-	document.querySelectorAll('.dropdown button').forEach($dropdownButton => {
-		$dropdownButton.addEventListener('click', function (event) {
-			if (event.currentTarget.classList.contains("expanded")) {
-				event.currentTarget.classList.remove("expanded");
-			} else {
-				event.currentTarget.classList.add("expanded");
+function dropdowns() {
+	const initializeDropdown = ($dropdown) => {
+		/* click -> expand */
+		$dropdown.addEventListener('click', (e) => {
+			if (e.target.closest('.options')) {
+				return;
+			}
+			const $dd = e.currentTarget;
+			$dd.classList.toggle('expanded');
+			if ($dd.classList.contains('expanded')) {
+				/* set dropdown height */
+				const height = window.innerHeight - $dd.getBoundingClientRect().bottom - 24;
+				$dd.querySelector('.options').style.maxHeight = `${height}px`;
+				const outsideClickListener = (e) => {
+					if (!e.target.classList.contains('option') && e.target.closest('.dropdown') && e.target.closest('.dropdown').isEqualNode($dd)) return;
+					$dd.classList.remove('expanded');
+					document.removeEventListener('click', outsideClickListener);
+				};
+				document.addEventListener('click', outsideClickListener);
 			}
 		});
+
+		/* click option -> set form value */
+		$dropdown.querySelectorAll('.option').forEach($option => {
+			$option.addEventListener('click', (e) => {
+				e.preventDefault();
+				e.target.closest('.dropdown-container').querySelector('select').value = e.currentTarget.value;
+				e.target.closest('.dropdown').querySelector('.label b').innerHTML = e.currentTarget.innerHTML;
+			});
+		});
+
+		/* delete */
+		$dropdown.closest('.dropdown-container').querySelector('.delete-major').addEventListener('click', (e) => {
+			// add code for delete
+		});
+	};
+	document.querySelectorAll('.dropdown').forEach($dropdown => {
+		initializeDropdown($dropdown);
 	});
-}
-
-function toggleImages(button) {
-
-	var image1 = button.querySelector('.image1');
-	var image2 = button.querySelector('.image2');
-
-	if (image1.style.display === 'none' || image1.style.display === '') {
-		image1.style.display = 'block'; // Display the first image
-		image2.style.display = 'none';  // Hide the second image
-	} else {
-		image1.style.display = 'none';  // Hide the first image
-		image2.style.display = 'block'; // Display the second image
-	}
+	document.querySelector('#add-major').addEventListener('click', (e) => {
+		e.preventDefault();
+		let formOptions = '';
+		let majorNumber = document.querySelectorAll('.dropdown').length + 1;
+		let displayOptions = '';
+		const majors = e.currentTarget.getAttribute('data-majors').split(',');
+		majors.forEach(major => {
+			formOptions += `<option value='${major}'>${major}</option>`;
+			displayOptions += `<button class='option' value='${major}'>${major}</button>`;
+		});
+		const $dropdownContainer = document.createElement('div');
+		$dropdownContainer.className = 'dropdown-container';
+		$dropdownContainer.innerHTML = `
+			<button class='delete-major'></button>
+			<select name='majors'>
+				${formOptions}
+			</select>
+			<div class='dropdown'>
+				<div class='label'>Major ${majorNumber}: <b>Select option...</b></div>
+				<div class='options'>
+					${displayOptions}
+				</div>
+			</div>
+		`;
+		initializeDropdown($dropdownContainer.querySelector('.dropdown'));
+		e.currentTarget.insertAdjacentElement('beforebegin', $dropdownContainer);
+	});
 }
 
 function inputSubmit() {
 	const form = document.querySelector("#majorselect");
 	form.addEventListener("submit", function (e) {
 		e.preventDefault(); // Prevent default form submission behavior
-		const $form = e.currentTarget;
-		const formData = new FormData($form);
-		let url = "?majors=";
-		for (const value of formData.values()) {
-			url += value + ",";
-		}
-		url = url.slice(0, -1); // Remove the trailing ','
+		const formData = new FormData(e.currentTarget);
+		formData.getAll('majors').forEach((value, i) => {
+			console.log(value);
+		});
+		let url = "?majors=" + Array.from(formData.values()).join(",");
 		window.location.href = url;
 	});
 }
