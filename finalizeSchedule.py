@@ -107,13 +107,15 @@ def reformat(semesterList, startingSemester, dict_3, dict_6):
                 if course != "Placeholder" and course != "AOI":
                     courseTitle = "course name"
                     courseCredits = float(dict_3[course])
+                    if courseCredits % 1 == 0:
+                        courseCredits = int(courseCredits)
                     if course in dict_6:
                         courseAttributes = dict_6[course]
                     else:
                         courseAttributes = [None]
                     courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': courseAttributes}
                 else:
-                    courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 0.0, 'attributes': []}    
+                    courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 0, 'attributes': []}    
                 finalSchedule[semester].update({course:courseDict[course]})
             semester = addSemester(semester)
             i+=1
