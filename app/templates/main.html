@@ -12,27 +12,32 @@
             <content>
                 {% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in
                 user_choices) %}
-                {% for i in range((user_choices['majors'] | length)) %}
-                {% set major_choice = user_choices['majors'][i] %}
-                <div class="dropdown-container">
-                    <label for='major'>Major {{i + 1}}</label>
-                    <select id='major'>
-                        <option selected disabled hidden value=''>Please choose an option</option>
-                        {% for major in drake_curriculum['majors'] %}
-                        <option value='{{major}}' {{ (major==major_choice) and 'selected' or '' }}>{{major}}</option>
+                <form id="majorselect">
+                    <div class='dropdowns'>
+                        {% for i in range((user_choices['majors'] | length)) %}
+                        {% set major_choice = user_choices['majors'][i] %}
+                        <div class='dropdown-container'>
+                            <button class='delete-major'></button>
+                            <select name='majors'>
+                                {% for major in drake_curriculum['majors'] %}
+                                <option value='{{major}}' {% if major_choice==major %} selected {% endif %}>{{major}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class='dropdown'>
+                                <div class='label'>Major {{i + 1}}: <b>{{major_choice}}</b></div>
+                                <div class='options'>
+                                    {% for major in drake_curriculum['majors'] %}
+                                    <button class='option' value='{{major}}'>{{major}}</button>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                         {% endfor %}
-                    </select>
-                </div>
-                {% endfor %}
-                <div class="dropdown-container">
-                    <label for='major'>Major {{(user_choices['majors'] | length) + 1}}</label>
-                    <select id='major'>
-                        <option selected disabled hidden value=''>Please choose an option</option>
-                        {% for major in drake_curriculum['majors'] %}
-                        <option value='{{major}}'>{{major}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                        <button id='add-major' data-majors='{{drake_curriculum["majors"]|join(",")}}'></button>
+                    </div>
+                    <input type="submit" value="Submit">
+                </form>
                 {% endif %}
             </content>
         </div>
@@ -46,21 +51,26 @@
             </header>
             <content>
                 {% if requirements %}
-                <div class='credit-req-container'>
-                    <h3>Minimum Credit Requirement</h3>
-                    <div class='credit-req req-header'><input type='checkbox'><label>{{requirements.total_credits}}</label></div>
+                <div class='reqs-container'>
+                    <h3>Minimum Total Credit</h3>
+                    <div class='credit-req req-header'><input
+                            type='checkbox'><label>{{requirements.total_credits}}</label></div>
                 </div>
-                {% for major, major_reqs in requirements.majors.items() %}
-                <div class='major-reqs-container'>
-                    <h3>{{major}} Major Requirements</h3>
-                    <div class='major-reqs'>
-                        {% for req_key, req in major_reqs.items() %}
+                {% set temp = requirements.majors %}
+                {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %} <!-- temp = {...majors, AOIs: <aois>} -->
+                {% for category_key, category in temp.items() %}
+                <div class='reqs-container'>
+                    <h3>{{category_key}}</h3>
+                    <div class='reqs'>
+                        {% for req_key, req in category.items() %}
                         {% if req_key != 'singles' %}
                         <div class='choice-group see-more-container'>
                             {% set num_choices = req_key[5]|int %}
-                            <div class='req-header'><input type='checkbox'><label>{{req_key[7:]}} (-/{{num_choices}})</label></div>
+                            <div class='req-header'><input type='checkbox'><label>{{req_key[7:]}}
+                                    (-/{{num_choices}})</label></div>
                             {% for class in req %}
-                            <label for='{{req_key}}_{{class}}'><input type='radio' value='{{class}}' name='{{req_key}}_{{class}}' id='{{req_key}}_{{class}}'>{{class}}</label>
+                            <label for='{{req_key}}_{{class}}'><input type='radio' value='{{class}}'
+                                    name='{{req_key}}_{{class}}' id='{{req_key}}_{{class}}'>{{class}}</label>
                             {% endfor %}
                             <div class='see-more'></div>
                         </div>
