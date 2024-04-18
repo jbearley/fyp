@@ -30,7 +30,7 @@ requirements = {
 
 
 
-def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, startingSemester):
+def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, startingSemester, popped_courses):
     startingSemesterYear = startingSemester.split(" ")
     # Calculate prerequisite dictionary 
     prereq_dict = class_prereqs_score(requirements)
@@ -205,6 +205,10 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     #print("Semester Lists:")
     semesterLists = [0]
     for semester, courses in semester_lists.items():
+        for course in courses:
+            if course in popped_courses:
+                dict_3[course] = float(dict_3[course]) - .5
+                courses.insert(courses.index(course)+1, popped_courses[course])
         #print(f"Semester {semester}: {courses}")
         semesterLists.append(courses)
     
