@@ -36,10 +36,9 @@ def index():
     }
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
     try:
-        major = user_choices["majors"][0]
+        major = user_choices["majors"][0].upper()
     except:
         major = "ACTUARIAL SCIENCE" #don't hardcode later
-        print("not working")
         
     startingSemester = "Fall 2022" #ditto
     dictionaries = createDictionaries(major)
@@ -57,7 +56,7 @@ def index():
     return render_template(
         "main.html",
         title="Drake Four-Year Plan Generator",
-        classes_by_semester=finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList),
+        classes_by_semester=finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semesterList),
         requirements=data.get_requirements(),
         drake_curriculum=drake_curriculum,
         user_choices=user_choices,

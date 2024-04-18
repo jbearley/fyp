@@ -32,8 +32,9 @@ semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict
 
 #semesterList = [0, ["MATH 50", "ACTS 50", "ACTS 131"], ["ACTS 161"], [], [], [], [], [], []]
 
-def finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList):
+def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semesterList):
     working = True
+    retest = False
     currentSemester = startingSemester
     semesterCounter = 0
     while working:
@@ -62,8 +63,11 @@ def finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList):
                     springOffered = dict_2[semesterClass][1]
                     if int(springOffered) == 0:
                         print(semesterClass, "is not offered in spring")
-                        working = False
-                        break
+                        semesterList[semesterCounter].remove(semesterClass)
+                        semesterList[semesterCounter+1].append(semesterClass)
+                        retest = True
+                        #working = False
+                        #break
                 #check odd/even years
                 yearOfferings = dict_7[semesterClass]
                 if yearOfferings != "11": #if it isn't offered every year...
@@ -92,7 +96,10 @@ def finalCheck(dict_2, dict_4, dict_7, dict_8, startingSemester, semesterList):
                         break
                 currentSemester = addSemester(currentSeason + " " + str(currentYear))
         if working:
-            return reformat(semesterList, startingSemester, dict_3, dict_6)
+            if retest:
+                return finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semesterList)
+            else:
+                return reformat(semesterList, startingSemester, dict_3, dict_6)
     return "ERROR - INVALID SCHEDULE"
 
 def reformat(semesterList, startingSemester, dict_3, dict_6):
@@ -112,8 +119,8 @@ def reformat(semesterList, startingSemester, dict_3, dict_6):
                     if course in dict_6:
                         courseAttributes = dict_6[course]
                     else:
-                        courseAttributes = [None]
-                    courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': courseAttributes}
+                        courseAttributes = None
+                    courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': [courseAttributes]}
                 else:
                     courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 0, 'attributes': []}    
                 finalSchedule[semester].update({course:courseDict[course]})
