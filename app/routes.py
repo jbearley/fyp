@@ -50,7 +50,9 @@ def index():
     dict_6 = dictionaries[5]
     dict_7 = dictionaries[6]
     dict_8 = dictionaries[7]
-    semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester)
+    dict_9 = dictionaries[8]
+    popped_classes = dictionaries[9]
+    semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester, popped_classes)
     styles_to_enqueue = ["main.css"]
     scripts_to_enqueue = ["main.js"]
     return render_template(

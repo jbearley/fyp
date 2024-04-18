@@ -60,7 +60,7 @@ def createDictionaries(selectedMajor1):
     result_3 = cursor.fetchall()
     for tup in result_3:
         dict_3[tup[0]]=tup[1]
-
+        
     #dictionary with ClassID for the key, grade requirement for the value. If no grade requirement, than it has None.
     query_4 = "SELECT CLASSES.ClassID, GradeReq FROM dbo.CLASSES"#, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
     cursor.execute(query_4)
@@ -85,8 +85,16 @@ def createDictionaries(selectedMajor1):
     for key in dict_5:
         if dict_5[key]!=None:
             if key in dict_1 and key[-1] == "L":
-                popped_classes[key]=dict_5[key]
+                popped_classes[dict_5[key]]=key
+                if "ACTS 120L" in popped_classes:
+                    del popped_classes["ACTS 120L"]
+                    popped_classes["ACTS 120"] = "ACTS 120L"
                 dict_1.pop(key)
+                
+    
+    for key in popped_classes:
+        if key in dict_3:
+            dict_3[key] = float(dict_3[key]) + .5
         
     query_6 = f"""
     SELECT ClassID, AOI FROM dbo.AOI
@@ -116,6 +124,7 @@ def createDictionaries(selectedMajor1):
         except:
             aois = 'None'
         dict_8[tup[0]]=[tup[0], 'course title', float(tup[1]), aois] #update when DB has those capabilities
+    
     #dictionary with ClassID for the key, value is the class Name
     query_9 = "SELECT CLASSES.ClassID, CLASSES.ClassName FROM dbo.CLASSES"#, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
     cursor.execute(query_9)
@@ -127,7 +136,7 @@ def createDictionaries(selectedMajor1):
         
     conn.commit()
     cursor.close()
-    return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_6, dict_7, dict_8, dict_9)
+    return (dict_1, dict_2, dict_3, dict_4, dict_5, dict_6, dict_7, dict_8, dict_9, popped_classes)
 
 
 #print(createDictionaries("Economics"))
