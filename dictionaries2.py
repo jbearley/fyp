@@ -2,30 +2,43 @@ from azuresqlconnector import *
 from OrRequirements import *
 
 
-def createDictionaries(selectedMajor1):
+def createDictionaries(selectedMajorList):
     conn = SQLConnection()
     conn = conn.getConnection()
     cursor = conn.cursor()
-#this will have to be done for all majors
-    if selectedMajor1 == "ACTUARIAL SCIENCE":
-        selectedMajor = "ACT_SCI_MAJOR"
-    elif selectedMajor1 == "ACCOUNTING":
-        selectedMajor = "ACCOUNTING_MAJOR"
-    elif selectedMajor1 == "ECONOMICS":
-        selectedMajor = "ECON_MAJOR"
-    elif selectedMajor1 == "BUSINESS LAW":
-        selectedMajor = "BLAW_MAJOR"
-    elif selectedMajor1 == "DATA ANALYTICS":
-        selectedMajor = "DATA_ANALYTICS_MAJOR"
-    elif selectedMajor1 == "FINANCE":
-        selectedMajor = "FIN_MAJOR"
-    elif selectedMajor1 == "MANAGEMENT":
-        selectedMajor = "MANAGEMENT_MAJOR"
-    
-
-
-    #dictionary with Class Id for the key, Prerequisites for the value
-    query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    #this will have to be done for all majors
+    tableList = []
+    #selectedMajor1 = selectedMajorList[0]
+    if "ACTUARIAL SCIENCE" in selectedMajorList:
+        tableList.append("ACT_SCI_MAJOR")
+        tableList.append("PICK_TWO_ACT_SCI")
+    if "ACCOUNTING" in selectedMajorList:
+        tableList.append("ACCOUNTING_MAJOR")
+        tableList.append("PICK_TWO_ACC")
+    if "ECONOMICS" in selectedMajorList:
+        tableList.append("ECON_MAJOR")
+        tableList.append("CHOOSE_FOUR_ECON")
+    if "BUSINESS LAW" in selectedMajorList:
+        tableList.append("BLAW_MAJOR")
+        tableList.append("CHOOSE_THREE_BLAW")
+    if "DATA ANALYTICS" in selectedMajorList:
+        tableList.append("DATA_ANALYTICS_MAJOR")
+    if "FINANCE" in selectedMajorList:
+        tableList.append("FIN_MAJOR")
+        tableList.append("PICK_THREE_FIN")
+    if "MANAGEMENT" in selectedMajorList:
+        tableList.append("MANAGEMENT_MAJOR")
+    #for now:
+    for a in tableList:
+        if "MAJOR" not in a: #and a != "ACTUARIAL SCIENCE":
+            tableList.remove(a)
+    #for now over
+    if len(tableList) == 1: #for now
+        #print("ONE MAJOR:", selectedMajorList)
+        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    elif len(tableList) == 2: #for now, indices will also have to change in next line
+        #print("TWO MAJORS:", selectedMajorList)
+        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
     cursor.execute(query_1)
     dict_1 = {}
     result = cursor.fetchall()
@@ -51,6 +64,10 @@ def createDictionaries(selectedMajor1):
         dict_1["ECON 170"].remove("MATH 28") #what curriculum is the econ major stuff from??
     if "CS 65" in dict_1 and "MATH 20" in dict_1["CS 65"]:
         dict_1["CS 65"].remove("MATH 20")
+    if "ECON 108" in dict_1 and "MATH 17" in dict_1["ECON 108"]:
+        dict_1["ECON 108"].remove("MATH 17") #what curriculum is the econ major stuff from??
+    if "ECON 135" in dict_1 and "MATH 17" in dict_1["ECON 135"]:
+        dict_1["ECON 135"].remove("MATH 17")
     #print("major:", selectedMajor)
     #(dict_1, "\n\n")
 
