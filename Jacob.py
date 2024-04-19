@@ -165,7 +165,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
                 #     break
 
     # Fill semester lists for required courses
-    credits_left = {i: 12 for i in range(1, 9)}  # Initialize credits left for each semester
+    credits_left = {i: 15 for i in range(1, 9)}  # Initialize credits left for each semester
     fill_semester_lists(spots_dict, semester_lists, credits_left, requirements)
 
     # Fill semester lists for AOI courses

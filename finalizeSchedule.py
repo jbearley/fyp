@@ -32,7 +32,7 @@ dict_8 = dictionaries[7]
 
 #semesterList = [0, ["MATH 50", "ACTS 50", "ACTS 131"], ["ACTS 161"], [], [], [], [], [], []]
 
-def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semesterList):
+def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester, semesterList):
     print(semesterList)
     working = True
     retest = False
@@ -103,20 +103,21 @@ def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semeste
             if retest:
                 return finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semesterList)
             else:
-                return reformat(semesterList, startingSemester, dict_3, dict_6)
+                return reformat(semesterList, startingSemester, dict_3, dict_6, dict_9)
     return "ERROR - INVALID SCHEDULE"
 
-def reformat(semesterList, startingSemester, dict_3, dict_6):
+def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
         finalSchedule = {}
         semester = startingSemester
         i = 1
         while i <= 8:
             finalSchedule[semester] = {}
+            tempList = {}
             for course in semesterList[i]:
                 courseDict = {}
                 #for each course, we need the name, course_num and attributes
                 if course != "Placeholder" and course != "AOI":
-                    courseTitle = "course name"
+                    courseTitle = dict_9[course]
                     courseCredits = float(dict_3[course])
                     if courseCredits % 1 == 0:
                         courseCredits = int(courseCredits)
@@ -126,8 +127,14 @@ def reformat(semesterList, startingSemester, dict_3, dict_6):
                         courseAttributes = None
                     courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': [courseAttributes]}
                 else:
-                    courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 0, 'attributes': []}    
-                finalSchedule[semester].update({course:courseDict[course]})
+                    courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 0, 'attributes': []}
+                #have courses with 0 credits appear first
+                if courseDict[course]["num_credits"] == 0 and courseDict[course]["title"] != "Placeholder":
+                    finalSchedule[semester].update({course:courseDict[course]})
+                else:
+                    tempList[course] = courseDict[course]
+            for key in tempList:
+                finalSchedule[semester].update({key:tempList[key]})
             semester = addSemester(semester)
             i+=1
         return finalSchedule
