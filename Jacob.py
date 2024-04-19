@@ -41,7 +41,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     spots_dict = {}
 
     for course in requirements:
-
+        
         prereq_score = prereq_dict[course]
         postreq_score = postreq_dict[course]
         yearOfferings = dict_7[course]
@@ -125,8 +125,9 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
                         if num in fits_arr:
                             fits_arr.remove(num) #can't fit in freshman, sophomore, or junior year
             fit += 1
+            if course == "MATH 70":
+                print(fits_arr)
         spots_dict[course] = fits_arr
-
 
     # Fill semester lists for required courses first
     semester_lists = {}
@@ -138,12 +139,15 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
 
     # Function to fill semester lists with courses
     def fill_semester_lists(course_dict, semester_lists, credits_left, requirements):
+        course_dict = sorted(course_dict.items(), key=itemgetter(1))
+        course_dict = OrderedDict(course_dict)
+        print(course_dict)
         for course, info in course_dict.items():
             #course,info are variable used to iterate
-            #course_dict.items are the value (of key:value pairs) of spots_dict = semster numbers avaliable
+            #course_dict.items are the value (of key:value pairs) of spots_dict = semester numbers avaliable
             for semester in info:
  
-                if credits_left[semester] >= 3:
+                if credits_left[semester] >= float(dict_3[course]):
                     good = True  # Assume the course can be added initially
                     for a in semester_lists[semester]:
                         if a in requirements[course] or semester not in course_dict[course]:
@@ -153,12 +157,12 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
                             break  # No need to continue checking once good is False
                     if good:
                         semester_lists[semester].append(course)
-                        credits_left[semester] -= 3
+                        credits_left[semester] = credits_left[semester] - float(dict_3[course])
                         break 
-                if credits_left[semester] >= dict_3[course]:
-                    semester_lists[semester].append(course)
-                    credits_left[semester] -= dict_3[course]
-                    break
+                # if credits_left[semester] >= dict_3[course]:
+                #     semester_lists[semester].append(course)
+                #     credits_left[semester] -= dict_3[course]
+                #     break
 
     # Fill semester lists for required courses
     credits_left = {i: 12 for i in range(1, 9)}  # Initialize credits left for each semester

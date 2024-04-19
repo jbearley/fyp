@@ -3,6 +3,9 @@ majors = [
     "Accounting",
     "Economics",
     "Business Law",
+    "Data Analytics",
+    "Finance",
+    "Management",
 ]
 minors = [
     "Anthropology",

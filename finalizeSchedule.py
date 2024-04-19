@@ -33,6 +33,7 @@ dict_8 = dictionaries[7]
 #semesterList = [0, ["MATH 50", "ACTS 50", "ACTS 131"], ["ACTS 161"], [], [], [], [], [], []]
 
 def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semesterList):
+    print(semesterList)
     working = True
     retest = False
     currentSemester = startingSemester
@@ -57,17 +58,20 @@ def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, startingSemester, semeste
                     fallOffered = dict_2[semesterClass][0]
                     if int(fallOffered) == 0:
                         print(semesterClass, "is not offered in fall")
+                        # semesterList[semesterCounter].remove(semesterClass)
+                        # semesterList[semesterCounter-1].append(semesterClass)
+                        # retest = True
                         working = False
                         break
                 else:
                     springOffered = dict_2[semesterClass][1]
                     if int(springOffered) == 0:
                         print(semesterClass, "is not offered in spring")
-                        semesterList[semesterCounter].remove(semesterClass)
-                        semesterList[semesterCounter+1].append(semesterClass)
-                        retest = True
-                        #working = False
-                        #break
+                        # semesterList[semesterCounter].remove(semesterClass)
+                        # semesterList[semesterCounter+1].append(semesterClass)
+                        # retest = True
+                        working = False
+                        break
                 #check odd/even years
                 yearOfferings = dict_7[semesterClass]
                 if yearOfferings != "11": #if it isn't offered every year...

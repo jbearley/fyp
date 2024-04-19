@@ -15,6 +15,12 @@ def createDictionaries(selectedMajor1):
         selectedMajor = "ECON_MAJOR"
     elif selectedMajor1 == "BUSINESS LAW":
         selectedMajor = "BLAW_MAJOR"
+    elif selectedMajor1 == "DATA ANALYTICS":
+        selectedMajor = "DATA_ANALYTICS_MAJOR"
+    elif selectedMajor1 == "FINANCE":
+        selectedMajor = "FIN_MAJOR"
+    elif selectedMajor1 == "MANAGEMENT":
+        selectedMajor = "MANAGEMENT_MAJOR"
     
 
 
@@ -35,12 +41,16 @@ def createDictionaries(selectedMajor1):
         dict_1["MGMT 120"] = ["STAT 72/ACTS 135"]
     if "ECON 190" in dict_1:
         dict_1["ECON 190"] = ["ECON 170/STAT 170"]
+    if "STAT 172" in dict_1:
+        dict_1["STAT 172"] = ['STAT 130/ACTS 131', 'STAT 40', 'STAT 170', 'MATH 70']
     dict_1 = dealWithOrReqs(dict_1)
     if "ACTS 140" in dict_1 and "ACT 135" in dict_1["ACTS 140"]:
         dict_1["ACTS 140"].remove("ACT 135")
         dict_1["ACTS 140"].append("ACTS 135") 
     if "ECON 170" in dict_1 and "MATH 28" in dict_1["ECON 170"]:
-        dict_1["ECON 170"].remove("MATH 28") #what curriculum is the econ major stuff from?
+        dict_1["ECON 170"].remove("MATH 28") #what curriculum is the econ major stuff from??
+    if "CS 65" in dict_1 and "MATH 20" in dict_1["CS 65"]:
+        dict_1["CS 65"].remove("MATH 20")
     #print("major:", selectedMajor)
     #(dict_1, "\n\n")
 
