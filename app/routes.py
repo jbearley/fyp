@@ -36,12 +36,16 @@ def index():
     }
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
     try:
-        major = user_choices["majors"][0].upper()
+        majors = []
+        for major in user_choices["majors"]:
+            majors.append(major.upper())
+        if majors == []:
+            majors.append("ACTUARIAL SCIENCE")
     except:
-        major = "ACTUARIAL SCIENCE" #don't hardcode later
+        majors = ["HELLO"] #don't hardcode later
         
     startingSemester = "Fall 2022" #ditto
-    dictionaries = createDictionaries(major)
+    dictionaries = createDictionaries(majors)
     dict_1 = dictionaries[0]
     dict_2 = dictionaries[1]
     dict_3 = dictionaries[2]

@@ -61,8 +61,8 @@ def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester,
                         # semesterList[semesterCounter].remove(semesterClass)
                         # semesterList[semesterCounter-1].append(semesterClass)
                         # retest = True
-                        working = False
-                        break
+                        #working = False
+                        #break
                 else:
                     springOffered = dict_2[semesterClass][1]
                     if int(springOffered) == 0:
@@ -75,11 +75,11 @@ def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester,
                 #check odd/even years
                 yearOfferings = dict_7[semesterClass]
                 if yearOfferings != "11": #if it isn't offered every year...
-                    if currentYear % 2 == 0 and yearOfferings[1] != 1: #if even semester and not offered then
+                    if currentYear % 2 == 0 and int(yearOfferings[1]) != 1: #if even semester and not offered then
                         print(semesterClass, "is not offered in even years")
                         working = False
                         break
-                    elif currentYear % 2 != 0 and yearOfferings[0] != 1: #if even semester and not offered then
+                    elif currentYear % 2 != 0 and int(yearOfferings[0]) != 1: #if odd semester and not offered then
                         print(semesterClass, "is not offered in odd years")
                         working = False
                         break
