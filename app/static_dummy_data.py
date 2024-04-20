@@ -1,7 +1,7 @@
 majors = [
     "Actuarial Science", 
     "Accounting",
-    "Economics",
+    "Economics (BSBA)",
     "Business Law",
     "Data Analytics",
     "Finance",
