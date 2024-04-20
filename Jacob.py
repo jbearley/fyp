@@ -205,7 +205,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     for a in credits_left:
         credits_left_list.append(credits_left[a])
     while max(credits_left_list) > 3 + min(credits_left_list):
-        print("you need to balance!")
+        #print("you need to balance!")
         stuffTuple = loadBalance(credits_left, semester_lists, spots_dict, dict_3, counter, new)
         credits_left = stuffTuple[0]
         semester_lists = stuffTuple[1]

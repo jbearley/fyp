@@ -12,12 +12,12 @@ def loadBalance(credits_left, semester_lists, spots_dict, dict_3, counter, new):
             counter2 -= 1
     
     new = False
-    print(credits_left2)
+    #print(credits_left2)
     
     fullSemester = credits_left2.index(min(credits_left2)) + 1
     emptySemester = credits_left2.index(max(credits_left2)) + 1
             
-    print(emptySemester, fullSemester)
+    #print(emptySemester, fullSemester)
     for course in semester_lists[fullSemester]:
         if course != "Placeholder":
             if 8 in spots_dict[course]: #ensure no classes go after it
@@ -30,6 +30,6 @@ def loadBalance(credits_left, semester_lists, spots_dict, dict_3, counter, new):
                     credits_left[emptySemester] -= float(dict_3[course])
                     new = True
     
-    print(credits_left)
+    #print(credits_left)
     counter += 1
     return credits_left, semester_lists, counter, new
