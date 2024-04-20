@@ -3,6 +3,7 @@ from operator import itemgetter
 from class_prereqs_score import class_prereqs_score
 from class_is_prereq_score import class_is_prereq_score
 from dictionaries2 import *
+from balanceCredits import *
 
 
 # Given requirements dictionary
@@ -163,7 +164,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     # Fill semester lists for required courses
     credits_left = {i: 18 for i in range(1, 9)}  # Initialize credits left for each semester
     fill_semester_lists(spots_dict, semester_lists, credits_left, requirements)
-
+    
     # Fill semester lists for AOI courses
 
     aoi_req = {'Artistic Literacy','Critical Thinking','Engaged Citizen','Global & Cultural Understanding','Historical Foundations','Historical Foundations','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy','Values and Ethics','Written Communication'}
@@ -192,13 +193,31 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
         remaining_elective_slots = sum(credits_left.values()) // 3  # Calculate the number of elective slots remaining
         elective_slots_filled = 0
         for semester, slots_left in credits_left.items():
-            while slots_left >= 3 and elective_slots_filled < remaining_elective_slots:
+            while slots_left >= 4 and elective_slots_filled < remaining_elective_slots:
                 semester_lists[semester].append(placeholder_course)
                 elective_slots_filled += 1
                 slots_left -= 3
+                
+
+    counter = 0
+    new = False
+    credits_left_list = []
+    for a in credits_left:
+        credits_left_list.append(credits_left[a])
+    while max(credits_left_list) > 3 + min(credits_left_list):
+        print("you need to balance!")
+        stuffTuple = loadBalance(credits_left, semester_lists, spots_dict, dict_3, counter, new)
+        credits_left = stuffTuple[0]
+        semester_lists = stuffTuple[1]
+        counter = stuffTuple[2]
+        new = stuffTuple[3]
+        if counter >= 20:
+            break
+
 
     fill_placeholder_courses(semester_lists, credits_left)
     check_for_aoi(aoi_req, dict_6, semester_lists)
+    
     #fill_for_aoi(aoi_req, dict_6, semester_lists)
 
     # Print the filled semester lists
@@ -211,5 +230,6 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
                 courses.insert(courses.index(course)+1, popped_courses[course])
         #print(f"Semester {semester}: {courses}")
         semesterLists.append(courses)
-    
+        
+        
     return semesterLists

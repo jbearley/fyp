@@ -127,7 +127,7 @@ def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
                         courseAttributes = None
                     courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': [courseAttributes]}
                 else:
-                    courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 0, 'attributes': []}
+                    courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 3, 'attributes': []}
                 #have courses with 0 credits appear first
                 if courseDict[course]["num_credits"] == 0 and courseDict[course]["title"] != "Placeholder":
                     finalSchedule[semester].update({course:courseDict[course]})
