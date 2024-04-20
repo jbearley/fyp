@@ -29,8 +29,6 @@ def loadBalance(credits_left, semester_lists, spots_dict, dict_3, counter, new):
                     credits_left[fullSemester] += float(dict_3[course])
                     credits_left[emptySemester] -= float(dict_3[course])
                     new = True
-                    if float(dict_3[course]) != 0:
-                        counter -= 1
     
     print(credits_left)
     counter += 1
