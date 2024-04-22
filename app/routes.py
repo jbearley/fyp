@@ -33,6 +33,7 @@ def index():
             if request.args.get("concentrations")
             else []
         ),
+        "classes": serialize(request.args.get("classes")) if request.args.get("classes") else []
     }
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
     try:

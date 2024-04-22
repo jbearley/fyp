@@ -168,12 +168,12 @@ function inputSubmit() {
 
 function requirementsChecklist() {
 	const requirementsJSON = JSON.parse(document.querySelector('#requirements-overview').getAttribute('data-requirements'));
-	console.log(requirementsJSON);
 	const fypJSON = JSON.parse(document.querySelector('#by-semester').getAttribute('data-fyp'));
 	let allClasses = [];
 	Object.values(fypJSON).forEach(classes => {
 		allClasses = [...allClasses, ...Object.keys(classes)];
 	});
+	const checked = [];
 	const checkRequirements = (categoryKey, requirements) => {
 		Object.entries(requirements).forEach(([reqKey, classes]) => {
 			if (reqKey == 'singles') {
@@ -182,6 +182,7 @@ function requirementsChecklist() {
 						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] #${reqKey}_${classKey}`);
 						console.log($checkbox);
 						$checkbox.checked = true;
+						checked.push(classKey);
 					} catch {}
 				});
 				return;
@@ -192,6 +193,7 @@ function requirementsChecklist() {
 			while (i < classes.length) {
 				if (allClasses.includes(classes[i])) {
 					found++;
+					checked.push(classes[i]);
 					try {
 						const $radioInput = document.querySelector(`[category-key="${categoryKey}"] #${reqKey}_${classes[i]}`);
 						$radioInput.checked = true;
