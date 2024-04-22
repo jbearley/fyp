@@ -44,7 +44,7 @@ def getRequirementsForFrontEnd(selectedMajorList):
     tableDict = {}
     tableDict["ACTUARIAL SCIENCE"] = ["ACT_SCI_MAJOR", "PICK_TWO_ACT_SCI"]
     tableDict["ACCOUNTING"] = ["ACCOUNTING_MAJOR", "PICK_TWO_ACC"]
-    tableDict["ECONOMICS"] = ["ECON_MAJOR", "CHOOSE_FOUR_ECON"]
+    tableDict["ECONOMICS (BSBA)"] = ["ECON_MAJOR", "CHOOSE_FOUR_ECON"]
     tableDict["BUSINESS LAW"] = ["BLAW_MAJOR", "CHOOSE_THREE_BLAW"]
     tableDict["DATA ANALYTICS"] = ["DATA_ANALYTICS_MAJOR"]
     tableDict["FINANCE"] = ["FIN_MAJOR", "PICK_THREE_FIN"]
@@ -82,13 +82,26 @@ def getRequirementsForFrontEnd(selectedMajorList):
                     classList.append(tup[1])
             if "CHOOSE" in tableName:
                 tableName = tableName.replace("CHOOSE", "PICK")
-            tableName = tableName.replace("_", " ")
+            #tableName = tableName.replace("_", " ")
             #need to get rid of things after second word
-            indexFirstSpace = tableName.index(" ")
+            indexFirstSpace = tableName.index("_")
             temp = tableName[indexFirstSpace+1:]
-            indexSecondSpace = temp.index(" ")
-            tableName = tableName[0:indexSecondSpace + indexFirstSpace + 1]
+            indexSecondSpace = temp.index("_")
+            number = temp[:indexSecondSpace]
+            if number.lower() == "one":
+                number = 1
+            elif number.lower() == "two":
+                number = 2
+            elif number.lower() == "three":
+                number = 3
+            elif number.lower() == "four":
+                number = 4
+            elif number.lower() == "five":
+                number = 5
+            tableName = tableName[0:indexFirstSpace + 1] + str(number)
             tableName = tableName.capitalize()
+            tableName2 = tableName.replace("_", " ")
+            tableName = tableName + " " + tableName2 + ":"
             majorRequirementsToFrontEnd[major][tableName] = classList
         
     requirementsToFrontEnd = {}
