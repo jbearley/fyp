@@ -9,6 +9,7 @@ from class_prereqs_score import class_prereqs_score
 from class_is_prereq_score import class_is_prereq_score
 from dictionaries2 import *
 from finalizeSchedule import *
+from reqsFormat import *
 
 sys.path.append("app")  # This must be called before importing below modules
 from app.random_dummy_data import Dummy_Data
@@ -64,7 +65,8 @@ def index():
         "main.html",
         title="Drake Four-Year Plan Generator",
         classes_by_semester=finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester, semesterList),
-        requirements=data.get_requirements(),
+        #requirements=data.get_requirements(),
+        requirements = getRequirementsForFrontEnd(majors),
         drake_curriculum=drake_curriculum,
         user_choices=user_choices,
         styles_to_enqueue=styles_to_enqueue,
