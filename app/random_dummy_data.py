@@ -88,7 +88,7 @@ class Dummy_Data:
             "pick_1_global_and_cultural_understanding": random.sample(
                 self.all_classes, 5
             ),
-            "pick_1_scientific_literacy_-_life/behavioral_science": random.sample(
+            "pick_1_scientific_literacy_-_life_science": random.sample(
                 self.all_classes, 5
             ),
             "pick_1_scientific_literacy_-_physical_science": random.sample(
@@ -98,6 +98,6 @@ class Dummy_Data:
             "pick_1_values_and_ethics": random.sample(self.all_classes, 5),
             "pick_1_written_communication": random.sample(self.all_classes, 5),
         }
-        res["equity_and_inclusion"] = {"pick_one": random.sample(self.all_classes, 2)}
+        res["equity_and_inclusion"] = {"pick_1_equity_and_inclusion_requirement": random.sample(self.all_classes, 2)}
         res["total_credits"] = 120
         return res

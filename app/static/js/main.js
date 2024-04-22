@@ -168,32 +168,55 @@ function inputSubmit() {
 
 function requirementsChecklist() {
 	const requirementsJSON = JSON.parse(document.querySelector('#requirements-overview').getAttribute('data-requirements'));
+	console.log(requirementsJSON);
 	const fypJSON = JSON.parse(document.querySelector('#by-semester').getAttribute('data-fyp'));
 	let allClasses = [];
 	Object.values(fypJSON).forEach(classes => {
 		allClasses = [...allClasses, ...Object.keys(classes)];
 	});
-	Object.entries(requirementsJSON.AOIs).forEach(([aoiKey, classes]) => {
-		const [, numChoices, aoi, ...rest] = aoiKey.match(/pick_(\d+)_(.*)/);
-		let found = 0;
-		let i = 0;
-		while (i < classes.length) {
-			if (allClasses.includes(classes[i])) {
-				found++;
-				try {
-					const $radioInput = document.querySelector(`#${aoiKey}_${classes[i]}`);
-					$radioInput.checked = true;
-				} catch {}
+	const checkRequirements = (categoryKey, requirements) => {
+		Object.entries(requirements).forEach(([reqKey, classes]) => {
+			if (reqKey == 'singles') {
+				classes.forEach(classKey => {
+					try {
+						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] #${reqKey}_${classKey}`);
+						console.log($checkbox);
+						$checkbox.checked = true;
+					} catch {}
+				});
+				return;
 			}
-			i++;
-		}
-		if (found >= numChoices) {
+			const [, numChoices, req, ...rest] = reqKey.match(/pick_(\d+)_(.*)/);
+			let found = 0;
+			let i = 0;
+			while (i < classes.length) {
+				if (allClasses.includes(classes[i])) {
+					found++;
+					try {
+						const $radioInput = document.querySelector(`[category-key="${categoryKey}"] #${reqKey}_${classes[i]}`);
+						$radioInput.checked = true;
+					} catch { }
+				}
+				i++;
+			}
 			try {
-				const $aoiCheckbox = document.querySelector(`#${aoi}`);
-				console.log($aoiCheckbox);
-				$aoiCheckbox.checked = true;
-				
-			} catch {}
-		}
+				const $checkbox = document.querySelector(`[category-key="${categoryKey}"] #${req}`);
+				const $label = $checkbox.nextElementSibling;
+				if (found >= numChoices) {
+					$checkbox.checked = true;
+					found = numChoices;
+				}
+				if ($label && $label.nodeName == 'LABEL') {
+					$label.innerHTML = $label.innerHTML.replace(/(.*)([(].*[)])/, (match, p1) => {
+						return p1 + `(${found}/${numChoices})`;
+					});
+				}
+			} catch { }
+		});
+	};
+	checkRequirements("AOIs", requirementsJSON.AOIs);
+	checkRequirements("equity_and_inclusion", requirementsJSON.equity_and_inclusion);
+	Object.entries(requirementsJSON.majors).forEach(([major, majorReqs]) => {
+		checkRequirements(major, majorReqs);
 	});
 }

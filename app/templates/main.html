@@ -57,9 +57,10 @@
                             type='checkbox'><label>{{requirements.total_credits}}</label></div>
                 </div>
                 {% set temp = requirements.majors %}
-                {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %} <!-- temp = {...majors, AOIs: <aois>} -->
+                {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %}
+                {% if temp.update({'equity_and_inclusion': requirements.equity_and_inclusion}) %}{% endif %}
                 {% for category_key, category in temp.items() %}
-                <div class='reqs-container'>
+                <div class='reqs-container' category-key='{{category_key}}'>
                     <h3>{{category_key}}</h3>
                     <div class='reqs'>
                         {% for req_key, req in category.items() %}
@@ -76,7 +77,7 @@
                         </div>
                         {% else %}
                         {% for class in req %}
-                        <div class='req-header'><input type='checkbox'><label>{{class}}</label></div>
+                        <div class='req-header'><input type='checkbox' id='singles_{{class}}'><label>{{class}}</label></div>
                         {% endfor %}
                         {% endif %}
                         {% endfor %}
