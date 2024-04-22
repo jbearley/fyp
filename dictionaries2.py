@@ -15,7 +15,7 @@ def createDictionaries(selectedMajorList):
     if "ACCOUNTING" in selectedMajorList:
         tableList.append("ACCOUNTING_MAJOR")
         tableList.append("PICK_TWO_ACC")
-    if "ECONOMICS" in selectedMajorList:
+    if "ECONOMICS (BSBA)" in selectedMajorList:
         tableList.append("ECON_MAJOR")
         tableList.append("CHOOSE_FOUR_ECON")
     if "BUSINESS LAW" in selectedMajorList:
@@ -39,6 +39,10 @@ def createDictionaries(selectedMajorList):
     elif len(tableList) == 2: #for now, indices will also have to change in next line
         #print("TWO MAJORS:", selectedMajorList)
         query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    else: #for now, indices will also have to change in next line
+        #print("TWO MAJORS:", selectedMajorList)
+        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    
     cursor.execute(query_1)
     dict_1 = {}
     result = cursor.fetchall()
