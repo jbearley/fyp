@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <button id='add-major' data-majors='{{drake_curriculum["majors"]|join(",")}}'></button>
+                        <button id='add-major' data-majors='{{drake_curriculum["majors"]|join(",")}}'><span class='text'>Add major</span></button>
                     </div>
                     <input type="submit" value="Submit">
                 </form>
@@ -43,7 +43,7 @@
         </div>
         <div class='resizer'></div>
     </section>
-    <section id='requirements-overview'>
+    <section id='requirements-overview' data-requirements='{{requirements|tojson|safe}}'>
         <div class='not-resizer'>
             <header>
                 <h1>Requirements Checklist</h1>
@@ -66,7 +66,7 @@
                         {% if req_key != 'singles' %}
                         <div class='choice-group see-more-container'>
                             {% set num_choices = req_key[5]|int %}
-                            <div class='req-header'><input type='checkbox'><label>{{req_key[7:]}}
+                            <div class='req-header' pick-n='{{num_choices}}'><input type='checkbox' id='{{req_key[7:]}}'><label>{{req_key[7:]}}
                                     (-/{{num_choices}})</label></div>
                             {% for class in req %}
                             <label for='{{req_key}}_{{class}}'><input type='radio' value='{{class}}'
@@ -88,7 +88,7 @@
         </div>
         <div class='resizer'></div>
     </section>
-    <section id='by-semester'>
+    <section id='by-semester' data-fyp='{{classes_by_semester|tojson|safe}}'>
         <div class='not-resizer'>
             <header>
                 <div class='left'>

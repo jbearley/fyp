@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	expandCollapseAll();
 	dropdowns();
 	inputSubmit();
+	requirementsChecklist();
 });
 
 /**
@@ -162,5 +163,37 @@ function inputSubmit() {
 		const formData = new FormData(e.currentTarget);
 		let url = "?majors=" + Array.from(formData.values()).join(",");
 		window.location.href = url;
+	});
+}
+
+function requirementsChecklist() {
+	const requirementsJSON = JSON.parse(document.querySelector('#requirements-overview').getAttribute('data-requirements'));
+	const fypJSON = JSON.parse(document.querySelector('#by-semester').getAttribute('data-fyp'));
+	let allClasses = [];
+	Object.values(fypJSON).forEach(classes => {
+		allClasses = [...allClasses, ...Object.keys(classes)];
+	});
+	Object.entries(requirementsJSON.AOIs).forEach(([aoiKey, classes]) => {
+		const [, numChoices, aoi, ...rest] = aoiKey.match(/pick_(\d+)_(.*)/);
+		let found = 0;
+		let i = 0;
+		while (i < classes.length) {
+			if (allClasses.includes(classes[i])) {
+				found++;
+				try {
+					const $radioInput = document.querySelector(`#${aoiKey}_${classes[i]}`);
+					$radioInput.checked = true;
+				} catch {}
+			}
+			i++;
+		}
+		if (found >= numChoices) {
+			try {
+				const $aoiCheckbox = document.querySelector(`#${aoi}`);
+				console.log($aoiCheckbox);
+				$aoiCheckbox.checked = true;
+				
+			} catch {}
+		}
 	});
 }
