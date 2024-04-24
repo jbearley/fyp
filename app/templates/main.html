@@ -10,6 +10,38 @@
                 <p>Use the fields below to set your graduation year, majors, and minors.</p>
             </header>
             <content>
+                <!-- minors-->
+                {% if drake_curriculum and user_choices and ('semesters' in drake_curriculum) and ('semesters' in
+                user_choices) %}
+                <form id="semesterselect">
+                    <div class='dropdowns'>
+                        {% for s in range((user_choices['semesters'] | length)) %}
+                        {% set semester_choice = user_choices['semesters'][s] %}
+                        <div class='dropdown-container'>
+                            <button class='delete-major'></button>
+                            <select name='semesters'>
+                                {% for semester in drake_curriculum['semesters'] %}
+                                <option value='{{semester}}' {% if semester_choice==semester %} selected {% endif %}>{{semester}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class='dropdown'>
+                                <div class='label'>Semester: <b>{{semester_choice}}</b></div>
+                                <div class='options'>
+                                    {% for semester in drake_curriculum['semesters'] %}
+                                    <button class='option' value='{{semester}}'>{{semester}}</button>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <button id='add-semester' data-semesters='{{drake_curriculum["semesters"]|join(",")}}'><span class='text'>Add semester</span></button>
+                    </div>
+                    <input type="submit" value="Submit">
+                </form>
+                {% endif %}
+                <div> <hr> </div>
+                <!-- majors-->
                 {% if drake_curriculum and user_choices and ('majors' in drake_curriculum) and ('majors' in
                 user_choices) %}
                 <form id="majorselect">
@@ -70,6 +102,8 @@
                     <input type="submit" value="Submit">
                 </form>
                 {% endif %}
+                <div> <hr> </div>
+
             </content>
         </div>
         <div class='resizer'></div>
