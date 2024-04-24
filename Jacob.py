@@ -113,7 +113,11 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             
             if dict_4[course] != None: # if there is a year requirement
                 yearReq = dict_4[course]
-                if yearReq == "SO": # has to be taken sophmore yr or later
+                if yearReq == "FR": # has to be taken during freshman year
+                    for num in [3,4,5,6,7,8]:
+                        if num in fits_arr:
+                            fits_arr.remove(num) #can't fit anywhere but freshman year
+                elif yearReq == "SO": # has to be taken sophmore yr or later
                     for num in [1,2]:
                         if num in fits_arr:
                             fits_arr.remove(num) #can't fit in freshman year
@@ -188,15 +192,53 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     #                         credits_left[semester] -= 3
     #                         break
 
+    # def fill_placeholder_courses(semester_lists, credits_left):
+    #     placeholder_course = "Placeholder"
+    #     remaining_elective_slots = sum(credits_left.values()) // 3  # Calculate the number of elective slots remaining
+    #     elective_slots_filled = 0
+    #     for semester, slots_left in credits_left.items():
+    #         while slots_left >= 4 and elective_slots_filled < remaining_elective_slots:
+    #             semester_lists[semester].append(placeholder_course)
+    #             elective_slots_filled += 1
+    #             slots_left -= 3
+    
     def fill_placeholder_courses(semester_lists, credits_left):
-        placeholder_course = "Placeholder"
-        remaining_elective_slots = sum(credits_left.values()) // 3  # Calculate the number of elective slots remaining
-        elective_slots_filled = 0
-        for semester, slots_left in credits_left.items():
-            while slots_left >= 4 and elective_slots_filled < remaining_elective_slots:
-                semester_lists[semester].append(placeholder_course)
-                elective_slots_filled += 1
-                slots_left -= 3
+        i = 1
+        j = 1
+        
+        while sum(credits_left.values()) > 24:
+            if i <= 8:
+                while credits_left[i] > 5:
+                    semester_lists[i].append("Elective Course " + str(j))
+                    credits_left[i] -= 3
+                    j += 1
+                i += 1
+            else:
+                break
+            
+        while sum(credits_left.values()) > 24:
+            if i <= 8:
+                while credits_left[i] > 4:
+                    semester_lists[i].append("Elective Course " + str(j))
+                    credits_left[i] -= 3
+                    j += 1
+                i += 1
+            else:
+                break
+            
+        i = 1
+        print()
+        while sum(credits_left.values()) > 24: #not meeting min credit requirement
+            if credits_left[i] > 3:
+                semester_lists[i].append("Elective Course " + str(j))
+                credits_left[i] -= 3
+                j += 1
+            i += 1
+            if i == 9:
+                print("ERROR")
+                break
+            
+        return semester_lists
                 
 
     counter = 0
@@ -215,7 +257,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             break
 
 
-    fill_placeholder_courses(semester_lists, credits_left)
+    semester_lists = fill_placeholder_courses(semester_lists, credits_left)
     check_for_aoi(aoi_req, dict_6, semester_lists)
     
     #fill_for_aoi(aoi_req, dict_6, semester_lists)

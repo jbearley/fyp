@@ -19,7 +19,7 @@ def loadBalance(credits_left, semester_lists, spots_dict, dict_3, counter, new):
             
     #print(emptySemester, fullSemester)
     for course in semester_lists[fullSemester]:
-        if course != "Placeholder":
+        if "Elective" not in course:
             if 8 in spots_dict[course]: #ensure no classes go after it
                 if emptySemester in spots_dict[course]: #ensure its offered that semester
                     #move it to that semester

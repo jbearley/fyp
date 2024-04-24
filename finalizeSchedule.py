@@ -51,7 +51,7 @@ def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester,
             #look at classes
             for semesterClass in oneSemesterList: #for each class in the selected semester
                 #Confirm that classes are placed when they are offered.
-                if semesterClass == "Placeholder" or semesterClass == "AOI": #ignore AOIs - may need to update this depending on how we end up formatting these
+                if "Elective" in semesterClass or semesterClass == "AOI": #ignore AOIs - may need to update this depending on how we end up formatting these
                     continue
                 #check fall/spring
                 if currentSeason == "Fall":
@@ -86,6 +86,10 @@ def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester,
                 #check grade requirements
                 gradeReqs = dict_4[semesterClass]
                 if gradeReqs != None:
+                    if gradeReqs == "FR" and semesterCounter > 2:
+                        print(semesterClass, "is only offered to Freshman.")
+                        working = False
+                        break
                     if gradeReqs == "SO" and semesterCounter <3:
                         print(semesterClass, "requires at least Sophomore status.")
                         working = False
@@ -94,8 +98,8 @@ def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester,
                         print(semesterClass, "requires at least Junior status.")
                         working = False
                         break
-                    elif gradeReqs == "SR" and semesterCounter <7:
-                        print(semesterClass, "requires at least Sophomore status.")
+                    elif gradeReqs == "SR" and semesterCounter < 7:
+                        print(semesterClass, "requires Senior status.")
                         working = False
                         break
                 currentSemester = addSemester(currentSeason + " " + str(currentYear))
@@ -116,7 +120,7 @@ def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
             for course in semesterList[i]:
                 courseDict = {}
                 #for each course, we need the name, course_num and attributes
-                if course != "Placeholder" and course != "AOI":
+                if "Elective" not in course and course != "AOI":
                     courseTitle = dict_9[course]
                     courseCredits = float(dict_3[course])
                     if courseCredits % 1 == 0:
@@ -129,7 +133,7 @@ def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
                 else:
                     courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 3, 'attributes': []}
                 #have courses with 0 credits appear first
-                if courseDict[course]["num_credits"] == 0 and courseDict[course]["title"] != "Placeholder":
+                if courseDict[course]["num_credits"] == 0 and "Elective" not in courseDict[course]["title"]:
                     finalSchedule[semester].update({course:courseDict[course]})
                 else:
                     tempList[course] = courseDict[course]
@@ -147,10 +151,10 @@ def reformat2(semesterList, startingSemester, dict_8):
     while i <= 8:
         tempList = []
         for course in semesterList[i]:
-            if course != "Placeholder" and course != "AOI":
+            if "Elective" not in course and course != "AOI":
                 tempList.append(dict_8[course]) #gets dictionary for course with all info we pass to frontend
             else:
-                tempList.append("Placeholder")
+                tempList.append(course)
         finalSchedule[semester] = tempList #add entry for this semester
         
         semester = addSemester(semester)

@@ -108,7 +108,7 @@ def getRequirementsForFrontEnd(selectedMajorList):
     requirementsToFrontEnd["majors"] = majorRequirementsToFrontEnd
     requirementsToFrontEnd["AOIs"] = {"pick_1_artistic_literacy": ['class 1', 'class 2'], "pick_1_randomAOI": ['class 1', 'class 2']}
     requirementsToFrontEnd["equity_and_inclusion"] = {"pick 1": ['thing1', 'thing2']}
-    requirementsToFrontEnd["total credits"] = 120
+    requirementsToFrontEnd["total_credits"] = 120
     conn.commit()
     cursor.close()
     print(requirementsToFrontEnd)
