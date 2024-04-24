@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	expandCollapseAll();
 	dropdowns();
 	inputSubmit();
+	inputSubmit3();
     inputSubmit2();
 	requirementsChecklist();
 });
@@ -231,13 +232,30 @@ function inputSubmit() {
     return url
 }
 
+function inputSubmit3() {
+	const form = document.querySelector("#semesterselect");
+	form.addEventListener("submit", function (e) {
+		e.preventDefault(); // Prevent default form submission behavior
+		const formData = new FormData(e.currentTarget);
+		let url = "majors=" + Array.from(formData.values()).join(",");
+		window.location.href = url;
+        val = "string?"
+	});
+    const formData = new FormData(document.querySelector("#semesterselect"));
+    let url = "semesters=" + Array.from(formData.values()).join(",");
+    /*window.location.href = url; */
+    val = "string?"
+    return url
+}
+
 function inputSubmit2() {
 	const form = document.querySelector("#minorselect");
 	form.addEventListener("submit", function (e) {
 		e.preventDefault(); // Prevent default form submission behavior
 		const formData = new FormData(e.currentTarget);
         var val = inputSubmit()
-		let url = "?minors=" + Array.from(formData.values()).join(",") + "&" + String(val);
+		var sem = inputSubmit3()
+		let url = "?minors=" + Array.from(formData.values()).join(",") + "&" + String(val) + "&" + String(sem);
 		window.location.href = url;
 	});
 }
