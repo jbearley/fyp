@@ -148,7 +148,7 @@ function dropdowns() {
 				${formOptions}
 			</select>
 			<div class='dropdown'>
-				<div class='label'>Major ${majorNumber}: <b>Select option...</b></div>
+				<div class='label'>Major: <b>Select option...</b></div>
 				<div class='options'>
 					${displayOptions}
 				</div>
@@ -176,7 +176,7 @@ function dropdowns() {
 				${formOptions}
 			</select>
 			<div class='dropdown'>
-				<div class='label'>Minor ${minorNumber}: <b>Select option...</b></div>
+				<div class='label'>Minor: <b>Select option...</b></div>
 				<div class='options'>
 					${displayOptions}
 				</div>
