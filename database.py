@@ -157,6 +157,124 @@ for tup in result_15:
 
 
 
+print("\n")
+query_16 = f"""
+SELECT * FROM dbo.ACCOUNTING_MINOR
+"""
+cursor.execute(query_16)
+result_16 = cursor.fetchall()
+print("This is the Accounting minor table:")
+for tup in result_16:
+    print(tup)
+
+
+
+print("\n")
+query_17 = f"""
+SELECT * FROM dbo.ACT_SCI_MINOR
+"""
+cursor.execute(query_17)
+result_17 = cursor.fetchall()
+print("This is the Actuarial science minor table:")
+for tup in result_17:
+    print(tup)
+
+
+
+print("\n")
+query_18 = f"""
+SELECT * FROM dbo.ECON_MINOR
+"""
+cursor.execute(query_18)
+result_18 = cursor.fetchall()
+print("This is the Economics minor table:")
+for tup in result_18:
+    print(tup)
+
+
+
+print("\n")
+query_19 = f"""
+SELECT * FROM dbo.THREE_ECON_MINOR
+"""
+cursor.execute(query_19)
+result_19 = cursor.fetchall()
+print("This is the three econ minor  table:")
+for tup in result_19:
+    print(tup)
+
+
+
+print("\n")
+query_20 = f"""
+SELECT * FROM dbo.INFO_SYSTEMS_MINOR
+"""
+cursor.execute(query_20)
+result_20 = cursor.fetchall()
+print("This is the Information systems minor table:")
+for tup in result_20:
+    print(tup)
+
+
+print("\n")
+query_21 = f"""
+SELECT * FROM dbo.BLAW_MINOR
+"""
+cursor.execute(query_21)
+result_21 = cursor.fetchall()
+print("This is the Business law minor table:")
+for tup in result_21:
+    print(tup)
+
+
+
+print("\n")
+query_22 = f"""
+SELECT * FROM dbo.BLAW_MINOR_CHOOSE_TWO
+"""
+cursor.execute(query_22)
+result_22 = cursor.fetchall()
+print("This is the business law minor pick two table:")
+for tup in result_22:
+    print(tup)
+
+
+print("\n")
+query_23 = f"""
+SELECT * FROM dbo.MANAGEMENT_MINOR
+"""
+cursor.execute(query_23)
+result_23 = cursor.fetchall()
+print("This is the management minor table:")
+for tup in result_23:
+    print(tup)
+
+
+print("\n")
+query_24 = f"""
+SELECT * FROM dbo.MANAGEMENT_MINOR_CHOOSE_THREE
+"""
+cursor.execute(query_24)
+result_24 = cursor.fetchall()
+print("This is the managamenet minor choose three table:")
+for tup in result_24:
+    print(tup)
+
+
+print("\n")
+query_25 = f"""
+SELECT * FROM dbo.DATA_ANALYTICS_MINOR
+"""
+cursor.execute(query_25)
+result_25 = cursor.fetchall()
+print("This is the data analytics minor table:")
+for tup in result_25:
+    print(tup)
+
+
+
+
+
 
 
 
