@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	expandCollapseAll();
 	dropdowns();
 	inputSubmit();
+	inputSubmit3();
     inputSubmit2();
 	requirementsChecklist();
 });
@@ -185,6 +186,33 @@ function dropdowns() {
 		initializeDropdown($dropdownContainer.querySelector('.dropdown'));
 		e.currentTarget.insertAdjacentElement('beforebegin', $dropdownContainer);
 	});
+
+	document.querySelector('#add-semester').addEventListener('click', (e) => {
+		e.preventDefault();
+		let formOptions = '';
+		let semesterNumber = document.querySelectorAll('.dropdown').length + 1;
+		let displayOptions = '';
+		const semesters = e.currentTarget.getAttribute('data-semesters').split(',');
+		semesters.forEach(semester => {
+			formOptions += `<option value='${semester}'>${semester}</option>`;
+			displayOptions += `<button class='option' value='${semester}'>${semester}</button>`;
+		});
+		const $dropdownContainer = document.createElement('div');
+		$dropdownContainer.className = 'dropdown-container';
+		$dropdownContainer.innerHTML = `
+			<select name='semesters'>
+				${formOptions}
+			</select>
+			<div class='dropdown'>
+				<div class='label'>Semester: <b>Select option...</b></div>
+				<div class='options'>
+					${displayOptions}
+				</div>
+			</div>
+		`;
+		initializeDropdown($dropdownContainer.querySelector('.dropdown'));
+		e.currentTarget.insertAdjacentElement('beforebegin', $dropdownContainer);
+	});
 }
 
 function inputSubmit() {
@@ -203,13 +231,30 @@ function inputSubmit() {
     return url
 }
 
+function inputSubmit3() {
+	const form = document.querySelector("#semesterselect");
+	form.addEventListener("submit", function (e) {
+		e.preventDefault(); // Prevent default form submission behavior
+		const formData = new FormData(e.currentTarget);
+		let url = "majors=" + Array.from(formData.values()).join(",");
+		window.location.href = url;
+        val = "string?"
+	});
+    const formData = new FormData(document.querySelector("#semesterselect"));
+    let url = "semesters=" + Array.from(formData.values()).join(",");
+    /*window.location.href = url; */
+    val = "string?"
+    return url
+}
+
 function inputSubmit2() {
 	const form = document.querySelector("#minorselect");
 	form.addEventListener("submit", function (e) {
 		e.preventDefault(); // Prevent default form submission behavior
 		const formData = new FormData(e.currentTarget);
         var val = inputSubmit()
-		let url = "?minors=" + Array.from(formData.values()).join(",") + "&" + String(val);
+		var sem = inputSubmit3()
+		let url = "?minors=" + Array.from(formData.values()).join(",") + "&" + String(val) + "&" + String(sem);
 		window.location.href = url;
 	});
 }

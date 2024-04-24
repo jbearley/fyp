@@ -374,6 +374,23 @@ h3 {
     transition: all .2s;
 }
 
+.delete-semester,
+#add-semester {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    height: 1.25rem;
+    margin-top: 3px;
+    padding: 0;
+    background-color: var(--gray-200);
+    border: 1px solid var(--drake-blue);
+    border-radius: .375rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all .2s;
+}
+
 
 .delete-major:hover,
 #add-major:hover {
@@ -382,6 +399,11 @@ h3 {
 
 .delete-minor:hover,
 #add-minor:hover {
+    background-color: var(--light-blue);
+}
+
+.delete-semester:hover,
+#add-semester:hover {
     background-color: var(--light-blue);
 }
 
@@ -411,11 +433,28 @@ h3 {
     transition: all .2s;
 }
 
+.delete-semester::after,
+#add-semester::before {
+    content: '';
+    background-color: var(--drake-blue);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    transition: all .2s;
+}
+
 .delete-major {
     width: 1.25rem;
 }
 
 .delete-minor {
+    width: 1.25rem;
+}
+
+.delete-semester {
     width: 1.25rem;
 }
 
@@ -433,11 +472,22 @@ h3 {
     -webkit-mask-image: url(../images/minus-svgrepo-com.svg);
 }
 
+.delete-semester::after {
+    position: absolute;
+    inset: 2px;
+    mask-image: url(../images/minus-svgrepo-com.svg);
+    -webkit-mask-image: url(../images/minus-svgrepo-com.svg);
+}
+
 .delete-major:hover::after {
     inset: 1px;
 }
 
 .delete-minor:hover::after {
+    inset: 1px;
+}
+
+.delete-semester:hover::after {
     inset: 1px;
 }
 
@@ -451,11 +501,20 @@ h3 {
     width: fit-content;
 }
 
+#add-semester {
+    max-width: 1.25rem;
+    width: fit-content;
+}
+
 #add-major:hover {
     max-width: 6rem;
 }
 
 #add-minor:hover {
+    max-width: fit-content;
+}
+
+#add-semester:hover {
     max-width: 6rem;
 }
 
@@ -481,12 +540,28 @@ h3 {
     transition: all .2s;
 }
 
+#add-semester::before {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    width: calc(1.25rem - 2px);
+    height: 1rem;
+    mask-image: url(../images/plus-large-svgrepo-com.svg);
+    -webkit-mask-image: url(../images/plus-large-svgrepo-com.svg);
+    transition: all .2s;
+}
+
 #add-major:hover::before {
     transform: scale(1.05);
     transform-origin: center;
 }
 
 #add-minor:hover::before {
+    transform: scale(1.05);
+    transform-origin: center;
+}
+
+#add-semester:hover::before {
     transform: scale(1.05);
     transform-origin: center;
 }
@@ -509,6 +584,15 @@ h3 {
     margin-right: .5rem;
 }
 
+#add-semester .text {
+    white-space: nowrap;
+    color: var(--drake-blue);
+    font-weight: 550;
+    font-size: 13px;
+    margin-left: .25rem;
+    margin-right: .5rem;
+}
+
 .dropdowns {
     display: flex;
     flex-direction: column;
@@ -520,6 +604,10 @@ h3 {
 }
 
 #minorselect select {
+    display: none;
+}
+
+#semesterselect select {
     display: none;
 }
 
@@ -727,6 +815,12 @@ h3 {
     gap: 24px;
 }
 
+#semesterselect {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 #majorselect input[type="submit"] {
     appearance: none;
     border: none;
@@ -751,11 +845,27 @@ h3 {
     cursor: pointer;
 }
 
+#semesterselect input[type="submit"] {
+    appearance: none;
+    border: none;
+    border-radius: .5rem;
+    font-size: 14px;
+    font-weight: 550;
+    padding: .5rem .75rem;
+    color: white;
+    background-color: var(--drake-blue);
+    cursor: pointer;
+}
+
 #majorselect input[type="submit"]:hover {
     filter: brightness(1.2);
 }
 
 #minorselect input[type="submit"]:hover {
+    filter: brightness(1.2);
+}
+
+#semesterselect input[type="submit"]:hover {
     filter: brightness(1.2);
 }
 

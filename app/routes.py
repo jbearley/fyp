@@ -34,7 +34,8 @@ def index():
             if request.args.get("concentrations")
             else []
         ),
-        "classes": serialize(request.args.get("classes")) if request.args.get("classes") else []
+        "classes": serialize(request.args.get("classes")) if request.args.get("classes") else [],
+        "semesters": request.args.get("semesters") if request.args.get("semesters") else ""
     }
     data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
     try:
@@ -45,8 +46,10 @@ def index():
             majors.append("ACTUARIAL SCIENCE")
     except:
         majors = ["HELLO"] #don't hardcode later
-        
-    startingSemester = "Fall 2022" #ditto
+    if user_choices["semesters"] == "":  
+        startingSemester = "Fall 2022"
+    else:
+        startingSemester = user_choices["semesters"]
     dictionaries = createDictionaries(majors)
     dict_1 = dictionaries[0]
     dict_2 = dictionaries[1]
