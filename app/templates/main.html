@@ -45,8 +45,10 @@
                 user_choices) %}
                 <form id="majorselect">
                     <div class='dropdowns'>
-                        {% for i in range((user_choices['majors'] | length)) %}
-                        {% set major_choice = user_choices['majors'][i] %}
+                        {% set num_choices = user_choices['majors'] | length %}
+                        {% set num_dropdowns = num_choices if num_choices else 1 %}
+                        {% for i in range(num_dropdowns) %}
+                        {% set major_choice = user_choices['majors'][i] if num_choices else "Select option..." %}
                         <div class='dropdown-container'>
                             <button class='delete-major'></button>
                             <select name='majors'>
@@ -76,8 +78,10 @@
                 user_choices) %}
                 <form id="minorselect">
                     <div class='dropdowns'>
-                        {% for m in range((user_choices['minors'] | length)) %}
-                        {% set minor_choice = user_choices['minors'][m] %}
+                        {% set num_choices = user_choices['minors'] | length %}
+                        {% set num_dropdowns = num_choices if num_choices else 1 %}
+                        {% for m in range(num_dropdowns) %}
+                        {% set minor_choice = user_choices['minors'][m] if num_choices else "Select option..." %}
                         <div class='dropdown-container'>
                             <button class='delete-major'></button>
                             <select name='minors'>
