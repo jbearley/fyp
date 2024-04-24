@@ -151,7 +151,7 @@
                                         class='course-number'>{{class.course_number}}</span><span
                                         class='course-title'>{{class.title}}</span>
                                 </div>
-                                {% if class.attributes %}
+                                {% if class.attributes and class.attributes[0] %}
                                 <div class='attributes'>
                                     {% for attribute in class.attributes %}
                                     <div class='chip'>{{attribute}}</div>
