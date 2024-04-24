@@ -200,7 +200,6 @@ function dropdowns() {
 		const $dropdownContainer = document.createElement('div');
 		$dropdownContainer.className = 'dropdown-container';
 		$dropdownContainer.innerHTML = `
-			<button class='delete-major'></button>
 			<select name='semesters'>
 				${formOptions}
 			</select>
