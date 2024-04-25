@@ -30,6 +30,15 @@ section:has(.resizer) {
     cursor: pointer;
 }
 
+.h-bar {
+    margin: 0 auto;
+    width: 98%;
+    height: 1px;
+    background-color: var(--drake-blue);
+    opacity: .25;
+    display: flex;
+}
+
 .not-resizer {
     display: flex;
     width: 100%;
@@ -129,21 +138,22 @@ p {
 
 .req-header {
     display: flex;
-    align-items: center;
-    gap: 6px;
+    gap: .25rem;
 }
 
 .req-header label {
     cursor: inherit;
+    line-height: 1.25rem;
+    font-size: .875rem;
+    color: var(--gray-600);
 }
 
 .req-header input[type="checkbox"] {
     display: flex;
     flex-shrink: 0;
-    margin: 0;
-    margin-left: 2px;
-    width: 1rem;
-    height: 1rem;
+    margin: 4px;
+    width: .75rem;
+    height: .75rem;
     border: 1px solid var(--gray-400) !important;
     border-radius: 4px;
 }
@@ -151,31 +161,43 @@ p {
 .reqs {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: .25rem;
 }
 
 .choice-group {
     display: flex;
     flex-direction: column;
+    gap: 0;
+    transition: all .2s;
+}
+
+.choice-group.expanded {
+    gap: .125rem;
+}
+
+.choice-group input[type="radio"] {
+    margin: 4px;
+    width: .75rem;
+    height: .75rem;
+    cursor: pointer;
 }
 
 .choice-group>label {
     display: flex;
-    align-items: center;
-    height: 0;
+    gap: .25rem;
+    max-height: 0;
     opacity: 0;
-    margin-left: .25rem;
+    line-height: 1.25rem;
+    font-size: .875rem;
+    color: var(--gray-600);
+    margin-left: .625rem;
     margin-top: 0;
     transition: all .2s;
 }
 
 .choice-group.expanded>label {
-    height: 1.5rem;
+    max-height: 5rem;
     opacity: 1;
-}
-
-.choice-group.expanded>label:first-of-type {
-    margin-top: .25rem;
 }
 
 .fyp-grid {

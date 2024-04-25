@@ -1,44 +1,92 @@
-"""
-FYP Table
 {
-	"semester_key_1": {
-		"class_key_1": <class>,
-		"class_key_2": <class>,
-		"class_key_3": <class>,
-		"class_key_4": <class>,
-		"class_key_5": <class>,
-	},
-	...
-}
-
-Requirements Table (So that we can justify the FYP result on the front-end)
-{
-    "major_1": {
-        "singles": [
-            "class_key_1",
-            "class_key_2",
-            ...
-        ],
-        "pick_1_description1": [
-            "class_key_3",
-            "class_key_4",
-            ...
-        ],
-        "pick_1_description2": [
-            "class_key_5",
-            "class_key_6",
-            ...
-        ],
-        "pick_2_description3": [
-            "class_key_7",
-            "class_key_8",
-            "class_key_9",
-            "class_key_10",
-            ...
-        ],
+    "majors": {
+        "BUSINESS LAW": {
+            "singles": [
+                "Introduction to Financial Accounting",
+                "Business Law II",
+                "Introduction to Managerial Accounting",
+                "Principles of Microeconomics",
+                "Microsoft Office Tools for Business Analysis",
+                "Business Law I",
+                "Globalization",
+                "Professional Verbal Communications",
+                "Professional Written Communications",
+                "Information Technology and Business",
+                "Statistics I",
+                "Statistics II",
+                "Corporate Finance",
+                "Organizational Behavior",
+                "Management of Operations",
+                "Marketing Principles",
+                "Business Strategy and Policy",
+                "The Business Profession I",
+                "The Business Profession II",
+                "The Business Profession III",
+                "The Business Profession IV",
+                "Legal Issues of Business Organizations",
+                "Individual Taxation",
+                "Business Risk Management",
+            ],
+            "pick_3_pick 3": [
+                "Business Entity Taxation",
+                "Public Economics",
+                "Introduction to Entrepreneurship",
+                "The Business Model",
+                "Financial Institutions Management",
+                "Insurance Company Operations",
+                "Information Technology Law and Ethics",
+                "Human Resource Management",
+                "Marketing Research",
+                "Money and Banking",
+                "Labor Economics",
+                "Regulation and Antitrust Policy",
+            ],
+        },
+        "ACCOUNTING": {
+            "singles": [
+                "Introduction to Financial Accounting",
+                "Principles of Macroeconomics",
+                "Introduction to Managerial Accounting",
+                "Principles of Microeconomics",
+                "Microsoft Office Tools for Business Analysis",
+                "Business Law I",
+                "Globalization",
+                "Professional Verbal Communications",
+                "Professional Written Communications",
+                "Information Technology and Business",
+                "Statistics I",
+                "Statistics II",
+                "Corporate Finance",
+                "Organizational Behavior",
+                "Management of Operations",
+                "Marketing Principles",
+                "Business Strategy and Policy",
+                "The Business Profession I",
+                "The Business Profession II",
+                "The Business Profession III",
+                "The Business Profession IV",
+                "Accounting Information Systems",
+                "Managerial Accounting",
+                "Advanced Managerial Accounting",
+                "Financial Accounting I",
+                "Financial Accounting II",
+                "Auditing Principles",
+                "Individual Taxation",
+            ],
+            "pick_2_pick 2": [
+                "Advanced Financial Accounting",
+                "Business Entity Taxation",
+                "Business Law II",
+                "Legal Issues of Business Organizations",
+                "Advanced IT Applications for Business",
+                "Database Management",
+            ],
+        },
     },
-    "major_2": <major 2 requirements, similar to above>,
-    "AOIs": <requirements, similarly indicating any pick-1s, etc.>,
-    "total_credits": <min # of credits for graduation>
+    "AOIs": {
+        "pick_1_artistic_literacy": ["class 1", "class 2"],
+        "pick_1_randomAOI": ["class 1", "class 2"],
+    },
+    "equity_and_inclusion": {"pick_1": ["thing1", "thing2"]},
+    "total_credits": 120,
 }
-"""

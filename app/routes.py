@@ -45,7 +45,7 @@ def index():
             majors.append("ACTUARIAL SCIENCE")
     except:
         majors = ["HELLO"] #don't hardcode later
-        
+    print(getRequirementsForFrontEnd(majors))
     startingSemester = "Fall 2022" #ditto
     dictionaries = createDictionaries(majors)
     dict_1 = dictionaries[0]
@@ -63,7 +63,7 @@ def index():
     scripts_to_enqueue = ["main.js"]
     return render_template(
         "main.html",
-        title="Drake Four-Year Plan Generator",
+        title="Four-Year Plan Generator",
         classes_by_semester=finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester, semesterList),
         #requirements=data.get_requirements(),
         requirements = getRequirementsForFrontEnd(majors),

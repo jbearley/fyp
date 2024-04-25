@@ -227,15 +227,14 @@ function requirementsChecklist() {
 			if (reqKey == 'singles') {
 				classes.forEach(classKey => {
 					try {
-						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] #${reqKey}_${classKey}`);
-						console.log($checkbox);
+						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
 						$checkbox.checked = true;
 						checked.push(classKey);
 					} catch {}
 				});
 				return;
 			}
-			const [, numChoices, req, ...rest] = reqKey.match(/pick_(\d+)_(.*)/);
+			const [, numChoices, req] = reqKey.match(/pick_(\d+)_?(.*)/);
 			let found = 0;
 			let i = 0;
 			while (i < classes.length) {
@@ -243,14 +242,14 @@ function requirementsChecklist() {
 					found++;
 					checked.push(classes[i]);
 					try {
-						const $radioInput = document.querySelector(`[category-key="${categoryKey}"] #${reqKey}_${classes[i]}`);
+						const $radioInput = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classes[i]}"]`);
 						$radioInput.checked = true;
 					} catch { }
 				}
 				i++;
 			}
 			try {
-				const $checkbox = document.querySelector(`[category-key="${categoryKey}"] #${req}`);
+				const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${req}"]`);
 				const $label = $checkbox.nextElementSibling;
 				if (found >= numChoices) {
 					$checkbox.checked = true;

@@ -99,15 +99,15 @@ def getRequirementsForFrontEnd(selectedMajorList):
             elif number.lower() == "five":
                 number = 5
             tableName = tableName[0:indexFirstSpace + 1] + str(number)
-            tableName = tableName.capitalize()
+            tableName = tableName.lower()
             tableName2 = tableName.replace("_", " ")
-            tableName = tableName + " " + tableName2 + ":"
+            tableName = tableName + "_" + tableName2
             majorRequirementsToFrontEnd[major][tableName] = classList
         
     requirementsToFrontEnd = {}
     requirementsToFrontEnd["majors"] = majorRequirementsToFrontEnd
     requirementsToFrontEnd["AOIs"] = {"pick_1_artistic_literacy": ['class 1', 'class 2'], "pick_1_randomAOI": ['class 1', 'class 2']}
-    requirementsToFrontEnd["equity_and_inclusion"] = {"pick 1": ['thing1', 'thing2']}
+    requirementsToFrontEnd["equity_and_inclusion"] = {"pick_1": ['thing1', 'thing2']}
     requirementsToFrontEnd["total_credits"] = 120
     conn.commit()
     cursor.close()

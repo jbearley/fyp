@@ -31,7 +31,6 @@ concentrations = [
     "Human Resources Management",
     "Interdisciplinary Study of the Humanities and Sciences",
 ]
-# complete from this link https://www.drake.edu/academics/undergraduate/majors/ up to "Military Studies" (from "College / School Listing" view)
 drake_curriculum = {
     "majors": majors,
     "minors": minors,
