@@ -1,29 +1,23 @@
 import datetime
 
-majors = [
-    "Actuarial Science", 
+majors = [ 
     "Accounting",
-    "Economics (BSBA)",
+    "Actuarial Science",
     "Business Law",
     "Data Analytics",
+    "Economics (BSBA)",
     "Finance",
     "Management",
 ]
 minors = [
-    "Anthropology",
-    "Biology",
-    "Chemistry",
-    "Computer Science",
-    "Cybersecurity",
+    "Accounting",
+    "Actuarial Science",
+    "Business Law",
     "Data Analytics",
-    "English",
-    "Writing",
-    "Rhetoric and Media Studies",
-    "History",
-    "International Relations",
-    "Mathematics",
-    "Mathematics Education (Secondary)",
-    "Military Studies",
+    "Economics",
+    "Finance",
+    "Information Systems",
+    "Management",
 ]
 concentrations = [
     "Behavior Analysis of Developmental Disabilities",

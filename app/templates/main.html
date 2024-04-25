@@ -7,7 +7,7 @@
         <div class='not-resizer'>
             <header>
                 <h1>Your Information</h1>
-                <p>Use the fields below to set your graduation year, majors, and minors.</p>
+                <p>Use the fields below to set your starting semester, majors, and minors.</p>
             </header>
             <content>
                 <!-- minors-->
@@ -18,7 +18,7 @@
                         {% set num_choices = user_choices['semesters'] | length %}
                         {% set semester_choice = user_choices['semesters'] if num_choices else "Select option..." %}
                         <div class='dropdown-container'>
-                            <button style = "visibility: hidden" class='delete-major'></button>
+                            <button style = "display: none" class='delete-major'></button>
                             <select name='semesters'>
                                 {% for semester in drake_curriculum['semesters'] %}
                                 <option value='{{semester}}' {% if semester_choice==semester %} selected {% endif %}>{{semester}}
