@@ -46,11 +46,20 @@ def index():
             majors.append("ACTUARIAL SCIENCE")
     except:
         majors = ["HELLO"] #don't hardcode later
+        
+    try:
+        minors = []
+        for minor in user_choices["minors"]:
+            minors.append(minor.upper())
+    except:
+        minors = [] #don't hardcode later
+        
     if user_choices["semesters"] == "":  
         startingSemester = "Fall 2022"
     else:
         startingSemester = user_choices["semesters"]
-    dictionaries = createDictionaries(majors)
+    
+    dictionaries = createDictionaries(majors, minors)
     dict_1 = dictionaries[0]
     dict_2 = dictionaries[1]
     dict_3 = dictionaries[2]
@@ -61,13 +70,15 @@ def index():
     dict_8 = dictionaries[7]
     dict_9 = dictionaries[8]
     popped_classes = dictionaries[9]
+    
     semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester, popped_classes)
+    
     styles_to_enqueue = ["main.css"]
     scripts_to_enqueue = ["main.js"]
     return render_template(
         "main.html",
         title="Drake Four-Year Plan Generator",
-        classes_by_semester=finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester, semesterList),
+        classes_by_semester=finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingSemester, semesterList),
         #requirements=data.get_requirements(),
         requirements = getRequirementsForFrontEnd(majors),
         drake_curriculum=drake_curriculum,

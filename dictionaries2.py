@@ -2,11 +2,10 @@ from azuresqlconnector import *
 from OrRequirements import *
 
 
-def createDictionaries(selectedMajorList):
+def createDictionaries(selectedMajorList, selectedMinorList):
     conn = SQLConnection()
     conn = conn.getConnection()
     cursor = conn.cursor()
-    #this will have to be done for all majors
     tableList = []
     #selectedMajor1 = selectedMajorList[0]
     if "ACTUARIAL SCIENCE" in selectedMajorList:
@@ -28,20 +27,45 @@ def createDictionaries(selectedMajorList):
         tableList.append("PICK_THREE_FIN")
     if "MANAGEMENT" in selectedMajorList:
         tableList.append("MANAGEMENT_MAJOR")
-    #for now:
+    #Minors
+    if "ACCOUNTING" in selectedMinorList:
+        tableList.append("ACCOUNTING_MINOR")
+    if "ACTUARIAL SCIENCE" in selectedMinorList:
+        tableList.append("ACT_SCI_MINOR")
+    if "BUSINESS LAW" in selectedMinorList:
+        tableList.append("BLAW_MINOR")
+        tableList.append("BLAW_MINOR_CHOOSE_TWO")
+    if "DATA ANALYTICS" in selectedMinorList:
+        tableList.append("DATA_ANALYTICS_MINOR")
+    if "ECONOMICS" in selectedMinorList:
+        tableList.append("ECON_MINOR")
+        tableList.append("THREE_ECON_MINOR")
+    if "FINANCE" in selectedMinorList:
+        tableList.append("ACCOUNTING_MINOR")
+    if "INFORMATION SYSTEMS" in selectedMinorList:
+        tableList.append("INFO_SYSTEMS_MINOR")
+    if "MANAGEMENT" in selectedMinorList:
+        tableList.append("MANAGEMENT_MINOR")
+        tableList.append("MANAGEMENT_MINOR_CHOOSE_THREE")
+        
+        
     for a in tableList:
-        if "MAJOR" not in a: 
+        minorTable = ("CHOOSE" in a and "MINOR" in a) or a == "THREE_ECON_MINOR"
+        if "MAJOR" not in a:
             tableList.remove(a)
-    #for now over
-    if len(tableList) == 1: #for now
-        #print("ONE MAJOR:", selectedMajorList)
+        if minorTable:
+            tableList.remove(a)
+            
+    print(tableList)
+            
+    if len(tableList) == 1:
         query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
-    elif len(tableList) == 2: #for now, indices will also have to change in next line
-        #print("TWO MAJORS:", selectedMajorList)
+    elif len(tableList) == 2:
         query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
-    else: #for now, indices will also have to change in next line
-        #print("TWO MAJORS:", selectedMajorList)
-        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    elif len(tableList) == 3:
+        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + ",dbo." + tableList[2] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID =" + tableList[2] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    else:
+        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + ",dbo." + tableList[2] + ",dbo." + tableList[3] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID =" + tableList[2] + ".ClassID OR CLASSES.ClassID =" + tableList[3] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
     
     cursor.execute(query_1)
     dict_1 = {}
@@ -52,6 +76,7 @@ def createDictionaries(selectedMajorList):
             if a[0] == " ":
                 a = a[1:]
         dict_1[tup[0]]=tup[1]
+        
     if "FIN 101" in dict_1:
         dict_1["FIN 101"] = ["ACCT 42", "IS 44", "ECON 02", "STAT 71/STAT 130/ACTS 131"]
     if "MGMT 120" in dict_1:
