@@ -1,27 +1,23 @@
-majors = [
-    "Actuarial Science", 
+import datetime
+
+majors = [ 
     "Accounting",
-    "Economics (BSBA)",
+    "Actuarial Science",
     "Business Law",
     "Data Analytics",
+    "Economics (BSBA)",
     "Finance",
     "Management",
 ]
 minors = [
-    "Anthropology",
-    "Biology",
-    "Chemistry",
-    "Computer Science",
-    "Cybersecurity",
+    "Accounting",
+    "Actuarial Science",
+    "Business Law",
     "Data Analytics",
-    "English",
-    "Writing",
-    "Rhetoric and Media Studies",
-    "History",
-    "International Relations",
-    "Mathematics",
-    "Mathematics Education (Secondary)",
-    "Military Studies",
+    "Economics",
+    "Finance",
+    "Information Systems",
+    "Management",
 ]
 concentrations = [
     "Behavior Analysis of Developmental Disabilities",
@@ -31,8 +27,23 @@ concentrations = [
     "Human Resources Management",
     "Interdisciplinary Study of the Humanities and Sciences",
 ]
+
+semesters = []
+
+today = datetime.date.today()
+currentYear = today.year
+i = -3
+while i < 3:
+    fallSemester = "Fall " +str(currentYear + i)
+    springSemester = "Spring " + str(currentYear + i)
+    semesters.append(fallSemester)
+    semesters.append(springSemester)
+    i += 1
+    
+# complete from this link https://www.drake.edu/academics/undergraduate/majors/ up to "Military Studies" (from "College / School Listing" view)
 drake_curriculum = {
     "majors": majors,
     "minors": minors,
     "concentrations": concentrations,
+    "semesters": semesters,
 }

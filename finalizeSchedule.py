@@ -16,24 +16,12 @@ def addSemester(pastSemName):
         next2 = int(pastSemName.replace("Spring ", ""))
     return next1 + str(next2)
     
-
-major = "ACTUARIAL SCIENCE" #don't hardcode later
-startingSemester = "Fall 2022" #ditto
-dictionaries = createDictionaries(major)
-dict_1 = dictionaries[0]
-dict_2 = dictionaries[1]
-dict_3 = dictionaries[2]
-dict_4 = dictionaries[3]
-dict_5 = dictionaries[4]
-dict_6 = dictionaries[5]
-dict_7 = dictionaries[6]
-dict_8 = dictionaries[7]
 #semesterList = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester)
 
 #semesterList = [0, ["MATH 50", "ACTS 50", "ACTS 131"], ["ACTS 161"], [], [], [], [], [], []]
 
-def finalCheck(dict_2, dict_3, dict_4, dict_7, dict_8, dict_9, startingSemester, semesterList):
-    print(semesterList)
+def finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingSemester, semesterList):
+    #print(semesterList)
     working = True
     retest = False
     currentSemester = startingSemester
