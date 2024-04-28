@@ -18,10 +18,11 @@
                         {% set num_choices = user_choices['semesters'] | length %}
                         {% set semester_choice = user_choices['semesters'] if num_choices else "Select option..." %}
                         <div class='dropdown-container'>
-                            <button style = "display: none" class='delete-major'></button>
+                            <button style="display: none" class='delete-major'></button>
                             <select name='semesters'>
                                 {% for semester in drake_curriculum['semesters'] %}
-                                <option value='{{semester}}' {% if semester_choice==semester %} selected {% endif %}>{{semester}}
+                                <option value='{{semester}}' {% if semester_choice==semester %} selected {% endif %}>
+                                    {{semester}}
                                 </option>
                                 {% endfor %}
                             </select>
@@ -34,7 +35,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button style = "display: none" id='add-semester' data-semesters='{{drake_curriculum["semesters"]|join(",")}}'><span class='text'>Add semester</span></button>
+                        <button style="display: none" id='add-semester'
+                            data-semesters='{{drake_curriculum["semesters"]|join(",")}}'><span class='text'>Add
+                                semester</span></button>
                     </div>
                 </form>
                 {% endif %}
@@ -65,9 +68,10 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <button id='add-major' data-majors='{{drake_curriculum["majors"]|join(",")}}'><span class='text'>Add major</span></button>
+                        <button id='add-major' data-majors='{{drake_curriculum["majors"]|join(",")}}'><span
+                                class='text'>Add major</span></button>
                     </div>
-                </form> 
+                </form>
                 {% endif %}
                 <!-- minors-->
                 {% if drake_curriculum and user_choices and ('minors' in drake_curriculum) and ('minors' in
@@ -96,7 +100,8 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <button id='add-minor' data-minors='{{drake_curriculum["minors"]|join(",")}}'><span class='text'>Add minor</span></button>
+                        <button id='add-minor' data-minors='{{drake_curriculum["minors"]|join(",")}}'><span
+                                class='text'>Add minor</span></button>
                     </div>
                     <input type="submit" value="Submit">
                 </form>
@@ -112,25 +117,26 @@
                 <p>These items must be fulfilled for successful completion of your program.</p>
             </header>
             <content>
-                {% if requirements %}
+                {% for requirement_key, requirement in requirements.items() %}
+                {% if requirement_key == 'total_credits' %}
                 <div class='reqs-container'>
                     <h3>Minimum Total Credit</h3>
-                    <div class='credit-req req-header'><input
-                            type='checkbox'><label>{{requirements.total_credits}}</label></div>
+                    <div class='credit-req req-header'><input type='checkbox' id='total_credits'><label>(<span
+                                class='credits-met'>-</span>/<span
+                                class='credits-required'>{{requirement}}</span>)</label></div>
                 </div>
-                {% set temp = requirements.majors %}
-                {% if temp.update({'AOIs': requirements.AOIs}) %}{% endif %}
-                {% if temp.update({'equity_and_inclusion': requirements.equity_and_inclusion}) %}{% endif %}
-                {% for category_key, category in temp.items() %}
-                <div class='reqs-container' category-key='{{category_key}}'>
-                    <h3>{{category_key}}</h3>
+                {% else %}
+                <div class='reqs-container' category-key='{{requirement_key}}'>
+                    <h3>{{requirement_key}}</h3>
                     <div class='reqs'>
-                        {% for req_key, req in category.items() %}
+                        {% for req_key, req in requirement.items() %}
                         {% if req_key != 'singles' %}
                         <div class='choice-group see-more-container'>
                             {% set num_choices = req_key[5]|int %}
-                            <div class='req-header' pick-n='{{num_choices}}'><input type='checkbox' id='{{req_key[7:]}}'><label>{{req_key[7:]}}
-                                    (-/{{num_choices}})</label></div>
+                            <div class='req-header' pick-n='{{num_choices}}'><input type='checkbox'
+                                    id='{{req_key[7:]}}'><label>{{req_key[7:]}}
+                                    (<span class='num-picked'>-</span>/<span
+                                        class='num-choices'>{{num_choices}}</span>)</label></div>
                             {% for class in req %}
                             <label for='{{req_key}}_{{class}}'><input type='radio' value='{{class}}'
                                     name='{{req_key}}_{{class}}' id='{{req_key}}_{{class}}'>{{class}}</label>
@@ -139,14 +145,15 @@
                         </div>
                         {% else %}
                         {% for class in req %}
-                        <div class='req-header'><input type='checkbox' id='singles_{{class}}'><label>{{class}}</label></div>
+                        <div class='req-header'><input type='checkbox' id='singles_{{class}}'><label>{{class}}</label>
+                        </div>
                         {% endfor %}
                         {% endif %}
                         {% endfor %}
                     </div>
                 </div>
-                {% endfor %}
                 {% endif %}
+                {% endfor %}
             </content>
         </div>
         <div class='resizer'></div>
