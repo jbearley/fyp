@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	dropdowns();
 	// inputSubmit();
 	// inputSubmit3();
-    inputSubmit2();
+	inputSubmit2();
 	requirementsChecklist();
 });
 
@@ -56,15 +56,37 @@ function resizer() {
 	});
 }
 
+/* Dynamically add see-more functionality to the class containers in the fyp panel; also adds see-more functionality to checklist item with choices */
 function seeMore() {
+	const expandListener = (event) => { // event function for toggling 'expanded' class on click
+		if (event.currentTarget.classList.contains('expanded')) {
+			event.currentTarget.classList.remove('expanded');
+		} else {
+			event.currentTarget.classList.add('expanded');
+		}
+	};
+	const updateSeeMoreStatus = ($classContainer) => { // checks given element for overflow and adds/removes class 'see-more-container'
+		if ($classContainer.scrollWidth > $classContainer.clientWidth + 4) {
+			$classContainer.classList.add('see-more-container');
+			$classContainer.addEventListener('click', expandListener);
+		} else {
+			$classContainer.classList.remove('see-more-container');
+			$classContainer.removeEventListener('click', expandListener);
+		}
+	};
+	const resizeObserver = new ResizeObserver(entries => {
+		for (const entry of entries) {
+			updateSeeMoreStatus(entry.target);
+		}
+	});
+	/* give class 'see-more-container' to classes with overflow text in the fyp */
+	document.querySelectorAll('.class-container').forEach($classContainer => {
+		updateSeeMoreStatus($classContainer);
+		resizeObserver.observe($classContainer);
+	});
+	/* add event listener to all elements of class 'see-more-container' */
 	document.querySelectorAll('.see-more-container').forEach($classContainer => {
-		$classContainer.addEventListener('click', (event) => {
-			if (event.currentTarget.classList.contains('expanded')) {
-				event.currentTarget.classList.remove('expanded');
-			} else {
-				event.currentTarget.classList.add('expanded');
-			}
-		});
+		$classContainer.addEventListener('click', expandListener);
 	});
 }
 
@@ -127,7 +149,7 @@ function dropdowns() {
 		});
 
 	};
-	
+
 	document.querySelectorAll('.dropdown').forEach($dropdown => {
 		initializeDropdown($dropdown);
 	});
@@ -147,7 +169,7 @@ function dropdowns() {
 			const categoryTitleCase = category.charAt(0).toUpperCase() + category.substring(1);
 			$dropdownContainer.innerHTML = `
 			<button class='delete-${category}'></button>
-			<select name='${category}s'>
+			<select name='${category}s' value=''>
 				${formOptions}
 			</select>
 			<div class='dropdown'>
@@ -191,15 +213,15 @@ function dropdowns() {
 
 function inputSubmit() {
 	const form = document.querySelector("#majorselect");
-    const formData = new FormData(form);
-    let url = "majors=" + Array.from(formData.values()).join(",");
+	const formData = new FormData(form);
+	let url = "majors=" + Array.from(formData.values()).join(",");
 	return url;
 }
 
 function inputSubmit3() {
 	const form = document.querySelector('#semesterselect');
-    const formData = new FormData(form);
-    let url = "semesters=" + Array.from(formData.values()).join(",");
+	const formData = new FormData(form);
+	let url = "semesters=" + Array.from(formData.values()).join(",");
 	return url;
 }
 
@@ -219,11 +241,11 @@ function inputSubmit2() {
 function requirementsChecklist() {
 	const requirementsJSON = JSON.parse(document.querySelector('#requirements-overview').getAttribute('data-requirements'));
 	const fypJSON = JSON.parse(document.querySelector('#by-semester').getAttribute('data-fyp'));
-	let allClasses = [];
-	Object.values(fypJSON).forEach(classes => {
+	let allClasses = []; // all classes in the fyp
+	Object.values(fypJSON).forEach(classes => { // add all classes from the fyp to allClasses
 		allClasses = [...allClasses, ...Object.keys(classes)];
 	});
-	const checked = [];
+	const checked = []; // list that should contain electives selected by either the fyp algorithm or the user
 	const checkRequirements = (categoryKey, requirements) => {
 		if (categoryKey === 'total_credits') { // credit requirement
 			const requiredCredits = parseInt(requirements);
@@ -239,14 +261,14 @@ function requirementsChecklist() {
 			}
 			return;
 		}
-		Object.entries(requirements).forEach(([reqKey, classes]) => { // any requirement that is a mapping of 'requirementKey' => classes[]
+		Object.entries(requirements).forEach(([reqKey, classes]) => { // for any requirement that is a mapping of 'requirementKey' => classes[]
 			if (reqKey == 'singles') { // if the key is 'singles', every class in the list is required
 				classes.forEach(classKey => {
 					try {
 						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
 						$checkbox.checked = true;
 						checked.push(classKey);
-					} catch {}
+					} catch { }
 				});
 				return;
 			}

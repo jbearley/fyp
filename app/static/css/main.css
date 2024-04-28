@@ -253,13 +253,15 @@ h3 {
 }
 
 .main-info .num-credits {
-    font-style: italic;
+    display: flex;
     background-color: var(--gray-400);
     color: var(--gray-200);
     border-radius: 2px;
-    width: 1rem;
-    height: 1rem;
-    display: flex;
+    font-style: italic;
+    font-size: .75rem;
+    line-height: 1;
+    height: fit-content;
+    padding: .125rem .25rem;
     align-items: center;
     justify-content: center;
 }
@@ -279,11 +281,11 @@ h3 {
     transition: all .2s;
 }
 
-.class-container:hover {
+.class-container.see-more-container:hover {
     scale: 1.01;
 }
 
-.class-container:not(.expanded)::before {
+.class-container.see-more-container:not(.expanded)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -296,6 +298,10 @@ h3 {
 .class-container.expanded {
     flex-wrap: wrap;
     overflow: visible;
+}
+
+.class-container.expanded .course-title {
+    white-space: normal;
 }
 
 .attributes {
