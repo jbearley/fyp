@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	seeMore();
 	expandCollapseAll();
 	dropdowns();
-	inputSubmit();
-	inputSubmit3();
+	// inputSubmit();
+	// inputSubmit3();
     inputSubmit2();
 	requirementsChecklist();
 });
@@ -113,7 +113,7 @@ function dropdowns() {
 		});
 
 		/* delete */
-		$dropdown.closest('.dropdown-container').querySelector('.delete-major').addEventListener('click', (e) => {
+		$dropdown.closest('.dropdown-container').querySelector('[class^="delete-"]').addEventListener('click', (e) => {
 			const $toBeDeleted = e.currentTarget.closest('.dropdown-container');
 			let $nextSibling = $toBeDeleted.nextElementSibling;
 			while ($nextSibling && $nextSibling.classList.contains('dropdown-container')) {
@@ -131,66 +131,40 @@ function dropdowns() {
 	document.querySelectorAll('.dropdown').forEach($dropdown => {
 		initializeDropdown($dropdown);
 	});
-	document.querySelector('#add-major').addEventListener('click', (e) => {
-		e.preventDefault();
-		let formOptions = '';
-		let majorNumber = document.querySelectorAll('.dropdown').length + 1;
-		let displayOptions = '';
-		const majors = e.currentTarget.getAttribute('data-majors').split(',');
-		majors.forEach(major => {
-			formOptions += `<option value='${major}'>${major}</option>`;
-			displayOptions += `<button class='option' value='${major}'>${major}</button>`;
-		});
-		const $dropdownContainer = document.createElement('div');
-		$dropdownContainer.className = 'dropdown-container';
-		$dropdownContainer.innerHTML = `
-			<button class='delete-major'></button>
-			<select name='majors'>
+	document.querySelectorAll('#add-major, #add-minor').forEach($btn => {
+		$btn.addEventListener('click', (e) => {
+			const category = e.currentTarget.id === 'add-major' ? 'major' : 'minor';
+			e.preventDefault();
+			let formOptions = '';
+			let displayOptions = '';
+			const options = e.currentTarget.getAttribute(`data-${category}s`).split(',');
+			options.forEach(option => {
+				formOptions += `<option value='${option}'>${option}</option>`;
+				displayOptions += `<button class='option' value='${option}'>${option}</button>`;
+			});
+			const $dropdownContainer = document.createElement('div');
+			$dropdownContainer.className = 'dropdown-container';
+			const categoryTitleCase = category.charAt(0).toUpperCase() + category.substring(1);
+			$dropdownContainer.innerHTML = `
+			<button class='delete-${category}'></button>
+			<select name='${category}s'>
 				${formOptions}
 			</select>
 			<div class='dropdown'>
-				<div class='label'>Major: <b>Select option...</b></div>
+				<div class='label'>${categoryTitleCase}: <b>Select option...</b></div>
 				<div class='options'>
 					${displayOptions}
 				</div>
 			</div>
 		`;
-		initializeDropdown($dropdownContainer.querySelector('.dropdown'));
-		e.currentTarget.insertAdjacentElement('beforebegin', $dropdownContainer);
-	});
-
-	document.querySelector('#add-minor').addEventListener('click', (e) => {
-		e.preventDefault();
-		let formOptions = '';
-		let minorNumber = document.querySelectorAll('.dropdown').length + 1;
-		let displayOptions = '';
-		const minors = e.currentTarget.getAttribute('data-minors').split(',');
-		minors.forEach(minor => {
-			formOptions += `<option value='${minor}'>${minor}</option>`;
-			displayOptions += `<button class='option' value='${minor}'>${minor}</button>`;
+			initializeDropdown($dropdownContainer.querySelector('.dropdown'));
+			e.currentTarget.insertAdjacentElement('beforebegin', $dropdownContainer);
 		});
-		const $dropdownContainer = document.createElement('div');
-		$dropdownContainer.className = 'dropdown-container';
-		$dropdownContainer.innerHTML = `
-			<button class='delete-major'></button>
-			<select name='minors'>
-				${formOptions}
-			</select>
-			<div class='dropdown'>
-				<div class='label'>Minor: <b>Select option...</b></div>
-				<div class='options'>
-					${displayOptions}
-				</div>
-			</div>
-		`;
-		initializeDropdown($dropdownContainer.querySelector('.dropdown'));
-		e.currentTarget.insertAdjacentElement('beforebegin', $dropdownContainer);
 	});
 
 	document.querySelector('#add-semester').addEventListener('click', (e) => {
 		e.preventDefault();
 		let formOptions = '';
-		let semesterNumber = document.querySelectorAll('.dropdown').length + 1;
 		let displayOptions = '';
 		const semesters = e.currentTarget.getAttribute('data-semesters').split(',');
 		semesters.forEach(semester => {
@@ -217,44 +191,27 @@ function dropdowns() {
 
 function inputSubmit() {
 	const form = document.querySelector("#majorselect");
-	form.addEventListener("submit", function (e) {
-		e.preventDefault(); // Prevent default form submission behavior
-		const formData = new FormData(e.currentTarget);
-		let url = "majors=" + Array.from(formData.values()).join(",");
-		window.location.href = url;
-        val = "string?"
-	});
-    const formData = new FormData(document.querySelector("#majorselect"));
+    const formData = new FormData(form);
     let url = "majors=" + Array.from(formData.values()).join(",");
-    /*window.location.href = url; */
-    val = "string?"
-    return url
+	return url;
 }
 
 function inputSubmit3() {
-	const form = document.querySelector("#semesterselect");
-	form.addEventListener("submit", function (e) {
-		e.preventDefault(); // Prevent default form submission behavior
-		const formData = new FormData(e.currentTarget);
-		let url = "majors=" + Array.from(formData.values()).join(",");
-		window.location.href = url;
-        val = "string?"
-	});
-    const formData = new FormData(document.querySelector("#semesterselect"));
+	const form = document.querySelector('#semesterselect');
+    const formData = new FormData(form);
     let url = "semesters=" + Array.from(formData.values()).join(",");
-    /*window.location.href = url; */
-    val = "string?"
-    return url
+	return url;
 }
 
 function inputSubmit2() {
-	const form = document.querySelector("#minorselect");
-	form.addEventListener("submit", function (e) {
+	const $submitButton = document.querySelector("#submit-user-info");
+	$submitButton.addEventListener("click", function (e) {
 		e.preventDefault(); // Prevent default form submission behavior
-		const formData = new FormData(e.currentTarget);
-        var val = inputSubmit()
-		var sem = inputSubmit3()
-		let url = "?minors=" + Array.from(formData.values()).join(",") + "&" + String(val) + "&" + String(sem);
+		const formData = new FormData(document.querySelector('#minorselect'));
+		const minors = "?minors=" + Array.from(formData.values()).join(",");
+		var majors = inputSubmit();
+		var semester = inputSubmit3();
+		let url = minors + "&" + majors + "&" + semester;
 		window.location.href = url;
 	});
 }
