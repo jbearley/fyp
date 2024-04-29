@@ -4,6 +4,10 @@ main {
     overflow: hidden;
 }
 
+main:has(#your-information.initial) {
+    background-color: var(--gray-200);
+}
+
 section {
     display: flex;
     position: relative;
@@ -17,6 +21,14 @@ section:last-of-type {
 section:has(.resizer) {
     flex-shrink: 0;
     width: 23%;
+}
+
+.your-information.initial {
+    max-width: 40vw;
+    margin: 4rem auto;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-1), var(--shadow-2), var(--shadow-3);
+    background-color: white;
 }
 
 ::-webkit-scrollbar,
@@ -42,7 +54,7 @@ section:has(.resizer) {
     transition: all .12s;
 }
 
-.your-information .not-resizer {
+.your-information:not(.initial) .not-resizer {
     background-color: var(--gray-200);
 }
 
@@ -59,6 +71,10 @@ section:has(.resizer) {
     height: 100%;
     background-color: var(--gray-300);
     cursor: pointer;
+}
+
+.initial .resizer {
+    display: none;
 }
 
 .resizer:hover {
@@ -140,7 +156,7 @@ p {
     cursor: inherit;
     line-height: 1.25rem;
     font-size: .875rem;
-    color: var(--gray-600);
+    color: var(--color-not-started);
 }
 
 .req-header input[type="checkbox"] {
@@ -302,6 +318,7 @@ h3 {
 
 .class-container.expanded .course-title {
     white-space: normal;
+    margin-right: .25rem;
 }
 
 .attributes {
@@ -825,48 +842,21 @@ h3 {
     background-color: var(--light-blue);
 }
 
-#majorselect {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-#minorselect {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
+#majorselect,
+#minorselect,
 #semesterselect {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
-#majorselect input[type="submit"] {
-    appearance: none;
-    border: none;
-    border-radius: .5rem;
-    font-size: 14px;
-    font-weight: 550;
-    padding: .5rem .75rem;
-    color: white;
-    background-color: var(--drake-blue);
-    cursor: pointer;
+.initial #minorselect {
+    justify-content: space-between;
+    height: 100%;
 }
 
-#minorselect input[type="submit"] {
-    appearance: none;
-    border: none;
-    border-radius: .5rem;
-    font-size: 14px;
-    font-weight: 550;
-    padding: .5rem .75rem;
-    color: white;
-    background-color: var(--drake-blue);
-    cursor: pointer;
-}
-
+#majorselect input[type="submit"],
+#minorselect input[type="submit"],
 #semesterselect input[type="submit"] {
     appearance: none;
     border: none;
@@ -879,14 +869,12 @@ h3 {
     cursor: pointer;
 }
 
-#majorselect input[type="submit"]:hover {
-    filter: brightness(1.2);
+.initial #submit-user-info {
+    font-size: 1rem !important;
 }
 
-#minorselect input[type="submit"]:hover {
-    filter: brightness(1.2);
-}
-
+#majorselect input[type="submit"]:hover,
+#minorselect input[type="submit"]:hover,
 #semesterselect input[type="submit"]:hover {
     filter: brightness(1.2);
 }

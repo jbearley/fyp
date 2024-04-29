@@ -3,7 +3,8 @@
 {% block content %}
 
 <main>
-    <section id='your-information' class='your-information'>
+    {% set is_initial = not (user_choices.semesters and user_choices.majors|length) %}
+    <section id='your-information' class='your-information {% if is_initial %} initial {% endif %}'>
         <div class='not-resizer'>
             <header>
                 <h1>Your Information</h1>
@@ -110,6 +111,8 @@
         </div>
         <div class='resizer'></div>
     </section>
+    {% if is_initial %}
+    {% else %}
     <section id='requirements-overview' data-requirements='{{requirements|tojson|safe}}'>
         <div class='not-resizer'>
             <header>
@@ -208,6 +211,7 @@
             </content>
         </div>
     </section>
+    {% endif %}
 </main>
 
 {% endblock %}

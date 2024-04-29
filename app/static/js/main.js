@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-	resizer();
-	seeMore();
-	expandCollapseAll();
 	dropdowns();
-	// inputSubmit();
-	// inputSubmit3();
 	inputSubmit2();
-	requirementsChecklist();
+	if (!document.querySelector('#your-information').classList.contains('initial')) {
+		resizer();
+		seeMore();
+		expandCollapseAll();
+		requirementsChecklist();
+	}
 });
 
 /**
@@ -58,6 +58,7 @@ function resizer() {
 
 /* Dynamically add see-more functionality to the class containers in the fyp panel; also adds see-more functionality to checklist item with choices */
 function seeMore() {
+	if (document.querySelector('#your-information').classList.contains('initial')) return; // in the initial view, we don't have any see-more stuff to deal with
 	const expandListener = (event) => { // event function for toggling 'expanded' class on click
 		if (event.currentTarget.classList.contains('expanded')) {
 			event.currentTarget.classList.remove('expanded');
@@ -74,16 +75,21 @@ function seeMore() {
 			$classContainer.removeEventListener('click', expandListener);
 		}
 	};
+	let prevWidth = document.querySelector('#by-semester').clientWidth;
 	const resizeObserver = new ResizeObserver(entries => {
 		for (const entry of entries) {
-			updateSeeMoreStatus(entry.target);
+			if (document.querySelector('#by-semester').clientWidth === prevWidth) return;
+			console.log('resized');
+			document.querySelectorAll('.class-container').forEach($classContainer => {
+				updateSeeMoreStatus($classContainer);
+			});
 		}
 	});
 	/* give class 'see-more-container' to classes with overflow text in the fyp */
 	document.querySelectorAll('.class-container').forEach($classContainer => {
 		updateSeeMoreStatus($classContainer);
-		resizeObserver.observe($classContainer);
 	});
+	resizeObserver.observe(document.querySelector('#by-semester'));
 	/* add event listener to all elements of class 'see-more-container' */
 	document.querySelectorAll('.see-more-container').forEach($classContainer => {
 		$classContainer.addEventListener('click', expandListener);
@@ -246,6 +252,20 @@ function requirementsChecklist() {
 		allClasses = [...allClasses, ...Object.keys(classes)];
 	});
 	const checked = []; // list that should contain electives selected by either the fyp algorithm or the user
+	const progressStyles = {
+		notStarted: {
+			color: 'var(--color-not-started)',
+			fontWeight: 'var(--font-weight-not-started)'
+		},
+		started: {
+			color: 'var(--color-started)',
+			fontWeight: 'var(--font-weight-started)'
+		},
+		completed: {
+			color: 'var(--color-completed)',
+			fontWeight: 'var(--font-weight-completed)'
+		},
+	};
 	const checkRequirements = (categoryKey, requirements) => {
 		if (categoryKey === 'total_credits') { // credit requirement
 			const requiredCredits = parseInt(requirements);
@@ -258,6 +278,8 @@ function requirementsChecklist() {
 			$label.querySelector('.credits-met').innerHTML = totalCredits;
 			if (totalCredits >= requiredCredits) {
 				$checkbox.checked = true;
+				$label.style.color = progressStyles.completed.color;
+				$label.style.fontWeight = progressStyles.completed.fontWeight;
 			}
 			return;
 		}
@@ -268,6 +290,9 @@ function requirementsChecklist() {
 						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
 						$checkbox.checked = true;
 						checked.push(classKey);
+						const $label = $checkbox.nextElementSibling;
+						$label.style.color = progressStyles.completed.color;
+						$label.style.fontWeight = progressStyles.completed.fontWeight;
 					} catch { }
 				});
 				return;
@@ -291,12 +316,19 @@ function requirementsChecklist() {
 			}
 			try {
 				const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${req}"]`);
+				let progress = 'started';
 				if (found >= numChoices) {
 					$checkbox.checked = true;
 					found = numChoices;
+					progress = 'completed';
+				} else if (found == 0) {
+					progress = 'notStarted';
 				}
+				/* style label */
 				const $label = $checkbox.nextElementSibling;
 				$label.querySelector('.num-picked').innerHTML = found;
+				$label.style.color = progressStyles[progress].color;
+				$label.style.fontWeight = progressStyles[progress].fontWeight;
 			} catch { }
 		});
 	};
