@@ -156,7 +156,7 @@ def createDictionaries(selectedMajorList, selectedMinorList):
             dict_3[key] = float(dict_3[key]) + .5
         
     query_6 = f"""
-    SELECT ClassID, AOI FROM dbo.AOI
+    SELECT CLASSES.ClassID, AOI FROM dbo.AOI, dbo.CLASSES WHERE dbo.CLASSES.ClassID = dbo.AOI.ClassID
     """
     cursor.execute(query_6)
     dict_6 = {}

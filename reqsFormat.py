@@ -107,8 +107,9 @@ def getRequirementsForFrontEnd(selectedMajorList):
     requirementsToFrontEnd = {}
     requirementsToFrontEnd["total_credits"] = 120
     requirementsToFrontEnd.update(majorRequirementsToFrontEnd)
-    requirementsToFrontEnd["equity_and_inclusion"] = {"pick_1": ['thing1', 'thing2']}
-    requirementsToFrontEnd["AOIs"] = {"pick_1_artistic_literacy": ['class 1', 'class 2'], "pick_1_randomAOI": ['class 1', 'class 2']}
+    #requirementsToFrontEnd["equity_and_inclusion"] = {"pick_1": ['thing1', 'thing2']}
+    #requirementsToFrontEnd["AOIs"] = {"pick_1_Artistic Literacy": ['class 1', 'class 2'], "pick_1_randomAOI": ['class 1', 'class 2']}
+    requirementsToFrontEnd["AOIs"] = {'pick_1_Artistic Literacy': [],'pick_1_Critical Thinking': [],'pick_1_Engaged Citizen': [],'pick_1_Global & Cultural Understanding': [],'pick_2_Historical Foundations': [],'pick_1_Information Literacy': [],'pick_1_Quantitative Literacy': [],'pick_2_Scientific Literacy': [],'pick_1_Values and Ethics': [],'pick_1_Written Communication': []}
     conn.commit()
     cursor.close()
     print(requirementsToFrontEnd)

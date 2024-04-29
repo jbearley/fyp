@@ -171,16 +171,20 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     
     # Fill semester lists for AOI courses
 
-    aoi_req = {'Artistic Literacy','Critical Thinking','Engaged Citizen','Global & Cultural Understanding','Historical Foundations','Historical Foundations','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy','Values and Ethics','Written Communication'}
+    aoi_req = ['Artistic Literacy','Critical Thinking','Engaged Citizen','Global and Cultural Understanding','Historical Foundations','Historical Foundations','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy','Values and Ethics','Written Communication']
 
 
     def check_for_aoi(aoireqs, dict_6, semesterlist):
-        for course in semesterlist:
-            for aoicourse, info in dict_6.items():
-                if course == aoicourse:
-                    if info in aoireqs:
-                        aoireqs.remove(info)
-                    break
+        for semNumber in semesterlist:
+            for course in semesterlist[semNumber]:
+                for aoicourse, info in dict_6.items():
+                    print
+                    if course == aoicourse:
+                        print("?", course, aoicourse)
+                        if info in aoireqs:
+                            aoireqs.remove(info)
+                        break
+        return aoireqs
 
     # def fill_for_aoi(aoireqs,dict_6,semesterlist):
     #     for type in aoireqs:
@@ -258,7 +262,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
 
 
     semester_lists = fill_placeholder_courses(semester_lists, credits_left)
-    check_for_aoi(aoi_req, dict_6, semester_lists)
+    aois_left = check_for_aoi(aoi_req, dict_6, semester_lists)
     
     #fill_for_aoi(aoi_req, dict_6, semester_lists)
 
@@ -274,4 +278,4 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
         semesterLists.append(courses)
         
         
-    return semesterLists
+    return semesterLists, aois_left
