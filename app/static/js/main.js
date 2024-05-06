@@ -252,20 +252,7 @@ function requirementsChecklist() {
 		allClasses = [...allClasses, ...Object.keys(classes)];
 	});
 	const checked = []; // list that should contain electives selected by either the fyp algorithm or the user
-	const progressStyles = {
-		notStarted: {
-			color: 'var(--color-not-started)',
-			fontWeight: 'var(--font-weight-not-started)'
-		},
-		started: {
-			color: 'var(--color-started)',
-			fontWeight: 'var(--font-weight-started)'
-		},
-		completed: {
-			color: 'var(--color-completed)',
-			fontWeight: 'var(--font-weight-completed)'
-		},
-	};
+	console.log(allClasses);
 	const checkRequirements = (categoryKey, requirements) => {
 		if (categoryKey === 'total_credits') { // credit requirement
 			const requiredCredits = parseInt(requirements);
@@ -278,22 +265,31 @@ function requirementsChecklist() {
 			$label.querySelector('.credits-met').innerHTML = totalCredits;
 			if (totalCredits >= requiredCredits) {
 				$checkbox.checked = true;
-				$label.style.color = progressStyles.completed.color;
-				$label.style.fontWeight = progressStyles.completed.fontWeight;
+				$label.classList.add('completed');
+			} else {
+				$label.classList.add('started');
 			}
 			return;
 		}
 		Object.entries(requirements).forEach(([reqKey, classes]) => { // for any requirement that is a mapping of 'requirementKey' => classes[]
 			if (reqKey == 'singles') { // if the key is 'singles', every class in the list is required
 				classes.forEach(classKey => {
-					try {
-						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
-						$checkbox.checked = true;
-						checked.push(classKey);
-						const $label = $checkbox.nextElementSibling;
-						$label.style.color = progressStyles.completed.color;
-						$label.style.fontWeight = progressStyles.completed.fontWeight;
-					} catch { }
+					console.log(classKey);
+					if (allClasses.includes(classKey)) {
+						try {
+							const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
+							$checkbox.checked = true;
+							checked.push(classKey);
+							const $label = $checkbox.nextElementSibling;
+							$label.classList.add('completed');
+						} catch { }
+					} else {
+						try {
+							const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
+							const $label = $checkbox.nextElementSibling;
+							$label.classList.add('notStarted');
+						} catch { }
+					}
 				});
 				return;
 			}
@@ -324,15 +320,20 @@ function requirementsChecklist() {
 				} else if (found == 0) {
 					progress = 'notStarted';
 				}
+				if (progress !== 'completed') {
+					/* move item to the top */
+					const $choiceGroup = $checkbox.closest('.choice-group');
+					$choiceGroup.closest('.reqs').insertAdjacentElement('afterbegin', $choiceGroup);
+				}
 				/* style label */
 				const $label = $checkbox.nextElementSibling;
 				$label.querySelector('.num-picked').innerHTML = found;
-				$label.style.color = progressStyles[progress].color;
-				$label.style.fontWeight = progressStyles[progress].fontWeight;
+				$label.classList.add(progress);
 			} catch { }
 		});
 	};
 	Object.entries(requirementsJSON).forEach(([key, value]) => {
 		checkRequirements(key, value);
 	});
+	
 }

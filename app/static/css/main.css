@@ -156,7 +156,6 @@ p {
     cursor: inherit;
     line-height: 1.25rem;
     font-size: .875rem;
-    color: var(--color-not-started);
 }
 
 .req-header input[type="checkbox"] {
@@ -167,12 +166,28 @@ p {
     height: .75rem;
     border: 1px solid var(--gray-400) !important;
     border-radius: 4px;
+    pointer-events: none;
 }
 
 .reqs {
     display: flex;
     flex-direction: column;
     gap: .25rem;
+}
+
+.reqs label.completed {
+    color: var(--color-completed);
+    font-weight: var(--font-weight-completed);
+}
+
+.reqs label.started {
+    color: var(--color-started);
+    font-weight: var(--font-weight-started);
+}
+
+.reqs label.notStarted {
+    color: var(--color-not-started);
+    font-weight: var(--font-weight-not-started);
 }
 
 .choice-group {
@@ -186,7 +201,7 @@ p {
     gap: .125rem;
 }
 
-.choice-group input[type="radio"] {
+.choice-group label input[type="checkbox"] {
     margin: 4px;
     width: .75rem;
     height: .75rem;

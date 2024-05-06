@@ -8,8 +8,8 @@
 	--gray-500: #616161;
 	--gray-600: #595959;
 	--gray-700: #424242;
-	--color-not-started: var(--gray-400);
-	--color-started: var(--gray-400);
+	--color-not-started: rgb(183, 0, 0);
+	--color-started: rgb(183, 0, 0);
 	--color-completed: var(--gray-600);
 	--font-weight-not-started: 400;
 	--font-weight-started: 400;
