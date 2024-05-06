@@ -10,10 +10,10 @@ def createDictionaries(selectedMajorList, selectedMinorList):
     #selectedMajor1 = selectedMajorList[0]
     if "ACTUARIAL SCIENCE" in selectedMajorList:
         tableList.append("ACT_SCI_MAJOR")
-        tableList.append("PICK_TWO_ACT_SCI")
+        tableList.append("CHOOSE_TWO_ACT_SCI")
     if "ACCOUNTING" in selectedMajorList:
         tableList.append("ACCOUNTING_MAJOR")
-        tableList.append("PICK_TWO_ACC")
+        tableList.append("CHOOSE_TWO_ACC")
     if "ECONOMICS (BSBA)" in selectedMajorList:
         tableList.append("ECON_MAJOR")
         tableList.append("CHOOSE_FOUR_ECON")
@@ -24,7 +24,7 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         tableList.append("DATA_ANALYTICS_MAJOR")
     if "FINANCE" in selectedMajorList:
         tableList.append("FIN_MAJOR")
-        tableList.append("PICK_THREE_FIN")
+        tableList.append("CHOOSE_THREE_FIN")
     if "MANAGEMENT" in selectedMajorList:
         tableList.append("MANAGEMENT_MAJOR")
     #Minors
@@ -34,19 +34,19 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         tableList.append("ACT_SCI_MINOR")
     if "BUSINESS LAW" in selectedMinorList:
         tableList.append("BLAW_MINOR")
-        tableList.append("BLAW_MINOR_CHOOSE_TWO")
+        tableList.append("PICK_TWO_BLAW_MINOR")
     if "DATA ANALYTICS" in selectedMinorList:
         tableList.append("DATA_ANALYTICS_MINOR")
     if "ECONOMICS" in selectedMinorList:
         tableList.append("ECON_MINOR")
-        tableList.append("THREE_ECON_MINOR")
+        tableList.append("PICK_THREE_ECON_MINOR")
     if "FINANCE" in selectedMinorList:
         tableList.append("ACCOUNTING_MINOR")
     if "INFORMATION SYSTEMS" in selectedMinorList:
         tableList.append("INFO_SYSTEMS_MINOR")
     if "MANAGEMENT" in selectedMinorList:
         tableList.append("MANAGEMENT_MINOR")
-        tableList.append("MANAGEMENT_MINOR_CHOOSE_THREE")
+        tableList.append("PICK_THREE_MAANGEMENT_MINOR")
         
         
     for a in tableList:
