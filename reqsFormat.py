@@ -42,12 +42,12 @@ def getRequirementsForFrontEnd(selectedMajorList):
     majorRequirementsToFrontEnd = {}
 
     tableDict = {}
-    tableDict["ACTUARIAL SCIENCE"] = ["ACT_SCI_MAJOR", "PICK_TWO_ACT_SCI"]
-    tableDict["ACCOUNTING"] = ["ACCOUNTING_MAJOR", "PICK_TWO_ACC"]
+    tableDict["ACTUARIAL SCIENCE"] = ["ACT_SCI_MAJOR", "CHOOSE_TWO_ACT_SCI"]
+    tableDict["ACCOUNTING"] = ["ACCOUNTING_MAJOR", "CHOOSE_TWO_ACC"]
     tableDict["ECONOMICS (BSBA)"] = ["ECON_MAJOR", "CHOOSE_FOUR_ECON"]
     tableDict["BUSINESS LAW"] = ["BLAW_MAJOR", "CHOOSE_THREE_BLAW"]
     tableDict["DATA ANALYTICS"] = ["DATA_ANALYTICS_MAJOR"]
-    tableDict["FINANCE"] = ["FIN_MAJOR", "PICK_THREE_FIN"]
+    tableDict["FINANCE"] = ["FIN_MAJOR", "CHOOSE_THREE_FIN"]
     tableDict["MANAGEMENT"] = ["MANAGEMENT_MAJOR"]
 
     for major in selectedMajorList:
