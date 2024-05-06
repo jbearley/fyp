@@ -33,3 +33,5 @@ def loadBalance(credits_left, semester_lists, spots_dict, dict_3, counter, new):
     #print(credits_left)
     counter += 1
     return credits_left, semester_lists, counter, new
+
+
