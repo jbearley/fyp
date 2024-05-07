@@ -64,8 +64,12 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
     elif len(tableList) == 3:
         query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + ",dbo." + tableList[2] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID =" + tableList[2] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
-    else:
+    elif len(tableList) == 4:
         query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + ",dbo." + tableList[2] + ",dbo." + tableList[3] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID =" + tableList[2] + ".ClassID OR CLASSES.ClassID =" + tableList[3] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    elif len(tableList) == 5:
+        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + ",dbo." + tableList[2] + ",dbo." + tableList[3] + ",dbo." + tableList[4] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID =" + tableList[2] + ".ClassID OR CLASSES.ClassID =" + tableList[3] + ".ClassID OR CLASSES.ClassID =" + tableList[4] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+    else:
+        query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + tableList[0] + ",dbo." + tableList[1] + ",dbo." + tableList[2] + ",dbo." + tableList[3] + ",dbo." + tableList[4] + ",dbo." + tableList[5] + " WHERE CLASSES.ClassID =" + tableList[0] + ".ClassID OR CLASSES.ClassID =" + tableList[1] + ".ClassID OR CLASSES.ClassID =" + tableList[2] + ".ClassID OR CLASSES.ClassID =" + tableList[3] + ".ClassID OR CLASSES.ClassID =" + tableList[4] + ".ClassID OR CLASSES.ClassID =" + tableList[5] + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
     
     cursor.execute(query_1)
     dict_1 = {}
