@@ -116,7 +116,7 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
     tableDict["ACTUARIAL SCIENCE"] = ["ACT_SCI_MINOR"]
     tableDict["ACCOUNTING"] = ["ACCOUNTING_MINOR"]
     tableDict["ECONOMICS"] = ["ECON_MINOR", "PICK_FOUR_ECON_MINOR"]
-    tableDict["BUSINESS LAW"] = ["BLAW_MINOR", "PICK_TWO_BLAW"]
+    tableDict["BUSINESS LAW"] = ["BLAW_MINOR", "PICK_TWO_BLAW_MINOR"]
     tableDict["DATA ANALYTICS"] = ["DATA_ANALYTICS_MINOR"]
     tableDict["MANAGEMENT"] = ["PICK_THREE_MANAGEMENT_MINOR"]
 
@@ -128,19 +128,19 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
                 pickTables.append(value)
             else:
                 singlesTables.append(value)
-            minorRequirementsToFrontEnd[minor] = {}
+            minorRequirementsToFrontEnd[minor + " MINOR"] = {}
         singlesTablesDict[minor] = singlesTables
         pickTablesDict[minor] = pickTables
         
         for key in singlesTablesDict[minor]:
-            query_0r = "SELECT CLASSES.ClassID, CLASSES.ClassName FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + key + " WHERE CLASSES.ClassID =" + key + ".ClassID OR CLASSES.ClassID = BUSINESS_CORE.ClassID"
+            query_0r = "SELECT CLASSES.ClassID, CLASSES.ClassName FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + key + " WHERE CLASSES.ClassID =" + key + ".ClassID"
             cursor.execute(query_0r)
             classList = []
             result = cursor.fetchall()
             for tup in result:
                 if tup[1] not in classList:
                     classList.append(tup[1])
-            majorRequirementsToFrontEnd[minor] = {"singles": classList} #{"Individual Classes": classList}
+            minorRequirementsToFrontEnd[minor + " MINOR"] = {"singles": classList} #{"Individual Classes": classList}
             
         for tableName in pickTablesDict[minor]:
             query_1r = "SELECT CLASSES.ClassID, CLASSES.ClassName FROM dbo.CLASSES, dbo." + tableName + " WHERE CLASSES.ClassID =" + tableName + ".ClassID"
@@ -150,8 +150,8 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
             for tup in result:
                 if tup[1] not in classList:
                     classList.append(tup[1])
-            if "CHOOSE" in tableName:
-                tableName = tableName.replace("CHOOSE", "PICK")
+            tableName = tableName.replace("CHOOSE", "PICK")
+            #print(tableName)
             #tableName = tableName.replace("_", " ")
             #need to get rid of things after second word
             indexFirstSpace = tableName.index("_")
@@ -172,7 +172,7 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
             tableName = tableName.lower()
             tableName2 = tableName.replace("_", " ")
             tableName = tableName + "_" + tableName2
-            minorRequirementsToFrontEnd[minor][tableName] = classList
+            minorRequirementsToFrontEnd[minor + " MINOR"][tableName] = classList
 
     #PUT EVERYTHING TOGETHER ---------------------------------------------------------------------------------------
     
