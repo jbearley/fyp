@@ -107,17 +107,22 @@ header {
     width: 1.5rem;
     height: 1.5rem;
     position: relative;
+    border-radius: .75rem;
+    box-shadow: var(--shadow-1), var(--shadow-3);
+    background-color: rgb(197, 73, 54);
 }
 
 #requirements-overview .notice .icon::after {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--drake-blue);
+    background-color: white;
     mask-image: url(../images/notification-svgrepo-com.svg);
     -webkit-mask-image: url(../images/notification-svgrepo-com.svg);
     mask-size: contain;
     mask-repeat: no-repeat;
+    mask-position: center;
+    margin-top: -1px;
 }
 
 header:has(.left) {
@@ -943,4 +948,19 @@ h3 {
 
 .see-more-controllers button:hover {
     background-color: color-mix(in srgb, var(--drake-blue) 5%, white);
+}
+
+.tooltip-container {
+    position: relative;
+}
+
+.tooltip-container .tooltip {
+    opacity: 0;
+    transition: all .3s;
+    position: absolute;
+    left: 0;
+}
+
+.tooltip-container .icon:hover + .tooltip {
+    opacity: 1;
 }

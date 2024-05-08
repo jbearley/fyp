@@ -247,8 +247,6 @@ function inputSubmit2() {
 function requirementsChecklist() {
 	const requirementsJSON = JSON.parse(document.querySelector('#requirements-overview').getAttribute('data-requirements'));
 	const fypJSON = JSON.parse(document.querySelector('#by-semester').getAttribute('data-fyp'));
-	console.log(requirementsJSON);
-	console.log(fypJSON);
 	let allClasses = []; // all classes in the fyp
 	Object.values(fypJSON).forEach(classesObj => { // add all classes from the fyp to allClasses
 		Object.values(classesObj).forEach(classObj => {
@@ -356,7 +354,7 @@ function requirementsChecklist() {
 		const noticeHTML = `<div class='notice tooltip-container'>
 			<div class='icon'></div>
 			<div class='tooltip'>
-			
+				Notice: There are unmet requirements. Please use the checklist below to select any elective classes.
 			</div>
 		</div>`
 		$section.querySelector('header h1').insertAdjacentHTML('beforeend', noticeHTML);
