@@ -81,7 +81,7 @@ def index():
         title="Four-Year Plan Generator",
         classes_by_semester=finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingSemester, semesterList),
         #requirements=data.get_requirements(),
-        requirements = getRequirementsForFrontEnd(majors),
+        requirements = getRequirementsForFrontEnd(majors, minors),
         drake_curriculum=drake_curriculum,
         user_choices=user_choices,
         styles_to_enqueue=styles_to_enqueue,

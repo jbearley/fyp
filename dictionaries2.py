@@ -107,6 +107,7 @@ def createDictionaries(selectedMajorList, selectedMinorList):
     #print("major:", selectedMajor)
     #print(dict_1, "\n\n")
 
+    
     #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
     query_2 = "SELECT CLASSES.ClassID, Fall, Spring FROM dbo.CLASSES"#, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
     cursor.execute(query_2)

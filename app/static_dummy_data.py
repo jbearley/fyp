@@ -15,7 +15,6 @@ minors = [
     "Business Law",
     "Data Analytics",
     "Economics",
-    "Finance",
     "Information Systems",
     "Management",
 ]
