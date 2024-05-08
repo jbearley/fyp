@@ -103,6 +103,23 @@ header {
     padding: 1.5rem 1rem 1rem;
 }
 
+#requirements-overview .notice .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: relative;
+}
+
+#requirements-overview .notice .icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--drake-blue);
+    mask-image: url(../images/notification-svgrepo-com.svg);
+    -webkit-mask-image: url(../images/notification-svgrepo-com.svg);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+}
+
 header:has(.left) {
     flex-direction: row;
     justify-content: space-between;
@@ -121,6 +138,12 @@ h1 {
     font-weight: 700;
     letter-spacing: -0.15px;
     margin: 0;
+}
+
+#requirements-overview h1 {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 }
 
 content {

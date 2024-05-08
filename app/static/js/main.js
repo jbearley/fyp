@@ -247,12 +247,16 @@ function inputSubmit2() {
 function requirementsChecklist() {
 	const requirementsJSON = JSON.parse(document.querySelector('#requirements-overview').getAttribute('data-requirements'));
 	const fypJSON = JSON.parse(document.querySelector('#by-semester').getAttribute('data-fyp'));
+	console.log(requirementsJSON);
+	console.log(fypJSON);
 	let allClasses = []; // all classes in the fyp
-	Object.values(fypJSON).forEach(classes => { // add all classes from the fyp to allClasses
-		allClasses = [...allClasses, ...Object.keys(classes)];
+	Object.values(fypJSON).forEach(classesObj => { // add all classes from the fyp to allClasses
+		Object.values(classesObj).forEach(classObj => {
+			allClasses.push(classObj.title);
+		});
 	});
 	const checked = []; // list that should contain electives selected by either the fyp algorithm or the user
-	console.log(allClasses);
+	const incompleteReqs = [];
 	const checkRequirements = (categoryKey, requirements) => {
 		if (categoryKey === 'total_credits') { // credit requirement
 			const requiredCredits = parseInt(requirements);
@@ -268,13 +272,22 @@ function requirementsChecklist() {
 				$label.classList.add('completed');
 			} else {
 				$label.classList.add('started');
+				incompleteReqs.push(categoryKey);
 			}
 			return;
 		}
-		Object.entries(requirements).forEach(([reqKey, classes]) => { // for any requirement that is a mapping of 'requirementKey' => classes[]
+		if (categoryKey === 'AOIs') { // temporary AOI stuff !!!!!not legit
+			document.querySelectorAll(`[category-key="${categoryKey}"] input`).forEach($checkbox => {
+				$checkbox.checked = true;
+				const $label = $checkbox.nextElementSibling;
+				$label.classList.add('completed');
+				$label.querySelector('.num-picked').innerHTML = $label.querySelector('.num-choices').innerHTML;
+			});
+			return;
+		}
+		Object.entries(requirements).forEach(([reqKey, classes]) => { // each requirement is a mapping of 'requirementKey' => classes[]
 			if (reqKey == 'singles') { // if the key is 'singles', every class in the list is required
 				classes.forEach(classKey => {
-					console.log(classKey);
 					if (allClasses.includes(classKey)) {
 						try {
 							const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
@@ -284,6 +297,7 @@ function requirementsChecklist() {
 							$label.classList.add('completed');
 						} catch { }
 					} else {
+						incompleteReqs.push(classKey);
 						try {
 							const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
 							const $label = $checkbox.nextElementSibling;
@@ -321,6 +335,7 @@ function requirementsChecklist() {
 					progress = 'notStarted';
 				}
 				if (progress !== 'completed') {
+					incompleteReqs.push(req);
 					/* move item to the top */
 					const $choiceGroup = $checkbox.closest('.choice-group');
 					$choiceGroup.closest('.reqs').insertAdjacentElement('afterbegin', $choiceGroup);
@@ -335,5 +350,16 @@ function requirementsChecklist() {
 	Object.entries(requirementsJSON).forEach(([key, value]) => {
 		checkRequirements(key, value);
 	});
+	if (incompleteReqs.length) {
+		const $section = document.querySelector('#requirements-overview');
+		$section.classList.add('incomplete');
+		const noticeHTML = `<div class='notice tooltip-container'>
+			<div class='icon'></div>
+			<div class='tooltip'>
+			
+			</div>
+		</div>`
+		$section.querySelector('header h1').insertAdjacentHTML('beforeend', noticeHTML);
+	}
 	
 }
