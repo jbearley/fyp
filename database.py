@@ -35,11 +35,11 @@ for tup in result_3:
 
 print("\n")
 query_4 = f"""
-SELECT * FROM dbo.PICK_TWO_ACC
+SELECT * FROM dbo.CHOOSE_TWO_ACC
 """
 cursor.execute(query_4)
 result_4 = cursor.fetchall()
-print("This is the pick two accounting table:")
+print("This is the choose two accounting table:")
 for tup in result_4:
     print(tup)
 
@@ -55,7 +55,7 @@ for tup in result_5:
 
 print("\n")
 query_6 = f"""
-SELECT * FROM dbo.PICK_TWO_ACT_SCI
+SELECT * FROM dbo.CHOOSE_TWO_ACT_SCI
 """
 cursor.execute(query_6)
 result_6 = cursor.fetchall()
