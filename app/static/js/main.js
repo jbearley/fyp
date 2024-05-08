@@ -319,7 +319,7 @@ function requirementsChecklist() {
 					try {
 						const $radioInput = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classes[i]}"]`);
 						$radioInput.checked = true;
-						$radioInput.closest('.choice-group').insertAdjacentElement('afterbegin', $radioInput.closest('label')); // move checked item to the top
+						$radioInput.closest('.choice-group').querySelector('.req-header').insertAdjacentElement('afterend', $radioInput.closest('label')); // move checked item to the top
 					} catch { }
 				}
 				i++;
