@@ -231,7 +231,8 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             if i == 9:
                 print("ERROR")
                 break
-                
+        print("this")
+        print("FINALLLL" + semester_lists)        
         return semester_lists
 
 
