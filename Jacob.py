@@ -183,47 +183,55 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
                         if info in aoireqs:
                             aoireqs.remove(info)
                         break
+        print(aoireqs)
         return aoireqs
 
     def fill_aoi_courses(semester_lists, credits_left, aoireqs):
         i = 1
-        j = 1
+        j = len(aoireqs) - 1
+        print(str(semester_lists[1]))
+    
         
         while sum(credits_left.values()) > 24:
             if i <= 8:
-                while credits_left[i] > 5:
-                    semester_lists[i].append(aoireqs(j))
-                    aoireqs.remove(aoireqs(j))
+                while credits_left[i] > 5 and j >= 0:
+                    print("aoireqs for credits_left[i] > 5"+aoireqs[j])
+                    semester_lists[i].append(aoireqs[j])
+                    print("semester_lists[i] for credits_left[i] > 5"+ str(semester_lists[i]))
+                    aoireqs.remove(aoireqs[j])
                     credits_left[i] -= 3
-                    j += 1
+                    j -= 1
                 i += 1
             else:
                 break
-            
+        
         while sum(credits_left.values()) > 24:
             if i <= 8:
-                while credits_left[i] > 4:
-                    semester_lists[i].append(aoireqs(j))
-                    aoireqs.remove(aoireqs(j))
+                while credits_left[i] > 4 and j >= 0:
+                    print("aoireqs for credits_left[i] > 4"+aoireqs[j])
+                    semester_lists[i].append(aoireqs[j])
+                    print("semester_lists[i] for credits_left[i] > 4"+ str(semester_lists[i]))
+                    aoireqs.remove(aoireqs[j])
                     credits_left[i] -= 3
-                    j += 1
+                    j -= 1
                 i += 1
             else:
                 break
             
-        i = 1
-        print()
         while sum(credits_left.values()) > 24: #not meeting min credit requirement
-            if credits_left[i] > 3:
-                semester_lists[i].append(aoireqs(j))
-                aoireqs.remove(aoireqs(j))
+            if i <= 8 and credits_left[i] > 3 and j >= 0:
+                print("aoireqs for credits_left[i] > 3"+aoireqs[j])
+                semester_lists[i].append(aoireqs[j])
+                print("semester_lists[i] for credits_left[i] > 3"+ str(semester_lists[i]))
+                aoireqs.remove(aoireqs[j])
+                
                 credits_left[i] -= 3
-                j += 1
+                j -= 1
             i += 1
             if i == 9:
                 print("ERROR")
                 break
-            
+                
         return semester_lists
 
 
