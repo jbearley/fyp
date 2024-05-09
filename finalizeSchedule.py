@@ -119,13 +119,15 @@ def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
                         courseCredits = int(courseCredits)
                     if course in dict_6:
                         courseAttributes = dict_6[course]
+                    elif "MATH" in course:
+                        courseAttributes = "Quantitative Literacy"
                     else:
                         courseAttributes = None
                     courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': [courseAttributes]}
                 elif "AOI" in course:
                     if "Historical Foundations" in course:
                         courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 3, 'attributes': ["Historical Foundations"]}
-                    if "Scientific Literacy" in course and "Lab" in course:
+                    elif "Scientific Literacy" in course and "Lab" in course:
                         courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 4.5, 'attributes': ["Scientific Literacy"]}
                     else:
                         courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 3, 'attributes': [course[:-4]]}

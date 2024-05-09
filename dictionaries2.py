@@ -152,8 +152,9 @@ def createDictionaries(selectedMajorList, selectedMinorList):
                 popped_classes[dict_5[key]]=key
                 if "ACTS 120L" in popped_classes:
                     del popped_classes["ACTS 120L"]
-                    popped_classes["ACTS 120"] = "ACTS 120L"
                 dict_1.pop(key)
+    popped_classes["ACTS 120"] = "ACTS 120L"
+    dict_1.pop("ACTS 120L")
                 
     
     for key in popped_classes:

@@ -171,17 +171,24 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     
     # Fill semester lists for AOI courses
 
-    aoi_req = ['Artistic Literacy','Critical Thinking','Engaged Citizen','Global and Cultural Understanding','Historical Foundations (2)','Historical Foundations (1)','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy With Lab','Values and Ethics','Written Communication']
+    aoi_req = ['Artistic Literacy','Critical Thinking','Engaged Citizen','Global and Cultural Understanding','Historical Foundations (2)','Historical Foundations (1)','Information Literacy','Quantitative Literacy','Scientific Literacy','Values and Ethics','Written Communication','Scientific Literacy With Lab']
 
 
     def check_for_aoi(aoireqs, dict_6, semesterlist):
         for semNumber in semesterlist:
             for course in semesterlist[semNumber]:
+                if "MATH" in course or course == "STAT 71":
+                    if "Quantitative Literacy" in aoireqs:
+                        aoireqs.remove("Quantitative Literacy")
+                if "ACCT 41" in course:
+                    if "Critical Thinking" in aoireqs:
+                        aoireqs.remove("Critical Thinking")     
                 for aoicourse, info in dict_6.items():
                     if course == aoicourse:
                         if info in aoireqs:
                             aoireqs.remove(info)
                         break
+                    
         print(aoireqs)
         return aoireqs
 
@@ -191,12 +198,15 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
         i = 1
         j = len(aoireqs) - 1
     
-        while sum(credits_left.values()) > 24:
+        while sum(credits_left.values()) > 0:
             if i <= 8:
                 while credits_left[i] > 5 and j >= 0:
                     semester_lists[i].append(aoireqs[j] + " AOI")
+                    if "Lab" in aoireqs[j]:
+                        credits_left[i] -= 4.5
+                    else:
+                        credits_left[i] -= 3
                     aoireqs.remove(aoireqs[j])
-                    credits_left[i] -= 3
                     j -= 1
                 i += 1
             else:
@@ -205,10 +215,25 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
         print("1:", credits_left)
         
         i=1
-        while sum(credits_left.values()) > 24:
+        while sum(credits_left.values()) > 0:
             if i <= 8:
                 while credits_left[i] > 4 and j >= 0:
-                    semester_lists[i].append(aoireqs[j])
+                    semester_lists[i].append(aoireqs[j] + " AOI")
+                    if "Lab" in aoireqs[j]:
+                        credits_left[i] -= 4.5
+                    else:
+                        credits_left[i] -= 3
+                    aoireqs.remove(aoireqs[j])
+                    j -= 1
+                i += 1
+            else:
+                break
+            
+        i = 1
+        while sum(credits_left.values()) > 0:
+            if i <= 8:
+                while credits_left[i] > 3 and j >= 0:
+                    semester_lists[i].append(aoireqs[j] + " AOI")
                     aoireqs.remove(aoireqs[j])
                     credits_left[i] -= 3
                     j -= 1
@@ -217,10 +242,10 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
                 break
             
         i = 1
-        while sum(credits_left.values()) > 24: #not meeting min credit requirement
+        while sum(credits_left.values()) > 0:
             if i <= 8:
-                while credits_left[i] > 3 and j >= 0:
-                    semester_lists[i].append(aoireqs[j])
+                while credits_left[i] == 3 and j >= 0:
+                    semester_lists[i].append(aoireqs[j] + " AOI")
                     aoireqs.remove(aoireqs[j])
                     credits_left[i] -= 3
                     j -= 1
@@ -257,9 +282,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
         j = 1
         while sum(credits_left.values()) > 24:
             if i <= 8:
-                print(credits_left)
                 while credits_left[i] > 5:
-                    print("check?")
                     semester_lists[i].append("Elective Course " + str(j))
                     credits_left[i] -= 3
                     j += 1
@@ -320,6 +343,9 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             if course in popped_courses:
                 dict_3[course] = float(dict_3[course]) - .5
                 courses.insert(courses.index(course)+1, popped_courses[course])
+                #if "ACTS 120" in course:
+                    #print(f"Semester {semester}: {courses}")
+                credits_left[courses.index(course)+1] -= .5
         #print(f"Semester {semester}: {courses}")
         semesterLists.append(courses)
         
