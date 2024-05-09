@@ -1,11 +1,25 @@
-from Jacob import *
+# from azuresqlconnector import *
+# conn = SQLConnection()
+# conn = conn.getConnection()
+# cursor = conn.cursor()
 
-def check_for_aoi(aoireqs, dict_6, semesterlist):
-    for course in semesterlist:
-        for aoicourse, info in dict_6.items():
-            print(aoicourse, info)
-            if course == aoicourse:
-                print("?", course, aoicourse)
-                if info in aoireqs:
-                    aoireqs.remove(info)
-                break
+# # query = f"""
+# # SELECT * FROM dbo.CLASSES;
+# # """
+
+# print("\n")
+# query_22 = f"""
+# SELECT * FROM dbo.PICK_TWO_BLAW_MINOR
+# """
+# cursor.execute(query_22)
+# result_22 = cursor.fetchall()
+# print("This is the business law minor pick two table:")
+# for tup in result_22:
+#     print(tup)
+    
+# conn.commit()
+# cursor.close()
+
+import random
+
+print(random.randrange(0,2))

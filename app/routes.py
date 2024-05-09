@@ -70,7 +70,7 @@ def index():
     dict_8 = dictionaries[7]
     dict_9 = dictionaries[8]
     popped_classes = dictionaries[9]
-    
+    print("!!!", dict_1)
     placement_output = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester, popped_classes)
     semesterList = placement_output[0]
     aois_left = placement_output[1]

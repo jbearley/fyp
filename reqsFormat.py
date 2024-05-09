@@ -133,7 +133,7 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
         pickTablesDict[minor] = pickTables
         
         for key in singlesTablesDict[minor]:
-            query_0r = "SELECT CLASSES.ClassID, CLASSES.ClassName FROM dbo.CLASSES, dbo.BUSINESS_CORE, dbo." + key + " WHERE CLASSES.ClassID =" + key + ".ClassID"
+            query_0r = "SELECT CLASSES.ClassID, CLASSES.ClassName FROM dbo.CLASSES, dbo." + key + " WHERE CLASSES.ClassID =" + key + ".ClassID"
             cursor.execute(query_0r)
             classList = []
             result = cursor.fetchall()

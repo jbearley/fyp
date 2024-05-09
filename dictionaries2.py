@@ -1,5 +1,6 @@
 from azuresqlconnector import *
 from OrRequirements import *
+import random
 
 
 def createDictionaries(selectedMajorList, selectedMinorList):
@@ -7,6 +8,7 @@ def createDictionaries(selectedMajorList, selectedMinorList):
     conn = conn.getConnection()
     cursor = conn.cursor()
     tableList = []
+    pickTables = []
     #selectedMajor1 = selectedMajorList[0]
     if "ACTUARIAL SCIENCE" in selectedMajorList:
         tableList.append("ACT_SCI_MAJOR")
@@ -50,11 +52,12 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         
         
     for a in tableList:
-        minorTable = ("CHOOSE" in a and "MINOR" in a) or a == "THREE_ECON_MINOR"
-        if "MAJOR" not in a:
-            tableList.remove(a)
-        if minorTable:
-            tableList.remove(a)
+        if "MAJOR" not in a and "MINOR" not in a:
+            tableList.remove(a) #pick tables for majors
+            pickTables.append(a)
+        if "MINOR" in a and "PICK" in a:
+            tableList.remove(a) #pick tables for minors
+            pickTables.append(a)
             
     print(tableList)
             
@@ -80,25 +83,109 @@ def createDictionaries(selectedMajorList, selectedMinorList):
             if a[0] == " ":
                 a = a[1:]
         dict_1[tup[0]]=tup[1]
-        
+    
+    for pick_table in pickTables:
+        #query the database to get courses from pick table
+        query_1b = "SELECT dbo." + pick_table + ".ClassID FROM dbo." + pick_table
+        cursor.execute(query_1b)
+        #store courseIDs in a list
+        list1 = []
+        result = cursor.fetchall()
+        for tup in result:
+            list1.append(tup[0])
+        #temp fix - remove any classes with pre-reqs not involved in major/minor
+        if "STAT 172" in list1:
+            list1.remove("STAT 172")
+        if "FIN" in pick_table:
+            for a in ["CS 167", "ACCT 120", "ACCT 175", "AACT 165", "ACCT 166"]:
+                if a in list1:
+                    list1.remove(a)
+        if "ECON" in pick_table:
+            if "ECON 198" in list1:
+                list1.remove("ECON 198")
+        if "BLAW" in pick_table:
+            if "ENTR 150" in list1:
+                list1.remove("ENTR 150")
+        #figure out, from table name, how many X is
+        indexFirstSpace = pick_table.index("_")
+        temp = pick_table[indexFirstSpace+1:]
+        indexSecondSpace = temp.index("_")
+        number = temp[:indexSecondSpace]
+        if number.lower() == "one":
+            number = 1
+        elif number.lower() == "two":
+            number = 2
+        elif number.lower() == "three":
+            number = 3
+        elif number.lower() == "four":
+            number = 4
+        elif number.lower() == "five":
+            number = 5
+        #pick X random courses from the list, put in list2
+        list2 = []
+        if "ACC" in pick_table:
+            randomNum1 = random.randrange(0,2)
+            list2.append(list1[randomNum1])
+            while number != 1:
+                randomNum2 = random.randrange(2,len(list1))
+                list2.append(list1[randomNum2])
+                list1.remove(list1[randomNum2])
+                number -= 1
+        else:
+            list2 = random.sample(list1, number)
+        print("!!!", pick_table, list2)
+        #query the CLASSES table with where courseID IN list2
+        strList2 = "('" + list2[0]
+        for item in list2:
+            if item != list2[0]:
+                strList2 += "', '" + str(item)
+        strList2 += "')"
+        print(strList2)
+        query_1c = query_1 = "SELECT CLASSES.ClassID, Prereqs FROM dbo.CLASSES WHERE CLASSES.ClassID IN " + strList2
+        #add new values to dict_1
+        cursor.execute(query_1c)
+        result = cursor.fetchall()
+        for tup in result:
+            tup[1] = str(tup[1]).split(', ')
+            for a in tup[1]:
+                if a[0] == " ":
+                    a = a[1:]
+            dict_1[tup[0]]=tup[1]
+    
     if "FIN 101" in dict_1:
         dict_1["FIN 101"] = ["ACCT 42", "IS 44", "ECON 02", "STAT 71/STAT 130/ACTS 131"]
     if "MGMT 120" in dict_1:
         dict_1["MGMT 120"] = ["STAT 72/ACTS 135"]
-    if "ECON 190" in dict_1:
-        dict_1["ECON 190"] = ["ECON 170/STAT 170"]
     if "STAT 172" in dict_1:
         dict_1["STAT 172"] = ['STAT 130/ACTS 131', 'STAT 40', 'STAT 170', 'MATH 70']
+    if "ECON 190" in dict_1:
+        dict_1["ECON 190"] = ["ECON 170/STAT 170"]
     dict_1 = dealWithOrReqs(dict_1)
     if "ACTS 140" in dict_1 and "ACT 135" in dict_1["ACTS 140"]:
         dict_1["ACTS 140"].remove("ACT 135")
         dict_1["ACTS 140"].append("ACTS 135") 
     if "ECON 170" in dict_1 and "MATH 28" in dict_1["ECON 170"]:
-        dict_1["ECON 170"].remove("MATH 28") #what curriculum is the econ major stuff from??
+        dict_1["ECON 170"].remove("MATH 28")
+    if "ECON 105" in dict_1 and "MATH 28" in dict_1["ECON 105"]:
+        dict_1["ECON 105"].remove("MATH 28")
+    if "ECON 109" in dict_1 and "MATH 28" in dict_1["ECON 109"]:
+        dict_1["ECON 109"].remove("MATH 28")
+    if "ECON 115" in dict_1 and "MATH 28" in dict_1["ECON 115"]:
+        dict_1["ECON 115"].remove("MATH 28")
+    if "ECON 120" in dict_1 and "MATH 28" in dict_1["ECON 120"]:
+        dict_1["ECON 120"].remove("MATH 28")
+    if "ECON 130" in dict_1 and "MATH 28" in dict_1["ECON 130"]:
+        dict_1["ECON 130"].remove("MATH 28")
+    if "ECON 135" in dict_1 and "MATH 28" in dict_1["ECON 135"]:
+        dict_1["ECON 135"].remove("MATH 28")
+    if "ECON 174" in dict_1 and "MATH 28" in dict_1["ECON 174"]:
+        dict_1["ECON 174"].remove("MATH 28")
+    if "ECON 131" in dict_1 and "MATH 28" in dict_1["ECON 131"]:
+        dict_1["ECON 131"].remove("MATH 28")
     if "CS 65" in dict_1 and "MATH 20" in dict_1["CS 65"]:
         dict_1["CS 65"].remove("MATH 20")
     if "ECON 108" in dict_1 and "MATH 17" in dict_1["ECON 108"]:
-        dict_1["ECON 108"].remove("MATH 17") #what curriculum is the econ major stuff from??
+        dict_1["ECON 108"].remove("MATH 17")
     if "ECON 135" in dict_1 and "MATH 17" in dict_1["ECON 135"]:
         dict_1["ECON 135"].remove("MATH 17")
     if "BUS 70" in dict_1 and "BUS 70" in dict_1["BUS 70"]:
@@ -106,7 +193,6 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         dict_1["BUS 70"].remove("BUS 70")
     #print("major:", selectedMajor)
     #print(dict_1, "\n\n")
-
     
     #dictionary with ClassID for the key, value consists of a concatenated string of Fall (0 or 1) and Spring (0 or 1) value depending on whether the class is offered in the fall / spring or not
     query_2 = "SELECT CLASSES.ClassID, Fall, Spring FROM dbo.CLASSES"#, dbo." + selectedMajor + " WHERE CLASSES.ClassID =" + selectedMajor + ".ClassID"
