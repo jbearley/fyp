@@ -41,7 +41,7 @@ def finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingS
             #look at classes
             for semesterClass in oneSemesterList: #for each class in the selected semester
                 #Confirm that classes are placed when they are offered.
-                if "Elective" in semesterClass or semesterClass in aoi_req: #ignore AOIs - may need to update this depending on how we end up formatting these
+                if "Elective" in semesterClass or "AOI" in semesterClass: 
                     continue
                 #check fall/spring
                 if currentSeason == "Fall":
@@ -112,16 +112,25 @@ def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
             for course in semesterList[i]:
                 courseDict = {}
                 #for each course, we need the name, course_num and attributes
-                if "Elective" not in course and course not in aoi_req:
+                if "Elective" not in course and "AOI" not in course:
                     courseTitle = dict_9[course]
                     courseCredits = float(dict_3[course])
                     if courseCredits % 1 == 0:
                         courseCredits = int(courseCredits)
                     if course in dict_6:
                         courseAttributes = dict_6[course]
+                    elif "MATH" in course:
+                        courseAttributes = "Quantitative Literacy"
                     else:
                         courseAttributes = None
                     courseDict[course] = {'title': courseTitle, 'course_number': course, 'num_credits': courseCredits , 'attributes': [courseAttributes]}
+                elif "AOI" in course:
+                    if "Historical Foundations" in course:
+                        courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 3, 'attributes': ["Historical Foundations"]}
+                    elif "Scientific Literacy" in course and "Lab" in course:
+                        courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 4.5, 'attributes': ["Scientific Literacy"]}
+                    else:
+                        courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 3, 'attributes': [course[:-4]]}
                 else:
                     courseDict[course] = {'title': course, 'course_number': "", 'num_credits': 3, 'attributes': []}
                 #have courses with 0 credits appear first
@@ -143,7 +152,7 @@ def reformat2(semesterList, startingSemester, dict_8):
     while i <= 8:
         tempList = []
         for course in semesterList[i]:
-            if "Elective" not in course and course not in aoi_req:
+            if "Elective" not in course and "AOI" not in course:
                 tempList.append(dict_8[course]) #gets dictionary for course with all info we pass to frontend
             else:
                 tempList.append(course)
