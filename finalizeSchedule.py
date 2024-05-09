@@ -22,6 +22,8 @@ def addSemester(pastSemName):
 
 def finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingSemester, semesterList):
     #print(semesterList)
+    aoi_req = ['Artistic Literacy','Critical Thinking','Engaged Citizen','Global and Cultural Understanding','Historical Foundations','Historical Foundations','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy','Values and Ethics','Written Communication']
+
     working = True
     retest = False
     currentSemester = startingSemester
@@ -39,7 +41,7 @@ def finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingS
             #look at classes
             for semesterClass in oneSemesterList: #for each class in the selected semester
                 #Confirm that classes are placed when they are offered.
-                if "Elective" in semesterClass or semesterClass == "AOI": #ignore AOIs - may need to update this depending on how we end up formatting these
+                if "Elective" in semesterClass or semesterClass in aoi_req: #ignore AOIs - may need to update this depending on how we end up formatting these
                     continue
                 #check fall/spring
                 if currentSeason == "Fall":
@@ -99,6 +101,8 @@ def finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingS
     return "ERROR - INVALID SCHEDULE"
 
 def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
+        aoi_req = ['Artistic Literacy','Critical Thinking','Engaged Citizen','Global and Cultural Understanding','Historical Foundations','Historical Foundations','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy','Values and Ethics','Written Communication']
+
         finalSchedule = {}
         semester = startingSemester
         i = 1
@@ -108,7 +112,7 @@ def reformat(semesterList, startingSemester, dict_3, dict_6, dict_9):
             for course in semesterList[i]:
                 courseDict = {}
                 #for each course, we need the name, course_num and attributes
-                if "Elective" not in course and course != "AOI":
+                if "Elective" not in course and course not in aoi_req:
                     courseTitle = dict_9[course]
                     courseCredits = float(dict_3[course])
                     if courseCredits % 1 == 0:
@@ -139,7 +143,7 @@ def reformat2(semesterList, startingSemester, dict_8):
     while i <= 8:
         tempList = []
         for course in semesterList[i]:
-            if "Elective" not in course and course != "AOI":
+            if "Elective" not in course and course not in aoi_req:
                 tempList.append(dict_8[course]) #gets dictionary for course with all info we pass to frontend
             else:
                 tempList.append(course)
