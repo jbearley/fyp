@@ -248,24 +248,13 @@ function requirementsChecklist() {
 	const requirementsJSON = JSON.parse(document.querySelector('#requirements-overview').getAttribute('data-requirements'));
 	const fypJSON = JSON.parse(document.querySelector('#by-semester').getAttribute('data-fyp'));
 	let allClasses = []; // all classes in the fyp
-	Object.values(fypJSON).forEach(classes => { // add all classes from the fyp to allClasses
-		allClasses = [...allClasses, ...Object.keys(classes)];
+	Object.values(fypJSON).forEach(classesObj => { // add all classes from the fyp to allClasses
+		Object.values(classesObj).forEach(classObj => {
+			allClasses.push(classObj.title);
+		});
 	});
 	const checked = []; // list that should contain electives selected by either the fyp algorithm or the user
-	const progressStyles = {
-		notStarted: {
-			color: 'var(--color-not-started)',
-			fontWeight: 'var(--font-weight-not-started)'
-		},
-		started: {
-			color: 'var(--color-started)',
-			fontWeight: 'var(--font-weight-started)'
-		},
-		completed: {
-			color: 'var(--color-completed)',
-			fontWeight: 'var(--font-weight-completed)'
-		},
-	};
+	const incompleteReqs = [];
 	const checkRequirements = (categoryKey, requirements) => {
 		if (categoryKey === 'total_credits') { // credit requirement
 			const requiredCredits = parseInt(requirements);
@@ -278,22 +267,41 @@ function requirementsChecklist() {
 			$label.querySelector('.credits-met').innerHTML = totalCredits;
 			if (totalCredits >= requiredCredits) {
 				$checkbox.checked = true;
-				$label.style.color = progressStyles.completed.color;
-				$label.style.fontWeight = progressStyles.completed.fontWeight;
+				$label.classList.add('completed');
+			} else {
+				$label.classList.add('started');
+				incompleteReqs.push(categoryKey);
 			}
 			return;
 		}
-		Object.entries(requirements).forEach(([reqKey, classes]) => { // for any requirement that is a mapping of 'requirementKey' => classes[]
+		if (categoryKey === 'AOIs') { // temporary AOI stuff !!!!!not legit
+			document.querySelectorAll(`[category-key="${categoryKey}"] input`).forEach($checkbox => {
+				$checkbox.checked = true;
+				const $label = $checkbox.nextElementSibling;
+				$label.classList.add('completed');
+				$label.querySelector('.num-picked').innerHTML = $label.querySelector('.num-choices').innerHTML;
+			});
+			return;
+		}
+		Object.entries(requirements).forEach(([reqKey, classes]) => { // each requirement is a mapping of 'requirementKey' => classes[]
 			if (reqKey == 'singles') { // if the key is 'singles', every class in the list is required
 				classes.forEach(classKey => {
-					try {
-						const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
-						$checkbox.checked = true;
-						checked.push(classKey);
-						const $label = $checkbox.nextElementSibling;
-						$label.style.color = progressStyles.completed.color;
-						$label.style.fontWeight = progressStyles.completed.fontWeight;
-					} catch { }
+					if (allClasses.includes(classKey)) {
+						try {
+							const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
+							$checkbox.checked = true;
+							checked.push(classKey);
+							const $label = $checkbox.nextElementSibling;
+							$label.classList.add('completed');
+						} catch { }
+					} else {
+						incompleteReqs.push(classKey);
+						try {
+							const $checkbox = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classKey}"]`);
+							const $label = $checkbox.nextElementSibling;
+							$label.classList.add('notStarted');
+						} catch { }
+					}
 				});
 				return;
 			}
@@ -309,7 +317,7 @@ function requirementsChecklist() {
 					try {
 						const $radioInput = document.querySelector(`[category-key="${categoryKey}"] [id="${reqKey}_${classes[i]}"]`);
 						$radioInput.checked = true;
-						$radioInput.closest('.choice-group').insertAdjacentElement('afterbegin', $radioInput.closest('label')); // move checked item to the top
+						$radioInput.closest('.choice-group').querySelector('.req-header').insertAdjacentElement('afterend', $radioInput.closest('label')); // move checked item to the top
 					} catch { }
 				}
 				i++;
@@ -324,15 +332,32 @@ function requirementsChecklist() {
 				} else if (found == 0) {
 					progress = 'notStarted';
 				}
+				if (progress !== 'completed') {
+					incompleteReqs.push(req);
+					/* move item to the top */
+					const $choiceGroup = $checkbox.closest('.choice-group');
+					$choiceGroup.closest('.reqs').insertAdjacentElement('afterbegin', $choiceGroup);
+				}
 				/* style label */
 				const $label = $checkbox.nextElementSibling;
 				$label.querySelector('.num-picked').innerHTML = found;
-				$label.style.color = progressStyles[progress].color;
-				$label.style.fontWeight = progressStyles[progress].fontWeight;
+				$label.classList.add(progress);
 			} catch { }
 		});
 	};
 	Object.entries(requirementsJSON).forEach(([key, value]) => {
 		checkRequirements(key, value);
 	});
+	if (incompleteReqs.length) {
+		const $section = document.querySelector('#requirements-overview');
+		$section.classList.add('incomplete');
+		const noticeHTML = `<div class='notice tooltip-container'>
+			<div class='icon'></div>
+			<div class='tooltip'>
+				Notice: There are unmet requirements. Please use the checklist below to select any elective classes.
+			</div>
+		</div>`
+		$section.querySelector('header h1').insertAdjacentHTML('beforeend', noticeHTML);
+	}
+	
 }

@@ -103,6 +103,28 @@ header {
     padding: 1.5rem 1rem 1rem;
 }
 
+#requirements-overview .notice .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: relative;
+    border-radius: .75rem;
+    box-shadow: var(--shadow-1), var(--shadow-3);
+    background-color: rgb(197, 73, 54);
+}
+
+#requirements-overview .notice .icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: white;
+    mask-image: url(../images/notification-svgrepo-com.svg);
+    -webkit-mask-image: url(../images/notification-svgrepo-com.svg);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    margin-top: -1px;
+}
+
 header:has(.left) {
     flex-direction: row;
     justify-content: space-between;
@@ -121,6 +143,12 @@ h1 {
     font-weight: 700;
     letter-spacing: -0.15px;
     margin: 0;
+}
+
+#requirements-overview h1 {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 }
 
 content {
@@ -156,7 +184,6 @@ p {
     cursor: inherit;
     line-height: 1.25rem;
     font-size: .875rem;
-    color: var(--color-not-started);
 }
 
 .req-header input[type="checkbox"] {
@@ -167,12 +194,28 @@ p {
     height: .75rem;
     border: 1px solid var(--gray-400) !important;
     border-radius: 4px;
+    pointer-events: none;
 }
 
 .reqs {
     display: flex;
     flex-direction: column;
     gap: .25rem;
+}
+
+.reqs label.completed {
+    color: var(--color-completed);
+    font-weight: var(--font-weight-completed);
+}
+
+.reqs label.started {
+    color: var(--color-started);
+    font-weight: var(--font-weight-started);
+}
+
+.reqs label.notStarted {
+    color: var(--color-not-started);
+    font-weight: var(--font-weight-not-started);
 }
 
 .choice-group {
@@ -186,7 +229,7 @@ p {
     gap: .125rem;
 }
 
-.choice-group input[type="radio"] {
+.choice-group label input[type="checkbox"] {
     margin: 4px;
     width: .75rem;
     height: .75rem;
@@ -905,4 +948,19 @@ h3 {
 
 .see-more-controllers button:hover {
     background-color: color-mix(in srgb, var(--drake-blue) 5%, white);
+}
+
+.tooltip-container {
+    position: relative;
+}
+
+.tooltip-container .tooltip {
+    opacity: 0;
+    transition: all .3s;
+    position: absolute;
+    left: 0;
+}
+
+.tooltip-container .icon:hover + .tooltip {
+    opacity: 1;
 }
