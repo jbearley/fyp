@@ -171,7 +171,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     
     # Fill semester lists for AOI courses
 
-    aoi_req = ['Artistic Literacy','Critical Thinking','Engaged Citizen','Global and Cultural Understanding','Historical Foundations','Historical Foundations','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy','Values and Ethics','Written Communication']
+    aoi_req = ['Artistic Literacy','Critical Thinking','Engaged Citizen','Global and Cultural Understanding','Historical Foundations (2)','Historical Foundations (1)','Information Literacy','Quantitative Literacy','Scientific Literacy','Scientific Literacy With Lab','Values and Ethics','Written Communication']
 
 
     def check_for_aoi(aoireqs, dict_6, semesterlist):
@@ -179,7 +179,6 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             for course in semesterlist[semNumber]:
                 for aoicourse, info in dict_6.items():
                     if course == aoicourse:
-                        print("?", course, aoicourse)
                         if info in aoireqs:
                             aoireqs.remove(info)
                         break
@@ -187,30 +186,29 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
         return aoireqs
 
     def fill_aoi_courses(semester_lists, credits_left, aoireqs):
+        print("0:", semester_lists)
+        print("0:", credits_left)
         i = 1
         j = len(aoireqs) - 1
-        print(str(semester_lists[1]))
     
-        
         while sum(credits_left.values()) > 24:
             if i <= 8:
                 while credits_left[i] > 5 and j >= 0:
-                    print("aoireqs for credits_left[i] > 5"+aoireqs[j])
-                    semester_lists[i].append(aoireqs[j])
-                    print("semester_lists[i] for credits_left[i] > 5"+ str(semester_lists[i]))
+                    semester_lists[i].append(aoireqs[j] + " AOI")
                     aoireqs.remove(aoireqs[j])
                     credits_left[i] -= 3
                     j -= 1
                 i += 1
             else:
                 break
+        print("1:", semester_lists)
+        print("1:", credits_left)
         
+        i=1
         while sum(credits_left.values()) > 24:
             if i <= 8:
                 while credits_left[i] > 4 and j >= 0:
-                    print("aoireqs for credits_left[i] > 4"+aoireqs[j])
                     semester_lists[i].append(aoireqs[j])
-                    print("semester_lists[i] for credits_left[i] > 4"+ str(semester_lists[i]))
                     aoireqs.remove(aoireqs[j])
                     credits_left[i] -= 3
                     j -= 1
@@ -218,13 +216,11 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             else:
                 break
             
+        i = 1
         while sum(credits_left.values()) > 24: #not meeting min credit requirement
             if i <= 8:
                 while credits_left[i] > 3 and j >= 0:
-                 
-                    print("aoireqs for credits_left[i] > 3"+aoireqs[j])
                     semester_lists[i].append(aoireqs[j])
-                    print("semester_lists[i] for credits_left[i] > 3"+ str(semester_lists[i]))
                     aoireqs.remove(aoireqs[j])
                     credits_left[i] -= 3
                     j -= 1
@@ -232,7 +228,7 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             else:
                 break
               
-        return semester_lists
+        return semester_lists, credits_left
 
 
     # def fill_for_aoi(aoireqs,dict_6,semesterlist):
@@ -259,17 +255,18 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
     def fill_placeholder_courses(semester_lists, credits_left):
         i = 1
         j = 1
-        
         while sum(credits_left.values()) > 24:
             if i <= 8:
+                print(credits_left)
                 while credits_left[i] > 5:
+                    print("check?")
                     semester_lists[i].append("Elective Course " + str(j))
                     credits_left[i] -= 3
                     j += 1
                 i += 1
             else:
                 break
-            
+        i = 1
         while sum(credits_left.values()) > 24:
             if i <= 8:
                 while credits_left[i] > 4:
@@ -294,7 +291,6 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             
         return semester_lists
                 
-
     counter = 0
     new = False
     credits_left_list = []
@@ -311,7 +307,9 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             break
 
     aois_left = check_for_aoi(aoi_req, dict_6, semester_lists)
-    semester_lists = fill_aoi_courses(semester_lists, credits_left, aoi_req)
+    tuple1 = fill_aoi_courses(semester_lists, credits_left, aoi_req)
+    semester_lists = tuple1[0]
+    credits_left = tuple1[1]
     semester_lists = fill_placeholder_courses(semester_lists, credits_left)
     
     # Print the filled semester lists
