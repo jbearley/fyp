@@ -218,21 +218,19 @@ def Jplacement_algorithm(requirements, dict_2, dict_3, dict_4, dict_6,dict_7, st
             else:
                 break
             
-       # while sum(credits_left.values()) > 24: #not meeting min credit requirement
-       #     if i <= 8:
-       #         while credits_left[i] > 3 and j >= 0:
-       #         
-       #             print("aoireqs for credits_left[i] > 3"+aoireqs[j])
-       #             semester_lists[i].append(aoireqs[j])
-       #             print("semester_lists[i] for credits_left[i] > 3"+ str(semester_lists[i]))
-       #             aoireqs.remove(aoireqs[j])
-       #             
-       #             credits_left[i] -= 3
-       #             j -= 1
-       #         i += 1
-       #         if i == 9:
-       #             print("ERROR")
-       #             break
+        while sum(credits_left.values()) > 24: #not meeting min credit requirement
+            if i <= 8:
+                while credits_left[i] > 3 and j >= 0:
+                 
+                    print("aoireqs for credits_left[i] > 3"+aoireqs[j])
+                    semester_lists[i].append(aoireqs[j])
+                    print("semester_lists[i] for credits_left[i] > 3"+ str(semester_lists[i]))
+                    aoireqs.remove(aoireqs[j])
+                    credits_left[i] -= 3
+                    j -= 1
+                i += 1
+            else:
+                break
               
         return semester_lists
 
