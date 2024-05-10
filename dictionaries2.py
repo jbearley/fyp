@@ -41,7 +41,7 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         tableList.append("DATA_ANALYTICS_MINOR")
     if "ECONOMICS" in selectedMinorList:
         tableList.append("ECON_MINOR")
-        tableList.append("PICK_THREE_ECON_MINOR")
+        tableList.append("PICK_FOUR_ECON_MINOR")
     if "FINANCE" in selectedMinorList:
         tableList.append("ACCOUNTING_MINOR")
     if "INFORMATION SYSTEMS" in selectedMinorList:
