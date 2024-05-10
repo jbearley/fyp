@@ -14,9 +14,9 @@ minors = [
     "Actuarial Science",
     "Business Law",
     "Data Analytics",
-    "Economics",
+    # "Economics",
     "Information Systems",
-    "Management",
+    # "Management",
 ]
 concentrations = [
     "Behavior Analysis of Developmental Disabilities",

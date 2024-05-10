@@ -79,7 +79,6 @@ function seeMore() {
 	const resizeObserver = new ResizeObserver(entries => {
 		for (const entry of entries) {
 			if (document.querySelector('#by-semester').clientWidth === prevWidth) return;
-			console.log('resized');
 			document.querySelectorAll('.class-container').forEach($classContainer => {
 				updateSeeMoreStatus($classContainer);
 			});
