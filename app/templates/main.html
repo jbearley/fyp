@@ -54,6 +54,9 @@
                         <div class='dropdown-container'>
                             <button class='delete-major'></button>
                             <select name='majors'>
+                                {% if major_choice == "Select option..." %}
+                                <option disabled selected value></option>
+                                {% endif %}
                                 {% for major in drake_curriculum['majors'] %}
                                 <option value='{{major}}' {% if major_choice==major %} selected {% endif %}>{{major}}
                                 </option>
@@ -86,6 +89,9 @@
                         <div class='dropdown-container'>
                             <button class='delete-major'></button>
                             <select name='minors'>
+                                {% if minor_choice == "Select option..." %}
+                                <option disabled selected value></option>
+                                {% endif %}
                                 {% for minor in drake_curriculum['minors'] %}
                                 <option value='{{minor}}' {% if minor_choice==minor %} selected {% endif %}>{{minor}}
                                 </option>
