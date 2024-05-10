@@ -239,8 +239,10 @@ def createDictionaries(selectedMajorList, selectedMinorList):
                 if "ACTS 120L" in popped_classes:
                     del popped_classes["ACTS 120L"]
                 dict_1.pop(key)
-    popped_classes["ACTS 120"] = "ACTS 120L"
-    dict_1.pop("ACTS 120L")
+    if "ACTS 120" in dict_1 or "ACTS 120L" in dict_1:
+        popped_classes["ACTS 120"] = "ACTS 120L"
+    if "ACTS 120L" in dict_1:
+        dict_1.pop("ACTS 120L")
                 
     
     for key in popped_classes:
