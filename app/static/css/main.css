@@ -103,6 +103,10 @@ header {
     padding: 1.5rem 1rem 1rem;
 }
 
+#requirements-overview {
+    z-index: 2;
+}
+
 #requirements-overview .notice .icon {
     width: 100%;
     height: 100%;
