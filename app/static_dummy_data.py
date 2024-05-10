@@ -3,7 +3,7 @@ import datetime
 majors = [ 
     "Accounting",
     "Actuarial Science",
-    "Business Law",
+    # "Business Law",
     "Data Analytics",
     "Economics (BSBA)",
     "Finance",
@@ -15,7 +15,7 @@ minors = [
     "Business Law",
     "Data Analytics",
     # "Economics",
-    "Information Systems",
+    # "Information Systems",
     # "Management",
 ]
 concentrations = [
