@@ -1,25 +1,17 @@
-# from azuresqlconnector import *
-# conn = SQLConnection()
-# conn = conn.getConnection()
-# cursor = conn.cursor()
+from azuresqlconnector import *
+conn = SQLConnection()
+conn = conn.getConnection()
+cursor = conn.cursor()
 
-# # query = f"""
-# # SELECT * FROM dbo.CLASSES;
-# # """
+print("\n")
+query_23 = f"""
+SELECT * FROM dbo.MANAGEMENT_MINOR
+"""
+cursor.execute(query_23)
+result_23 = cursor.fetchall()
+print("This is the management minor table:")
+for tup in result_23:
+    print(tup)
 
-# print("\n")
-# query_22 = f"""
-# SELECT * FROM dbo.PICK_TWO_BLAW_MINOR
-# """
-# cursor.execute(query_22)
-# result_22 = cursor.fetchall()
-# print("This is the business law minor pick two table:")
-# for tup in result_22:
-#     print(tup)
-    
-# conn.commit()
-# cursor.close()
-
-import random
-
-print(random.randrange(0,2))
+conn.commit()
+cursor.close()
