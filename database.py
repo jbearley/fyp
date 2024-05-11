@@ -195,7 +195,7 @@ for tup in result_18:
 
 print("\n")
 query_19 = f"""
-SELECT * FROM dbo.THREE_ECON_MINOR
+SELECT * FROM dbo.CHOOSE_THREE_ECON_MINOR
 """
 cursor.execute(query_19)
 result_19 = cursor.fetchall()
@@ -226,11 +226,9 @@ print("This is the Business law minor table:")
 for tup in result_21:
     print(tup)
 
-
-
 print("\n")
 query_22 = f"""
-SELECT * FROM dbo.BLAW_MINOR_CHOOSE_TWO
+SELECT * FROM dbo.PICK_TWO_BLAW_MINOR
 """
 cursor.execute(query_22)
 result_22 = cursor.fetchall()
@@ -252,7 +250,7 @@ for tup in result_23:
 
 print("\n")
 query_24 = f"""
-SELECT * FROM dbo.MANAGEMENT_MINOR_CHOOSE_THREE
+SELECT * FROM dbo.CHOOSE_THREE_MANAGEMENT_MINOR
 """
 cursor.execute(query_24)
 result_24 = cursor.fetchall()

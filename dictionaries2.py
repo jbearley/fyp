@@ -48,7 +48,7 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         tableList.append("INFO_SYSTEMS_MINOR")
     if "MANAGEMENT" in selectedMinorList:
         tableList.append("MANAGEMENT_MINOR")
-        tableList.append("PICK_THREE_MAANGEMENT_MINOR")
+        tableList.append("PICK_THREE_MANAGEMENT_MINOR")
         
         
     for a in tableList:
@@ -85,54 +85,24 @@ def createDictionaries(selectedMajorList, selectedMinorList):
         dict_1[tup[0]]=tup[1]
     
     for pick_table in pickTables:
-        #query the database to get courses from pick table
-        query_1b = "SELECT dbo." + pick_table + ".ClassID FROM dbo." + pick_table
-        cursor.execute(query_1b)
-        #store courseIDs in a list
-        list1 = []
-        result = cursor.fetchall()
-        for tup in result:
-            list1.append(tup[0])
-        #temp fix - remove any classes with pre-reqs not involved in major/minor
-        if "STAT 172" in list1:
-            list1.remove("STAT 172")
-        if "FIN" in pick_table:
-            for a in ["CS 167", "ACCT 120", "ACCT 175", "AACT 165", "ACCT 166"]:
-                if a in list1:
-                    list1.remove(a)
-        if "ECON" in pick_table:
-            if "ECON 198" in list1:
-                list1.remove("ECON 198")
-        if "BLAW" in pick_table:
-            if "ENTR 150" in list1:
-                list1.remove("ENTR 150")
-        #figure out, from table name, how many X is
-        indexFirstSpace = pick_table.index("_")
-        temp = pick_table[indexFirstSpace+1:]
-        indexSecondSpace = temp.index("_")
-        number = temp[:indexSecondSpace]
-        if number.lower() == "one":
-            number = 1
-        elif number.lower() == "two":
-            number = 2
-        elif number.lower() == "three":
-            number = 3
-        elif number.lower() == "four":
-            number = 4
-        elif number.lower() == "five":
-            number = 5
-        #pick X random courses from the list, put in list2
         list2 = []
-        if "ACC" in pick_table:
-            randomNum1 = random.randrange(0,2)
-            list2.append(list1[randomNum1])
-            while number != 1:
-                randomNum2 = random.randrange(2,len(list1))
-                list2.append(list1[randomNum2])
-                list1.remove(list1[randomNum2])
-                number -= 1
-        else:
-            list2 = random.sample(list1, number)
+        if pick_table == "CHOOSE_TWO_ACC":
+            list2 = ["ACCT 167", "IS 160"]
+        elif pick_table == "CHOOSE_TWO_ACT_SCI":
+            list2 = ["FIN 102", "ACTS 155"]
+        elif pick_table == "CHOOSE_THREE_BLAW":
+            list2 = ["ENTR 101", "FIN 129", "IS 83"]
+        elif pick_table == "CHOOSE_FOUR_ECON":
+            list2 = ["ECON 105", "ECON 115", "ECON 120", "ECON 170"]
+        elif pick_table == "CHOOSE_THREE_FIN":
+            list2 = ["IS 107", "FIN 150", "ECON 170"]
+        elif pick_table == "PICK_FOUR_ECON_MINOR":
+            list2 = ["ECON 105", "ECON 115", "ECON 120", "ECON 130"]
+        elif pick_table == "PICK_TWO_BLAW_MINOR":
+            list2 = ["ACCT 185", "ACCT 186"]
+        elif pick_table == "PICK_THREE_MANAGEMENT_MINOR":
+            list2 = ["MGMT 160", "MGMT 182", "BUS 120"]
+        
         print("!!!", pick_table, list2)
         #query the CLASSES table with where courseID IN list2
         strList2 = "('" + list2[0]
@@ -151,7 +121,6 @@ def createDictionaries(selectedMajorList, selectedMinorList):
                 if a[0] == " ":
                     a = a[1:]
             dict_1[tup[0]]=tup[1]
-    
     if "FIN 101" in dict_1:
         dict_1["FIN 101"] = ["ACCT 42", "IS 44", "ECON 02", "STAT 71/STAT 130/ACTS 131"]
     if "MGMT 120" in dict_1:
@@ -163,7 +132,7 @@ def createDictionaries(selectedMajorList, selectedMinorList):
     dict_1 = dealWithOrReqs(dict_1)
     if "ACTS 140" in dict_1 and "ACT 135" in dict_1["ACTS 140"]:
         dict_1["ACTS 140"].remove("ACT 135")
-        dict_1["ACTS 140"].append("ACTS 135") 
+        dict_1["ACTS 140"].append("ACTS 135")
     if "ECON 170" in dict_1 and "MATH 28" in dict_1["ECON 170"]:
         dict_1["ECON 170"].remove("MATH 28")
     if "ECON 105" in dict_1 and "MATH 28" in dict_1["ECON 105"]:
@@ -191,6 +160,8 @@ def createDictionaries(selectedMajorList, selectedMinorList):
     if "BUS 70" in dict_1 and "BUS 70" in dict_1["BUS 70"]:
         dict_1["BUS 70"].append('None')
         dict_1["BUS 70"].remove("BUS 70")
+    if "ACTS 135" in dict_1 and "ACTS 131" not in dict_1: #and "MANAGEMENT_MINOR" in pickTables: #database issue
+        dict_1.pop("ACTS 135")
     #print("major:", selectedMajor)
     #print(dict_1, "\n\n")
     

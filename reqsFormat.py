@@ -82,6 +82,8 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
             for tup in result:
                 if tup[1] not in classList:
                     classList.append(tup[1])
+                    if tup[0] == "STAT 72":
+                        holdOntoThis = tup[1]
             if "CHOOSE" in tableName:
                 tableName = tableName.replace("CHOOSE", "PICK")
             #tableName = tableName.replace("_", " ")
@@ -118,7 +120,8 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
     tableDict["ECONOMICS"] = ["ECON_MINOR", "PICK_FOUR_ECON_MINOR"]
     tableDict["BUSINESS LAW"] = ["BLAW_MINOR", "PICK_TWO_BLAW_MINOR"]
     tableDict["DATA ANALYTICS"] = ["DATA_ANALYTICS_MINOR"]
-    tableDict["MANAGEMENT"] = ["PICK_THREE_MANAGEMENT_MINOR"]
+    tableDict["MANAGEMENT"] = ["MANAGEMENT_MINOR", "PICK_THREE_MANAGEMENT_MINOR"]
+    tableDict["INFORMATION SYSTEMS"] = ["INFO_SYSTEMS_MINOR"]
 
     for minor in selectedMinorList:
         singlesTables = []
@@ -138,6 +141,8 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
             classList = []
             result = cursor.fetchall()
             for tup in result:
+                if tup[1] == "Mathematical Statistics" and key == "MANAGEMENT_MINOR": #database issue
+                    tup[1] = "Statistics II"
                 if tup[1] not in classList:
                     classList.append(tup[1])
             minorRequirementsToFrontEnd[minor + " MINOR"] = {"singles": classList} #{"Individual Classes": classList}
@@ -149,7 +154,7 @@ def getRequirementsForFrontEnd(selectedMajorList, selectedMinorList):
             result = cursor.fetchall()
             for tup in result:
                 if tup[1] not in classList:
-                    classList.append(tup[1])
+                        classList.append(tup[1])
             tableName = tableName.replace("CHOOSE", "PICK")
             #print(tableName)
             #tableName = tableName.replace("_", " ")
