@@ -273,7 +273,7 @@ function requirementsChecklist() {
 			}
 			return;
 		}
-		if (categoryKey === 'AOIs') { // temporary AOI stuff !!!!!not legit
+		if (categoryKey === 'AOIs') { // temporary
 			document.querySelectorAll(`[category-key="${categoryKey}"] input`).forEach($checkbox => {
 				$checkbox.checked = true;
 				const $label = $checkbox.nextElementSibling;

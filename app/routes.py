@@ -12,8 +12,7 @@ from finalizeSchedule import *
 from reqsFormat import *
 
 sys.path.append("app")  # This must be called before importing below modules
-from app.random_dummy_data import Dummy_Data
-from app.static_dummy_data import drake_curriculum
+from app.static_data import drake_curriculum
 
 # We receive lists represented as strings in the URL and convert them to python lists
 from util import serialize
@@ -37,7 +36,6 @@ def index():
         "classes": serialize(request.args.get("classes")) if request.args.get("classes") else [],
         "semesters": request.args.get("semesters") if request.args.get("semesters") else ""
     }
-    data = Dummy_Data(user_choices)  # Dummy data!! Replace this with real FYP
     try:
         majors = []
         for major in user_choices["majors"]:
@@ -45,14 +43,14 @@ def index():
         if majors == []:
             majors.append("ACTUARIAL SCIENCE")
     except:
-        majors = ["HELLO"] #don't hardcode later
+        majors = []
         
     try:
         minors = []
         for minor in user_choices["minors"]:
             minors.append(minor.upper())
     except:
-        minors = [] #don't hardcode later
+        minors = []
         
     if user_choices["semesters"] == "":  
         startingSemester = "Fall 2022"
@@ -70,7 +68,6 @@ def index():
     dict_8 = dictionaries[7]
     dict_9 = dictionaries[8]
     popped_classes = dictionaries[9]
-    print("!!!", dict_1)
     placement_output = Jplacement_algorithm(dict_1, dict_2, dict_3, dict_4, dict_6, dict_7, startingSemester, popped_classes)
     semesterList = placement_output[0]
     aois_left = placement_output[1]
@@ -80,7 +77,6 @@ def index():
         "main.html",
         title="Four-Year Plan Generator",
         classes_by_semester=finalCheck(dict_2, dict_3, dict_4, dict_6, dict_7, dict_8, dict_9, startingSemester, semesterList),
-        #requirements=data.get_requirements(),
         requirements = getRequirementsForFrontEnd(majors, minors),
         drake_curriculum=drake_curriculum,
         user_choices=user_choices,

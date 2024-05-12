@@ -29,6 +29,9 @@ attributes = [
 
 
 class Dummy_Data:
+    """
+    A dummy data object that creates and outputs dummy FYP and requirements.
+    """
     def __init__(self, user_choices):
         self.all_classes = []
         self.majors = user_choices["majors"]

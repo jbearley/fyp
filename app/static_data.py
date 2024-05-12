@@ -38,8 +38,7 @@ while i < 3:
     semesters.append(fallSemester)
     semesters.append(springSemester)
     i += 1
-    
-# complete from this link https://www.drake.edu/academics/undergraduate/majors/ up to "Military Studies" (from "College / School Listing" view)
+
 drake_curriculum = {
     "majors": majors,
     "minors": minors,
